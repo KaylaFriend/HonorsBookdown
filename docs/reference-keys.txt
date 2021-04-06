@@ -1,7 +1,4 @@
-fig:nice-fig
-tab:nice-tab
 prerequisites
-intro
 classification-trees
 introduction-to-classification-trees
 prediction-with-a-classification-tree

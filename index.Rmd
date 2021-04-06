@@ -16,14 +16,6 @@ always_allow_html: true
 
 # Prerequisites
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
-
-The **bookdown** package can be installed from CRAN or Github:
-
-```{r eval=FALSE, echo=FALSE}
-
-```
-
 This material is from the [DataCamp](https://www.datacamp.com) course [Tree-Based Models](https://learn.datacamp.com/courses/tree-based-models-in-r) by Erin L. and Gabriela de Queiroz.  Before using this material, the reader should have completed and be comfortable with the material in the DataCamp module [Tree-Based Models](https://learn.datacamp.com/courses/tree-based-models-in-r).
 
 
