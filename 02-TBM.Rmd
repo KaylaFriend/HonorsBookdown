@@ -1,5 +1,14 @@
 # Classification Trees
 
+```{r echo=FALSE}
+library(readr)
+
+url <- "https://assets.datacamp.com/production/repositories/710/datasets/b649085c43111c83ba7ab6ec172d83cdc14a2942/credit.csv"
+  if(!file.exists("./credit.csv")){download.file(url, destfile = "./credit.csv")}
+
+credit <- read_csv("./credit.csv")
+```
+
 ## Welcome to the Course{-}
 
 <iframe src="https://drive.google.com/file/d/1NpANMsB2mgYs5Hg9T1mR7p2QnZZdV0DQ/preview" width="640" height="480"></iframe>
