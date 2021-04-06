@@ -1,0 +1,457 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Tree-Based Models},
+  pdfauthor={Kayla Friend},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{\href{https://learn.datacamp.com/courses/tree-based-models-in-r}{Tree-Based Models}}
+\author{\href{https://kaylafriend.github.io/}{Kayla Friend}}
+\date{Last compiled: Apr 06, 2021}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{prerequisites}{%
+\chapter{Prerequisites}\label{prerequisites}}
+
+This is a \emph{sample} book written in \textbf{Markdown}. You can use anything that Pandoc's Markdown supports, e.g., a math equation \(a^2 + b^2 = c^2\).
+
+The \textbf{bookdown} package can be installed from CRAN or Github:
+
+This material is from the \href{https://www.datacamp.com}{DataCamp} course \href{https://learn.datacamp.com/courses/tree-based-models-in-r}{Tree-Based Models} by Erin L. and Gabriela de Queiroz. Before using this material, the reader should have completed and be comfortable with the material in the DataCamp module \href{https://learn.datacamp.com/courses/tree-based-models-in-r}{Tree-Based Models}.
+
+\hypertarget{intro}{%
+\chapter{Introduction}\label{intro}}
+
+Kayla Friend
+
+You can label chapter and section titles using \texttt{\{\#label\}} after them, e.g., we can reference Chapter \ref{intro}. If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \ref{methods}.
+
+Figures and tables with captions will be placed in \texttt{figure} and \texttt{table} environments, respectively.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\FloatTok{.1}\NormalTok{, }\FloatTok{.1}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(pressure, }\DataTypeTok{type =} \StringTok{'b'}\NormalTok{, }\DataTypeTok{pch =} \DecValTok{19}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{HonorsBookdown_files/figure-latex/nice-fig-1} 
+
+}
+
+\caption{Here is a nice figure!}\label{fig:nice-fig}
+\end{figure}
+
+Reference a figure by its code chunk label with the \texttt{fig:} prefix, e.g., see Figure \ref{fig:nice-fig}. Similarly, you can reference tables generated from \texttt{knitr::kable()}, e.g., see Table \ref{tab:nice-tab}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\OperatorTok{::}\KeywordTok{kable}\NormalTok{(}
+  \KeywordTok{head}\NormalTok{(iris, }\DecValTok{20}\NormalTok{), }\DataTypeTok{caption =} \StringTok{'Here is a nice table!'}\NormalTok{,}
+  \DataTypeTok{booktabs =} \OtherTok{TRUE}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:nice-tab}Here is a nice table!}
+\centering
+\begin{tabular}[t]{rrrrl}
+\toprule
+Sepal.Length & Sepal.Width & Petal.Length & Petal.Width & Species\\
+\midrule
+5.1 & 3.5 & 1.4 & 0.2 & setosa\\
+4.9 & 3.0 & 1.4 & 0.2 & setosa\\
+4.7 & 3.2 & 1.3 & 0.2 & setosa\\
+4.6 & 3.1 & 1.5 & 0.2 & setosa\\
+5.0 & 3.6 & 1.4 & 0.2 & setosa\\
+\addlinespace
+5.4 & 3.9 & 1.7 & 0.4 & setosa\\
+4.6 & 3.4 & 1.4 & 0.3 & setosa\\
+5.0 & 3.4 & 1.5 & 0.2 & setosa\\
+4.4 & 2.9 & 1.4 & 0.2 & setosa\\
+4.9 & 3.1 & 1.5 & 0.1 & setosa\\
+\addlinespace
+5.4 & 3.7 & 1.5 & 0.2 & setosa\\
+4.8 & 3.4 & 1.6 & 0.2 & setosa\\
+4.8 & 3.0 & 1.4 & 0.1 & setosa\\
+4.3 & 3.0 & 1.1 & 0.1 & setosa\\
+5.8 & 4.0 & 1.2 & 0.2 & setosa\\
+\addlinespace
+5.7 & 4.4 & 1.5 & 0.4 & setosa\\
+5.4 & 3.9 & 1.3 & 0.4 & setosa\\
+5.1 & 3.5 & 1.4 & 0.3 & setosa\\
+5.7 & 3.8 & 1.7 & 0.3 & setosa\\
+5.1 & 3.8 & 1.5 & 0.3 & setosa\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+You can write citations, too. For example, we are using the \textbf{bookdown} package \citep{R-bookdown} in this sample book, which was built on top of R Markdown and \textbf{knitr} \citep{xie2015}.
+
+\hypertarget{classification-trees}{%
+\chapter{Classification Trees}\label{classification-trees}}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.3     v dplyr   1.0.5
+## v tibble  3.1.0     v stringr 1.4.0
+## v tidyr   1.1.3     v forcats 0.5.1
+## v purrr   0.3.4
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   checking_balance = col_character(),
+##   months_loan_duration = col_double(),
+##   credit_history = col_character(),
+##   purpose = col_character(),
+##   amount = col_double(),
+##   savings_balance = col_character(),
+##   employment_duration = col_character(),
+##   percent_of_income = col_double(),
+##   years_at_residence = col_double(),
+##   age = col_double(),
+##   other_credit = col_character(),
+##   housing = col_character(),
+##   existing_loans_count = col_double(),
+##   job = col_character(),
+##   dependents = col_double(),
+##   phone = col_character(),
+##   default = col_character()
+## )
+\end{verbatim}
+
+\hypertarget{welcome-to-the-course}{%
+\section*{Welcome to the Course}\label{welcome-to-the-course}}
+\addcontentsline{toc}{section}{Welcome to the Course}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+A classification tree is a decision tree that performs a classification (vs regression) task.\#\# Build a Classification Tree
+
+Let's get started and build our first classification tree.
+
+You will train a decision tree model to understand which loan applications are at higher risk of default using a subset of the \href{https://archive.ics.uci.edu/ml/datasets/Statlog+\%28German+Credit+Data\%29}{German Credit Dataset}. The response variable, \texttt{default}, indicates whether the loan went into a default or not, which means this is a binary classification problem (there are just two classes).
+
+You will use the \texttt{rpart} package to fit the decision tree and the \texttt{rpart.plot} package to visualize the tree.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise}{%
+\subsection*{Exercise}\label{exercise}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The data frame \texttt{creditsub} is in the workspace. This data frame is a subset of the original German Credit Dataset, which we will use to train our first classification tree model.
+
+\begin{itemize}
+\tightlist
+\item
+  Take a look at the data using the \texttt{str()} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(creditsub)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## tibble[,5] [1,000 x 5] (S3: tbl_df/tbl/data.frame)
+##  $ months_loan_duration: num [1:1000] 6 48 12 42 24 36 24 36 12 30 ...
+##  $ percent_of_income   : num [1:1000] 4 2 2 2 3 2 3 2 2 4 ...
+##  $ years_at_residence  : num [1:1000] 4 2 3 4 4 4 4 2 4 2 ...
+##  $ age                 : num [1:1000] 67 22 49 45 53 35 53 35 61 28 ...
+##  $ default             : chr [1:1000] "no" "yes" "no" "no" ...
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  In R, formulas are used to model the response as a function of some set of predictors, so the formula here is \texttt{default\ \textasciitilde{}\ .}, which means use all columns (except the response column) as predictors. Fit the classification decision tree using the \texttt{rpart()} function from the \texttt{rpart} package. In the \texttt{rpart()} function, note that you'll also have to provide the training data frame.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{credit_model <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ default }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                      \DataTypeTok{data =}\NormalTok{ creditsub, }
+                      \DataTypeTok{method =} \StringTok{"class"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Using the model object that you create, plot the decision tree model using the \texttt{rpart.plot()} function from the \texttt{rpart.plot} package.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rpart.plot}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ credit_model, }\DataTypeTok{yesno =} \DecValTok{2}\NormalTok{, }\DataTypeTok{type =} \DecValTok{0}\NormalTok{, }\DataTypeTok{extra =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{introduction-to-classification-trees}{%
+\section{Introduction to Classification Trees}\label{introduction-to-classification-trees}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+What are some advantages of using tree-based methods over other supervised learning methods?
+
+\begin{itemize}
+\tightlist
+\item
+  Model interpretability (easy to understand why a prediction is made).
+\item
+  Model performance (trees have superior performance compared to other machine learning algorithms).
+\item
+  No pre-processing (e.g.~normalization) of the data is required.
+\item
+  \textbf{1 and 3 are true.}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{prediction-with-a-classification-tree}{%
+\section{Prediction with a Classification Tree}\label{prediction-with-a-classification-tree}}
+
+Let's use the decision tree that you trained in the first exercise. The tree predicts whether a loan applicant will default on their loan (or not).
+
+Assume we have a loan applicant who:
+
+is applying for a 20-month loan
+is requesting a loan amount that is 2\% of their income
+is 25 years old
+After following the correct path down the tree for this individual's set of data, you will end up in a ``Yes'' or ``No'' bucket (in tree terminology, we'd call this a ``leaf'') which represents the predicted class. Ending up in a ``Yes'' leaf means that the model predicts that this individual will default on their loan, where as a ``No'' prediction means that they will not default on their loan.
+
+Starting with the top node of the tree, you must evaluate a query about a particular attribute of your data point (e.g.~is \texttt{months\_loan\_duration\ \textless{}\ 44}?). If the answer is yes, then you go to the left at the split; if the answer is no, then you will go right. At the next node you repeat the process until you end up in a leaf node, at which point you'll have a predicted class for your data point.
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+According to the model this person will default on their loan.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{overview-of-the-modelling-process}{%
+\section{Overview of the Modelling Process}\label{overview-of-the-modelling-process}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-1}{%
+\subsection*{Exercise}\label{exercise-1}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+For this exercise, you'll randomly split the \href{}{German Credit Dataset} into two pieces: a training set (80\%) called \texttt{credit\_train} and a test set (20\%) that we will call \texttt{credit\_test}. We'll use these two sets throughout the chapter. The \texttt{credit} data frame is loaded into the workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Define \texttt{n}, the number of rows in the \texttt{credit} data frame.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Total number of rows in the credit data frame}
+\NormalTok{n <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(credit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Define \texttt{n\_train} to be \textasciitilde80\% of \texttt{n}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Number of rows for the training set (80% of the dataset)}
+\NormalTok{n_train <-}\StringTok{ }\KeywordTok{round}\NormalTok{(.}\DecValTok{8} \OperatorTok{*}\StringTok{ }\NormalTok{n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Set a seed (for reproducibility) and then sample \texttt{n\_train} rows to define the set of training set indices.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create a vector of indices which is an 80% random sample}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{train_indices <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{n, n_train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Using row indices, subset the credit data frame to create two new datasets: \texttt{credit\_train} and \texttt{credit\_test}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Subset the credit data frame to training indices only}
+\NormalTok{credit_train <-}\StringTok{ }\NormalTok{credit[train_indices, ]  }
+  
+\CommentTok{# Exclude the training indices to create the test set}
+\NormalTok{credit_test <-}\StringTok{ }\NormalTok{credit[}\OperatorTok{-}\NormalTok{train_indices, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{methods}{%
+\chapter{Methods}\label{methods}}
+
+We describe our methods in this chapter.
+
+\hypertarget{applications}{%
+\chapter{Applications}\label{applications}}
+
+Some \emph{significant} applications are demonstrated in this chapter.
+
+\hypertarget{example-one}{%
+\section{Example one}\label{example-one}}
+
+\hypertarget{example-two}{%
+\section{Example two}\label{example-two}}
+
+\hypertarget{final-words}{%
+\chapter{Final Words}\label{final-words}}
+
+We have finished a nice book.
+
+  \bibliography{book.bib,packages.bib}
+
+\end{document}

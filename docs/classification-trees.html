@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Classification Trees | Tree-Based Models</title>
+  <meta name="description" content="Bookdown based on the datacamp course Tree-Based Models in R. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Classification Trees | Tree-Based Models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bookdown based on the datacamp course Tree-Based Models in R. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Classification Trees | Tree-Based Models" />
+  
+  <meta name="twitter:description" content="Bookdown based on the datacamp course Tree-Based Models in R. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Kayla Friend" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="methods.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="classification-trees.html"><a href="classification-trees.html"><i class="fa fa-check"></i><b>3</b> Classification Trees</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#welcome-to-the-course"><i class="fa fa-check"></i>Welcome to the Course</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.1" data-path="classification-trees.html"><a href="classification-trees.html#introduction-to-classification-trees"><i class="fa fa-check"></i><b>3.1</b> Introduction to Classification Trees</a></li>
+<li class="chapter" data-level="3.2" data-path="classification-trees.html"><a href="classification-trees.html#prediction-with-a-classification-tree"><i class="fa fa-check"></i><b>3.2</b> Prediction with a Classification Tree</a></li>
+<li class="chapter" data-level="3.3" data-path="classification-trees.html"><a href="classification-trees.html#overview-of-the-modelling-process"><i class="fa fa-check"></i><b>3.3</b> Overview of the Modelling Process</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-1"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
+<li class="chapter" data-level="5" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>5</b> Applications</a><ul>
+<li class="chapter" data-level="5.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>5.1</b> Example one</a></li>
+<li class="chapter" data-level="5.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>5.2</b> Example two</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>6</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><a href="https://learn.datacamp.com/courses/tree-based-models-in-r">Tree-Based Models</a></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="classification-trees" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Classification Trees</h1>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.3     ✓ dplyr   1.0.5
+## ✓ tibble  3.1.0     ✓ stringr 1.4.0
+## ✓ tidyr   1.1.3     ✓ forcats 0.5.1
+## ✓ purrr   0.3.4</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   checking_balance = col_character(),
+##   months_loan_duration = col_double(),
+##   credit_history = col_character(),
+##   purpose = col_character(),
+##   amount = col_double(),
+##   savings_balance = col_character(),
+##   employment_duration = col_character(),
+##   percent_of_income = col_double(),
+##   years_at_residence = col_double(),
+##   age = col_double(),
+##   other_credit = col_character(),
+##   housing = col_character(),
+##   existing_loans_count = col_double(),
+##   job = col_character(),
+##   dependents = col_double(),
+##   phone = col_character(),
+##   default = col_character()
+## )</code></pre>
+<div id="welcome-to-the-course" class="section level2 unnumbered">
+<h2>Welcome to the Course</h2>
+<iframe src="https://drive.google.com/file/d/1NpANMsB2mgYs5Hg9T1mR7p2QnZZdV0DQ/preview" width="640" height="480">
+</iframe>
+<hr />
+<p>A classification tree is a decision tree that performs a classification (vs regression) task.## Build a Classification Tree</p>
+<p>Let’s get started and build our first classification tree.</p>
+<p>You will train a decision tree model to understand which loan applications are at higher risk of default using a subset of the <a href="https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German Credit Dataset</a>. The response variable, <code>default</code>, indicates whether the loan went into a default or not, which means this is a binary classification problem (there are just two classes).</p>
+<p>You will use the <code>rpart</code> package to fit the decision tree and the <code>rpart.plot</code> package to visualize the tree.</p>
+<hr />
+<div id="exercise" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<p>The data frame <code>creditsub</code> is in the workspace. This data frame is a subset of the original German Credit Dataset, which we will use to train our first classification tree model.</p>
+<ul>
+<li>Take a look at the data using the <code>str()</code> function.</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="classification-trees.html#cb7-1"></a><span class="kw">str</span>(creditsub)</span></code></pre></div>
+<pre><code>## tibble[,5] [1,000 × 5] (S3: tbl_df/tbl/data.frame)
+##  $ months_loan_duration: num [1:1000] 6 48 12 42 24 36 24 36 12 30 ...
+##  $ percent_of_income   : num [1:1000] 4 2 2 2 3 2 3 2 2 4 ...
+##  $ years_at_residence  : num [1:1000] 4 2 3 4 4 4 4 2 4 2 ...
+##  $ age                 : num [1:1000] 67 22 49 45 53 35 53 35 61 28 ...
+##  $ default             : chr [1:1000] &quot;no&quot; &quot;yes&quot; &quot;no&quot; &quot;no&quot; ...</code></pre>
+<ul>
+<li>In R, formulas are used to model the response as a function of some set of predictors, so the formula here is <code>default ~ .</code>, which means use all columns (except the response column) as predictors. Fit the classification decision tree using the <code>rpart()</code> function from the <code>rpart</code> package. In the <code>rpart()</code> function, note that you’ll also have to provide the training data frame.</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="classification-trees.html#cb9-1"></a>credit_model &lt;-<span class="st"> </span><span class="kw">rpart</span>(<span class="dt">formula =</span> default <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb9-2"><a href="classification-trees.html#cb9-2"></a>                      <span class="dt">data =</span> creditsub, </span>
+<span id="cb9-3"><a href="classification-trees.html#cb9-3"></a>                      <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
+<ul>
+<li>Using the model object that you create, plot the decision tree model using the <code>rpart.plot()</code> function from the <code>rpart.plot</code> package.</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="classification-trees.html#cb10-1"></a><span class="kw">rpart.plot</span>(<span class="dt">x =</span> credit_model, <span class="dt">yesno =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="dv">0</span>, <span class="dt">extra =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="HonorsBookdown_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<hr />
+</div>
+</div>
+<div id="introduction-to-classification-trees" class="section level2">
+<h2><span class="header-section-number">3.1</span> Introduction to Classification Trees</h2>
+<iframe src="https://drive.google.com/file/d/1Mz2Scq6UbFRBrASmXj3kOzO7zIr7nd8F/preview" width="640" height="480">
+</iframe>
+<hr />
+<p>What are some advantages of using tree-based methods over other supervised learning methods?</p>
+<ul>
+<li>Model interpretability (easy to understand why a prediction is made).</li>
+<li>Model performance (trees have superior performance compared to other machine learning algorithms).</li>
+<li>No pre-processing (e.g. normalization) of the data is required.</li>
+<li><strong>1 and 3 are true.</strong></li>
+</ul>
+<hr />
+</div>
+<div id="prediction-with-a-classification-tree" class="section level2">
+<h2><span class="header-section-number">3.2</span> Prediction with a Classification Tree</h2>
+<p>Let’s use the decision tree that you trained in the first exercise. The tree predicts whether a loan applicant will default on their loan (or not).</p>
+<p>Assume we have a loan applicant who:</p>
+<p>is applying for a 20-month loan
+is requesting a loan amount that is 2% of their income
+is 25 years old
+After following the correct path down the tree for this individual’s set of data, you will end up in a “Yes” or “No” bucket (in tree terminology, we’d call this a “leaf”) which represents the predicted class. Ending up in a “Yes” leaf means that the model predicts that this individual will default on their loan, where as a “No” prediction means that they will not default on their loan.</p>
+<p>Starting with the top node of the tree, you must evaluate a query about a particular attribute of your data point (e.g. is <code>months_loan_duration &lt; 44</code>?). If the answer is yes, then you go to the left at the split; if the answer is no, then you will go right. At the next node you repeat the process until you end up in a leaf node, at which point you’ll have a predicted class for your data point.</p>
+<p><img src="HonorsBookdown_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>According to the model this person will default on their loan.</p>
+<hr />
+</div>
+<div id="overview-of-the-modelling-process" class="section level2">
+<h2><span class="header-section-number">3.3</span> Overview of the Modelling Process</h2>
+<iframe src="https://drive.google.com/file/d/1ca-ESb3KqG7IOJiGx4K9-YEnqshcuSkr/preview" width="640" height="480">
+</iframe>
+<hr />
+<div id="exercise-1" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<p>For this exercise, you’ll randomly split the <a href="">German Credit Dataset</a> into two pieces: a training set (80%) called <code>credit_train</code> and a test set (20%) that we will call <code>credit_test</code>. We’ll use these two sets throughout the chapter. The <code>credit</code> data frame is loaded into the workspace.</p>
+<ul>
+<li>Define <code>n</code>, the number of rows in the <code>credit</code> data frame.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="classification-trees.html#cb11-1"></a><span class="co"># Total number of rows in the credit data frame</span></span>
+<span id="cb11-2"><a href="classification-trees.html#cb11-2"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(credit)</span></code></pre></div>
+<ul>
+<li>Define <code>n_train</code> to be ~80% of <code>n</code>.</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="classification-trees.html#cb12-1"></a><span class="co"># Number of rows for the training set (80% of the dataset)</span></span>
+<span id="cb12-2"><a href="classification-trees.html#cb12-2"></a>n_train &lt;-<span class="st"> </span><span class="kw">round</span>(.<span class="dv">8</span> <span class="op">*</span><span class="st"> </span>n)</span></code></pre></div>
+<ul>
+<li>Set a seed (for reproducibility) and then sample <code>n_train</code> rows to define the set of training set indices.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="classification-trees.html#cb13-1"></a><span class="co"># Create a vector of indices which is an 80% random sample</span></span>
+<span id="cb13-2"><a href="classification-trees.html#cb13-2"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb13-3"><a href="classification-trees.html#cb13-3"></a>train_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>n, n_train)</span></code></pre></div>
+<ul>
+<li>Using row indices, subset the credit data frame to create two new datasets: <code>credit_train</code> and <code>credit_test</code></li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="classification-trees.html#cb14-1"></a><span class="co"># Subset the credit data frame to training indices only</span></span>
+<span id="cb14-2"><a href="classification-trees.html#cb14-2"></a>credit_train &lt;-<span class="st"> </span>credit[train_indices, ]  </span>
+<span id="cb14-3"><a href="classification-trees.html#cb14-3"></a>  </span>
+<span id="cb14-4"><a href="classification-trees.html#cb14-4"></a><span class="co"># Exclude the training indices to create the test set</span></span>
+<span id="cb14-5"><a href="classification-trees.html#cb14-5"></a>credit_test &lt;-<span class="st"> </span>credit[<span class="op">-</span>train_indices, ]</span></code></pre></div>
+<hr />
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["HonorsBookdown.pdf", "HonorsBookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
