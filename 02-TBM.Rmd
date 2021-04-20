@@ -1,0 +1,332 @@
+# Regression Trees
+
+```{r echo=FALSE}
+url <- "https://assets.datacamp.com/production/repositories/710/datasets/3d720e80d1ad70a88322c2175fa0e6041761a5f9/grade.csv"
+  if(!file.exists("./grade.csv")){download.file(url, destfile = "./grade.csv")}
+
+grade <- read_csv("./grade.csv")
+```
+```
+
+
+## Introduction to Regression Trees
+
+<iframe src="https://drive.google.com/file/d/16d7rpu07VgsNlCdqjO8g9_5H-T3P6ees/preview" width="640" height="480"></iframe>
+
+_____________
+
+### Classification vs. regression{-}
+
+What is the difference between classification and regression?
+
+* In classification, the response represents a category (e.g. "apples", "oranges", "bananas").
+
+* In regression, the response represents a numeric value (e.g. price of a house).
+
+* **All of the above.**
+
+* None of the above.
+
+_____________
+
+## Split the data
+
+The goal of this exercise is to predict a student's final Mathematics grade based on the following variables: `sex`, `age`, `address`, `studytime` (weekly study time), `schoolsup` (extra educational support), `famsup` (family educational support), `paid` (extra paid classes within the course subject) and `absences`.
+
+The response is `final_grade` (numeric: from 0 to 20, output target).
+
+After initial exploration, split the data into training, validation, and test sets. In this chapter, we will introduce the idea of a validation set, which can be used to select a "best" model from a set of competing models.
+
+In Chapter 1, we demonstrated a simple way to split the data into two pieces using the `sample()` function. In this exercise, we will take a slightly different approach to splitting the data that allows us to split the data into more than two parts (here, we want three: train, validation, test). We still use the `sample()` function, but instead of sampling the indices themselves, we will assign each row to either the training, validation or test sets according to a probability distribution.
+
+_________________
+
+### Exercise{-}
+
+These examples will use a subset of the [Student Performance Dataset](https://archive.ics.uci.edu/ml/datasets/Student+Performance) from UCI ML Dataset Repository.
+
+The dataset `grade` is already in your workspace.
+
+* Take a look at the data using the `str()` function.
+
+```{r}
+# Look at the data
+str(grade)
+```
+
+* Set a seed (for reproducibility) and then sample n_train rows to define the set of training set indices.
+    * Draw a sample of size nrow(grade) from the number 1 to 3 (with             replacement). You want approximately 70% of the sample to be 1 and         the remaining 30% to be equally split between 2 and 3.
+    
+```{r}
+# Set seed and create assignment
+set.seed(1)
+assignment <- sample(1:3, size = nrow(grade), prob = c(0.7, 0.15, 0.15), replace = TRUE)
+```
+
+* Subset `grade` using the sample you just drew so that indices with the value 1 are in `grade_train`, indices with the value 2 are in `grade_valid`, and indices with 3 are in `grade_test`.
+
+```{r}
+# Create a train, validation and tests from the original data frame 
+grade_train <- grade[assignment == 1, ]    # subset grade to training indices only
+grade_valid <- grade[assignment == 2, ]  # subset grade to validation indices only
+grade_test <- grade[assignment == 3, ]   # subset grade to test indices only
+```
+
+______________
+
+## Train a regression tree model
+
+In this exercise, we will use the `grade_train` dataset to fit a regression tree using `rpart()` and visualize it using `rpart.plot()`. A regression tree plot looks identical to a classification tree plot, with the exception that there will be numeric values in the leaf nodes instead of predicted classes.
+
+This is very similar to what we did previously in Chapter 1. When fitting a classification tree, we use `method = "class"`, however, when fitting a regression tree, we need to set `method = "anova"`. By default, the `rpart()` function will make an intelligent guess as to what the method value should be based on the data type of your response column, but it's recommened that you explictly set the method for reproducibility reasons (since the auto-guesser may change in the future).
+
+______________
+
+### Exercise{-}
+
+The `grade_train` training set is loaded into the workspace.
+
+* Using the `grade_train` dataframe and the given formula, train a regresion tree.
+
+```{r}
+grade_model <- rpart(formula = final_grade ~ ., 
+                     data = grade_train, 
+                     method = "anova")
+```
+
+* Look at the model output by printing the model object.
+
+```{r}
+# Look at the model output                      
+print(grade_model)
+```
+
+* Plot the decision tree using `rpart.plot()`.
+
+```{r}
+# Plot the tree model
+rpart.plot(x = grade_model, yesno = 2, type = 0, extra = 0)
+```
+
+______________
+
+## Performance Metrics for Regression
+
+<iframe src="https://drive.google.com/file/d/1VlpjPUV0FUjN0ThhE5dnyG_WlorCgqUW/preview" width="640" height="480"></iframe>
+
+______________
+
+### Evaluate a regression tree model
+
+Predict the final grade for all students in the test set. The grade is on a 0-20 scale. Evaluate the model based on test set [RMSE (Root Mean Squared Error)](https://en.wikipedia.org/wiki/Root-mean-square_deviation). RMSE tells us approximately how far away our predictions are from the true values.
+
+______________
+
+### Exercise{-}
+
+* First generate predictions on the `grade_test` data frame using the `grade_model` object.
+
+```{r}
+# Generate predictions on a test set
+pred <- predict(object = grade_model,  # model object 
+                newdata = grade_test)  # test dataset
+```
+
+* After generating test set predictions, use the `rmse()` function from the **Metrics** package to compute test set RMSE.
+
+```{r}
+# Compute the RMSE
+rmse(actual = grade_test$final_grade, 
+     predicted = pred)
+```
+
+______________
+
+## What are the Hyperparameters for a Decision Tree?
+
+<iframe src="https://drive.google.com/file/d/1M2toO5_45OrhJZcVvD9RGmwGHJcklnUz/preview" width="640" height="480"></iframe>
+
+_____________
+
+### Tuning the Model
+
+Tune (or "trim") the model using the `prune()` function by finding the best "CP" value (CP stands for "Complexity Parameter").
+
+### Exercise{-}
+
+* Print the CP Table, a matrix of information on the optimal prunings (based on CP).
+
+```{r}
+# Plot the "CP Table"
+plotcp(grade_model)
+# Print the "CP Table"
+print(grade_model$cptable)
+```
+
+* Retrieve the optimal CP value; the value for CP which minimizes cross-validated error of the model.
+
+```{r}
+# Retrieve optimal cp value based on cross-validated error
+opt_index <- which.min(grade_model$cptable[, "xerror"])
+cp_opt <- grade_model$cptable[opt_index, "CP"]
+```
+
+* Use the `prune()` function trim the tree, snipping off the least important splits, based on CP.
+
+```{r}
+# Prune the model (to optimized cp value)
+grade_model_opt <- prune(tree = grade_model, 
+                         cp = cp_opt)
+# Plot the optimized model
+rpart.plot(x = grade_model_opt, yesno = 2, type = 0, extra = 0)
+```
+
+_______________
+
+## Grid Search for Model Selection
+
+<iframe src="https://drive.google.com/file/d/1y5mBs5oKb9sJfAl0-P3Xmq36v-8N7owP/preview" width="640" height="480"></iframe>
+
+______________
+
+### Generate a grid of hyperparameter values
+
+Use `expand.grid(`) to generate a grid of `maxdepth` and `minsplit` values.
+
+_____________
+
+### Exercise{-}
+
+* Establish a list of possible values for `minsplit` and `maxdepth`.
+
+```{r}
+# Establish a list of possible values for minsplit and maxdepth
+minsplit <- seq(1, 4, 1)
+maxdepth <- seq(1, 6, 1)
+```
+
+* Use the `expand.grid()` function to generate a data frame containing all combinations
+
+```{r}
+# Create a data frame containing all combinations 
+hyper_grid <- expand.grid(minsplit = minsplit, maxdepth = maxdepth)
+```
+
+* Take a look at the resulting grid object
+
+```{r}
+# Check out the grid
+head(hyper_grid)
+# Print the number of grid combinations
+nrow(hyper_grid)
+```
+
+______________
+
+### Generate a grid of models
+
+In this exercise, we will write a simple loop to train a "grid" of models and store the models in a list called `grade_models`. R users who are familiar with the `apply` functions in R could think about how this loop could be easily converted into a function applied to a list as an extra-credit thought experiment.
+
+______________
+
+### Exercise{-}
+
+* Create an empty list to store the models from the grid search.
+
+```{r}
+# Number of potential models in the grid
+num_models <- nrow(hyper_grid)
+# Create an empty list to store models
+grade_models <- list()
+```
+
+* Write a loop that trains a model for each row in `hyper_grid` and adds it to the `grade_models` list.
+    * The loop will by indexed by the rows of `hyper_grid`.
+    * For each row, there is a unique combination of the `minsplit` and         `maxdepth` values that will be used to train a model.
+
+```{r}
+# Write a loop over the rows of hyper_grid to train the grid of models
+for (i in 1:num_models) {
+
+    # Get minsplit, maxdepth values at row i
+    minsplit <- hyper_grid$minsplit[i]
+    maxdepth <- hyper_grid$maxdepth[i]
+
+    # Train a model and store in the list
+    grade_models[[i]] <- rpart(formula = final_grade ~ ., 
+                               data = grade_train, 
+                               method = "anova",
+                               minsplit = minsplit,
+                               maxdepth = maxdepth)
+}
+```
+
+_________________
+
+### Evaluate the grid
+
+Earlier in the chapter we split the dataset into three parts: training, validation and test.
+
+A dataset that is not used in training is sometimes referred to as a "holdout" set. A holdout set is used to estimate model performance and although both validation and test sets are considered to be holdout data, there is a key difference:
+
+* Just like a test set, a validation set is used to evaluate the performance of a model. The difference is that a validation set is specifically used to compare the performance of a group of models with the goal of choosing a "best model" from the group. All the models in a group are evaluated on the same validation set and the model with the best performance is considered to be the winner.
+
+* Once you have the best model, a final estimate of performance is computed on the test set.
+
+* A test set should only ever be used to estimate model performance and should not be used in model selection. Typically if you use a test set more than once, you are probably doing something wrong.
+
+_____________
+
+### Exercise{-}
+
+* Write a loop that evaluates each model in the `grade_models` list and stores the validation RMSE in a vector called `rmse_values`.
+
+```{r}
+# Number of potential models in the grid
+num_models <- length(grade_models)
+
+# Create an empty vector to store RMSE values
+rmse_values <- c()
+
+# Write a loop over the models to compute validation RMSE
+for (i in 1:num_models) {
+
+    # Retrieve the i^th model from the list
+    model <- grade_models[[i]]
+    
+    # Generate predictions on grade_valid 
+    pred <- predict(object = model,
+                    newdata = grade_valid)
+    
+    # Compute validation RMSE and add to the 
+    rmse_values[i] <- rmse(actual = grade_valid$final_grade, 
+                           predicted = pred)
+}
+```
+
+* The `which.min()` function can be applied to the `rmse_values` vector to identify the index containing the smallest RMSE value.
+    * The model with the smallest validation set RMSE will be designated        as the "best model".
+
+```{r}
+# Identify the model with smallest validation set RMSE
+best_model <- grade_models[[which.min(rmse_values)]]
+```
+
+* Inspect the model parameters of the best model.
+
+```{r}
+# Print the model paramters of the best model
+best_model$control
+```
+
+* Generate predictions on the test set using the best model to compute test set RMSE.
+
+```{r}
+# Compute test set RMSE on best_model
+pred <- predict(object = best_model,
+                newdata = grade_test)
+rmse(actual = grade_test$final_grade, 
+     predicted = pred)
+```
+
+______________
