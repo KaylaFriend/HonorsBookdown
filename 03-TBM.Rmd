@@ -1,6 +1,6 @@
 # Bagged Trees
 
-```{r echo=FALSE}
+```{r include=FALSE}
 library(readr)
 library(rpart)
 library(rpart.plot)
@@ -33,7 +33,7 @@ credit_test <- credit[-train_indices, ]
 
 _____________
 
-## Advantages of bagged trees
+### Advantages of bagged trees
 
 What are the advantages of bagged trees compared to a single tree?
 
@@ -77,7 +77,7 @@ credit_model <- bagging(formula = factor(default) ~ .,
 
 * Inspect the model by printing it.
 
-```{r}
+```{r comment=NA}
 # Print the model
 print(credit_model)
 ```
@@ -90,7 +90,7 @@ ______________
 
 _____________
 
-## Prediction and confusion matrix
+### Prediction and confusion matrix
 
 As you saw in the video, a confusion matrix is a very useful tool for examining all possible outcomes of your predictions (true positive, true negative, false positive, false negative).
 
@@ -115,14 +115,14 @@ class_prediction <- predict(object = credit_model,
 
 * Take a look at the prediction using the `print()` function.
 
-```{r}
+```{r comment=NA}
 # Print the predicted classes
 print(class_prediction)
 ```
 
 * Calculate the confusion matrix using the `confusionMatrix` function.
 
-```{r}
+```{r comment=NA}
 # Calculate the confusion matrix for the test set
 confusionMatrix(data = class_prediction,         
                 reference = factor(credit_test$default))  
@@ -130,7 +130,7 @@ confusionMatrix(data = class_prediction,
 
 _____________
 
-## Predict on a Test Set and Compute AUC
+### Predict on a Test Set and Compute AUC
 
 In binary classification problems, we can predict numeric values instead of class labels. In fact, class labels are created only after you use the model to predict a raw, numeric, _predicted value_ for a test point.
 
@@ -144,7 +144,7 @@ _______________
 
 * Use the `predict()` function with `type = "prob"` to generate numeric predictions on the `credit_test` dataset.
 
-```{r}
+```{r comment=NA}
 # Generate predictions on the test set
 pred <- predict(object = credit_model,
                 newdata = credit_test,
@@ -159,7 +159,7 @@ head(pred)
 
 * Compute the AUC using the `auc()` function from the **Metrics** package.
 
-```{r}
+```{r comment=NA}
 # Compute the AUC (`actual` must be a binary (or 1/0 numeric) vector)
 auc(actual = ifelse(credit_test$default == "yes", 1, 0), 
     predicted = pred[,"yes"])  
@@ -195,7 +195,7 @@ ctrl <- trainControl(method = "cv",     # Cross-validation
 
 * In the `trainControl()` function, you can specify many things. We will set: `method = "cv"`, `number = 5` for 5-fold cross-validation. Also, two options that are required if you want to use AUC as the metric: `classProbs = TRUE` and `summaryFunction = twoClassSummary`.
 
-```{r}
+```{r comment=NA}
 # Cross validate the credit model using "treebag" method; 
 # Track AUC (Area under the ROC curve)
 set.seed(1)  # for reproducibility
@@ -229,10 +229,15 @@ predc <- predict(object = credit_caret_model,
                 newdata = credit_test,
                 type = "prob")
 ```
+```{r include=FALSE}
+bag_preds <- predict(object = credit_caret_model, 
+                newdata = credit_test)
+```
+
 
 * After generating test set predictions, use the `auc()` function from the `Metrics` package to compute AUC.
 
-```{r}
+```{r comment=NA}
 # Compute the AUC (`actual` must be a binary (or 1/0 numeric) vector)
 auc(actual = ifelse(credit_test$default == "yes", 1, 0), 
                     predicted = predc[,"yes"])
@@ -258,31 +263,31 @@ ________________
 
 * Print the object credit_ipred_model_test_auc.
 
-```{r}
+```{r include=FALSE}
 credit_ipred_model_test_auc <- auc(actual = ifelse(credit_test$default == "yes", 1, 0), 
     predicted = pred[,"yes"])  
 ```
 
-```{r eval=FALSE}
+```{r comment=NA}
 # Print ipred::bagging test set AUC estimate
 print(credit_ipred_model_test_auc)
 ```
 
 * Print the object credit_caret_model_test_auc.
 
-```{r}
+```{r include=FALSE}
 credit_caret_model_test_auc <- auc(actual = ifelse(credit_test$default == "yes", 1, 0), 
                     predicted = predc[,"yes"])
 ```
 
-```{r eval=FALSE}
+```{r comment=NA}
 # Print caret "treebag" test set AUC estimate
 print(credit_caret_model_test_auc)
 ```
 
 * Compare these to the 5-fold cross validated AUC.
 
-```{r}
+```{r comment=NA}
 # Compare to caret 5-fold cross-validated AUC
 credit_caret_model$results[, "ROC"]
 ```

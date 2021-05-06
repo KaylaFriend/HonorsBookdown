@@ -2,6 +2,19 @@
 
 ```{r include=FALSE}
 library(randomForest)
+library(dplyr)
+library(readr)
+library(rpart)
+library(rpart.plot)
+library(tidyverse)
+library(caret)
+library(Metrics)
+
+url <- "https://assets.datacamp.com/production/repositories/710/datasets/b649085c43111c83ba7ab6ec172d83cdc14a2942/credit.csv"
+  if(!file.exists("./credit.csv")){download.file(url, destfile = "./credit.csv")}
+
+credit <- read.csv("./credit.csv")
+
 creditsub <- credit %>%
   select(months_loan_duration, percent_of_income, years_at_residence, age, default)
 n <- nrow(creditsub)
@@ -13,6 +26,12 @@ credit_train <- credit[train_indices, ]
   
 # Exclude the training indices to create the test set
 credit_test <- credit[-train_indices, ]
+
+credit_train$default <- as.factor(credit_train$default)
+
+library(dplyr)
+credit_Train <- credit_train %>% mutate_if(is.character, as.factor)
+credit_Test <- credit_test %>% mutate_if(is.character, as.factor)
 ```
 
 ## Introduction to Random Forests
@@ -45,11 +64,11 @@ The `credit_train` and `credit_test` datasets (from Chapter 1 & 3) are already l
 
 * Use the `randomForest::randomForest()` function to train a Random Forest model on the `credit_train` dataset.
 
-```{r}
+```{r comment=NA}
 # Train a Random Forest
 set.seed(1)  # for reproducibility
 credit_model <- randomForest(default ~ ., 
-                             credit_train)
+                             credit_Train)
 ```
 
 * The formula used to define the model is the same as in previous chapters -- we want to predict "default" as a function of all the other columns in the training set.
@@ -81,7 +100,7 @@ The `credit_model` trained in the previous exercise is loaded in the workspace.
 
 * Get the OOB error rate for the Random Forest model.
 
-```{r}
+```{r comment=NA}
 # Grab OOB error matrix & take a look
 err <- credit_model$err.rate
 head(err)
@@ -118,22 +137,22 @@ _______________
 ```{r}
 # Generate predicted classes using the model object
 class_prediction <- predict(object = credit_model,   # model object 
-                            newdata = credit_test,  # test dataset
+                            newdata = credit_Test,  # test dataset
                             type = "class") # return classification labels
 ```
 
 * Using the `caret::confusionMatrix()` function, compute the confusion matrix for the test set.
 
-```{r}
+```{r comment=NA}
 # Calculate the confusion matrix for the test set
 cm <- confusionMatrix(data = class_prediction,       # predicted classes
-                      reference = credit_test$default)  # actual classes
+                      reference = credit_Test$default)  # actual classes
 print(cm)
 ```
 
 * Compare the test set accuracy reported from the confusion matrix to the OOB accuracy. The OOB error is stored in `oob_err`, which is already in your workspace, and so OOB accuracy is just `1 - oob_err`.
 
-```{r}
+```{r comment=NA}
 # Compare test set accuracy to OOB accuracy
 paste0("Test Accuracy: ", cm$overall[1])
 paste0("OOB Accuracy: ", 1 - oob_err)
@@ -169,10 +188,10 @@ _______________
 
 * Use the `predict()` function with `type = "prob"` to generate numeric predictions on the `credit_test` dataset.
 
-```{r}
+```{r comment=NA}
 # Generate predictions on the test set
 pred <- predict(object = credit_model, 
-                newdata = credit_test,
+                newdata = credit_Test,
                 type = "prob")
 
 # `pred` is a matrix
@@ -181,12 +200,19 @@ class(pred)
 # Look at the pred format
 head(pred) 
 ```
+```{r}
+credit_Model <- randomForest(default ~ ., 
+                             credit_Train)
+rf_preds <- predict(object = credit_Model, 
+                newdata = credit_Test)
+```
+
 
 * Compute the AUC using the `auc()` function from the **Metrics** package.
 
-```{r}
+```{r comment=NA}
 # Compute the AUC (`actual` must be a binary 1/0 numeric vector)
-auc(actual = ifelse(credit_test$default == "yes", 1, 0), 
+auc(actual = ifelse(credit_Test$default == "yes", 1, 0), 
     predicted = pred[,"yes"])
 ```
 
@@ -210,18 +236,18 @@ ____________
   * Note that (unfortunately) the `tuneRF()` interface does not support the           typical formula input that we've been using, but instead uses two arguments,      `x` (matrix or data frame of predictor variables) and `y` (response vector;       must be a factor for classification).
 * The `tuneRF()` function has an argument, `ntreeTry` that defaults to 50 trees. Set `nTreeTry = 500` to train a random forest model of the same size as you previously did.
 
-```{r}
+```{r comment=NA}
 # Execute the tuning process
 set.seed(1)              
-res <- tuneRF(x = subset(credit_train, select = -default),
-              y = credit_train$default,
+res <- tuneRF(x = subset(credit_Train, select = -default),
+              y = credit_Train$default,
               ntreeTry = 500)
 ```
 
 * After tuning the forest, this function will also plot model performance (OOB error) as a function of the `mtry` values that were evaluated.
   * Keep in mind that if we want to evaluate the model based on AUC instead of        error (accuracy), then this is not the best way to tune a model, as the           selection only considers (OOB) error.
   
-```{r}
+```{r comment=NA}
 # Look at results
 print(res)
 
@@ -247,9 +273,9 @@ ______________
 
 ```{r}
 # Establish a list of possible values for mtry, nodesize and sampsize
-mtry <- seq(4, ncol(credit_train) * 0.8, 2)
+mtry <- seq(4, ncol(credit_Train) * 0.8, 2)
 nodesize <- seq(3, 8, 2)
-sampsize <- nrow(credit_train) * c(0.7, 0.8)
+sampsize <- nrow(credit_Train) * c(0.7, 0.8)
 
 # Create a data frame containing all combinations 
 hyper_grid <- expand.grid(mtry = mtry, nodesize = nodesize, sampsize = sampsize)
@@ -266,7 +292,7 @@ for (i in 1:nrow(hyper_grid)) {
 
     # Train a Random Forest model
     model <- randomForest(formula = default ~ ., 
-                          data = credit_train,
+                          data = credit_Train,
                           mtry = hyper_grid$mtry[i],
                           nodesize = hyper_grid$nodesize[i],
                           sampsize = hyper_grid$sampsize[i])
@@ -278,7 +304,7 @@ for (i in 1:nrow(hyper_grid)) {
 
 * Print the set of hyperparameters which produced the best model.
 
-```{r}
+```{r comment=NA}
 # Identify optimal set of hyperparmeters based on OOB error
 opt_i <- which.min(oob_err)
 print(hyper_grid[opt_i,])

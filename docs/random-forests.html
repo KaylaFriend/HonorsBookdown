@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Random Forests | Tree-Based Models</title>
+  <meta name="description" content="Bookdown based on the datacamp course Tree-Based Models in R. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Random Forests | Tree-Based Models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bookdown based on the datacamp course Tree-Based Models in R. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Random Forests | Tree-Based Models" />
+  
+  <meta name="twitter:description" content="Bookdown based on the datacamp course Tree-Based Models in R. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Kayla Friend" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bagged-trees.html"/>
+<link rel="next" href="boosted-trees.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="classification-trees.html"><a href="classification-trees.html"><i class="fa fa-check"></i><b>2</b> Classification Trees</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#welcome-to-the-course"><i class="fa fa-check"></i>Welcome to the Course</a></li>
+<li class="chapter" data-level="2.1" data-path="classification-trees.html"><a href="classification-trees.html#build-a-classification-tree"><i class="fa fa-check"></i><b>2.1</b> Build a Classification Tree</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="classification-trees.html"><a href="classification-trees.html#introduction-to-classification-trees"><i class="fa fa-check"></i><b>2.2</b> Introduction to Classification Trees</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="classification-trees.html"><a href="classification-trees.html#advantages-of-tree-based-methods"><i class="fa fa-check"></i><b>2.2.1</b> Advantages of Tree-Based Methods</a></li>
+<li class="chapter" data-level="2.2.2" data-path="classification-trees.html"><a href="classification-trees.html#prediction-with-a-classification-tree"><i class="fa fa-check"></i><b>2.2.2</b> Prediction with a Classification Tree</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="classification-trees.html"><a href="classification-trees.html#overview-of-the-modelling-process"><i class="fa fa-check"></i><b>2.3</b> Overview of the Modelling Process</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="classification-trees.html"><a href="classification-trees.html#traintest-split"><i class="fa fa-check"></i><b>2.3.1</b> Train/Test Split</a></li>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-1"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="2.3.2" data-path="classification-trees.html"><a href="classification-trees.html#train-a-classification-tree"><i class="fa fa-check"></i><b>2.3.2</b> Train a Classification Tree</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="classification-trees.html"><a href="classification-trees.html#evaluating-classification-model-performance"><i class="fa fa-check"></i><b>2.4</b> Evaluating Classification Model Performance</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="classification-trees.html"><a href="classification-trees.html#compute-confusion-matrix"><i class="fa fa-check"></i><b>2.4.1</b> Compute confusion matrix</a></li>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-2"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="classification-trees.html"><a href="classification-trees.html#use-of-splitting-criterion-in-trees"><i class="fa fa-check"></i><b>2.5</b> Use of Splitting Criterion in Trees</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="classification-trees.html"><a href="classification-trees.html#compare-models-with-a-different-splitting-criterion"><i class="fa fa-check"></i><b>2.5.1</b> Compare models with a different splitting criterion</a></li>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-3"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>3</b> Regression Trees</a><ul>
+<li class="chapter" data-level="3.1" data-path="regression-trees.html"><a href="regression-trees.html#introduction-to-regression-trees"><i class="fa fa-check"></i><b>3.1</b> Introduction to Regression Trees</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="regression-trees.html"><a href="regression-trees.html#classification-vs.-regression"><i class="fa fa-check"></i><b>3.1.1</b> Classification vs. regression</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="regression-trees.html"><a href="regression-trees.html#split-the-data"><i class="fa fa-check"></i><b>3.2</b> Split the data</a><ul>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-4"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="regression-trees.html"><a href="regression-trees.html#train-a-regression-tree-model"><i class="fa fa-check"></i><b>3.3</b> Train a regression tree model</a><ul>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-5"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="regression-trees.html"><a href="regression-trees.html#performance-metrics-for-regression"><i class="fa fa-check"></i><b>3.4</b> Performance Metrics for Regression</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="regression-trees.html"><a href="regression-trees.html#evaluate-a-regression-tree-model"><i class="fa fa-check"></i><b>3.4.1</b> Evaluate a regression tree model</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-6"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="regression-trees.html"><a href="regression-trees.html#what-are-the-hyperparameters-for-a-decision-tree"><i class="fa fa-check"></i><b>3.5</b> What are the Hyperparameters for a Decision Tree?</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="regression-trees.html"><a href="regression-trees.html#tuning-the-model"><i class="fa fa-check"></i><b>3.5.1</b> Tuning the Model</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-7"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="regression-trees.html"><a href="regression-trees.html#grid-search-for-model-selection"><i class="fa fa-check"></i><b>3.6</b> Grid Search for Model Selection</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="regression-trees.html"><a href="regression-trees.html#generate-a-grid-of-hyperparameter-values"><i class="fa fa-check"></i><b>3.6.1</b> Generate a grid of hyperparameter values</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-8"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="3.6.2" data-path="regression-trees.html"><a href="regression-trees.html#generate-a-grid-of-models"><i class="fa fa-check"></i><b>3.6.2</b> Generate a grid of models</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-9"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="3.6.3" data-path="regression-trees.html"><a href="regression-trees.html#evaluate-the-grid"><i class="fa fa-check"></i><b>3.6.3</b> Evaluate the grid</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-10"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>4</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="4.1" data-path="bagged-trees.html"><a href="bagged-trees.html#introduction-to-bagged-trees"><i class="fa fa-check"></i><b>4.1</b> Introduction to Bagged Trees</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="bagged-trees.html"><a href="bagged-trees.html#advantages-of-bagged-trees"><i class="fa fa-check"></i><b>4.1.1</b> Advantages of bagged trees</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="bagged-trees.html"><a href="bagged-trees.html#train-a-bagged-tree-model"><i class="fa fa-check"></i><b>4.2</b> Train a Bagged Tree Model</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-11"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="bagged-trees.html"><a href="bagged-trees.html#evaluating-the-bagged-tree-performance"><i class="fa fa-check"></i><b>4.3</b> Evaluating the Bagged Tree Performance</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="bagged-trees.html"><a href="bagged-trees.html#prediction-and-confusion-matrix"><i class="fa fa-check"></i><b>4.3.1</b> Prediction and confusion matrix</a></li>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-12"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="4.3.2" data-path="bagged-trees.html"><a href="bagged-trees.html#predict-on-a-test-set-and-compute-auc"><i class="fa fa-check"></i><b>4.3.2</b> Predict on a Test Set and Compute AUC</a></li>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-13"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bagged-trees.html"><a href="bagged-trees.html#using-caret-for-cross-validating-models"><i class="fa fa-check"></i><b>4.4</b> Using <code>caret</code> for Cross-Validating Models</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="bagged-trees.html"><a href="bagged-trees.html#cross-validate-a-bagged-tree-model-in-caret"><i class="fa fa-check"></i><b>4.4.1</b> Cross-validate a bagged tree model in caret</a></li>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-14"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="4.4.2" data-path="bagged-trees.html"><a href="bagged-trees.html#generate-predictions-from-the-caret-model"><i class="fa fa-check"></i><b>4.4.2</b> Generate predictions from the caret model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="bagged-trees.html"><a href="bagged-trees.html#compare-test-set-performance-to-cv-performance"><i class="fa fa-check"></i><b>4.5</b> Compare test set performance to CV performance</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-15"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>5</b> Random Forests</a><ul>
+<li class="chapter" data-level="5.1" data-path="random-forests.html"><a href="random-forests.html#introduction-to-random-forests"><i class="fa fa-check"></i><b>5.1</b> Introduction to Random Forests</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="random-forests.html"><a href="random-forests.html#bagged-trees-vs.-random-forest"><i class="fa fa-check"></i><b>5.1.1</b> Bagged trees vs. Random Forest</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="random-forests.html"><a href="random-forests.html#train-a-random-forest-model"><i class="fa fa-check"></i><b>5.2</b> Train a Random Forest model</a><ul>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-16"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="random-forests.html"><a href="random-forests.html#understanding-random-forest-model-output"><i class="fa fa-check"></i><b>5.3</b> Understanding Random Forest Model Output</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="random-forests.html"><a href="random-forests.html#evaluate-out-of-bag-error"><i class="fa fa-check"></i><b>5.3.1</b> Evaluate out-of-bag error</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-17"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="5.3.2" data-path="random-forests.html"><a href="random-forests.html#evaluate-model-performance-on-a-test-set"><i class="fa fa-check"></i><b>5.3.2</b> Evaluate model performance on a test set</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-18"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="random-forests.html"><a href="random-forests.html#oob-error-vs.-test-set-error"><i class="fa fa-check"></i><b>5.4</b> OOB Error vs. Test Set Error</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="random-forests.html"><a href="random-forests.html#advantage-of-oob-error"><i class="fa fa-check"></i><b>5.4.1</b> Advantage of OOB error</a></li>
+<li class="chapter" data-level="5.4.2" data-path="random-forests.html"><a href="random-forests.html#evaluate-test-set-auc"><i class="fa fa-check"></i><b>5.4.2</b> Evaluate Test Set AUC</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-19"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="random-forests.html"><a href="random-forests.html#tuning-a-random-forest-model"><i class="fa fa-check"></i><b>5.5</b> Tuning a Random Forest Model</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="random-forests.html"><a href="random-forests.html#tuning-a-random-forest-via-mtry"><i class="fa fa-check"></i><b>5.5.1</b> Tuning a Random Forest via mtry</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-20"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="5.5.2" data-path="random-forests.html"><a href="random-forests.html#tuning-a-random-forest-via-tree-depth"><i class="fa fa-check"></i><b>5.5.2</b> Tuning a Random Forest via tree depth</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-21"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="boosted-trees.html"><a href="boosted-trees.html"><i class="fa fa-check"></i><b>6</b> Boosted Trees</a><ul>
+<li class="chapter" data-level="6.1" data-path="boosted-trees.html"><a href="boosted-trees.html#introduction-to-boosting"><i class="fa fa-check"></i><b>6.1</b> Introduction to Boosting</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="boosted-trees.html"><a href="boosted-trees.html#bagged-trees-vs.-boosted-trees"><i class="fa fa-check"></i><b>6.1.1</b> Bagged trees vs. boosted trees</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="boosted-trees.html"><a href="boosted-trees.html#train-a-gbm-model"><i class="fa fa-check"></i><b>6.2</b> Train a GBM Model</a><ul>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-22"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="boosted-trees.html"><a href="boosted-trees.html#understanding-gbm-model-output"><i class="fa fa-check"></i><b>6.3</b> Understanding GBM Model Output</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="boosted-trees.html"><a href="boosted-trees.html#prediction-using-a-gbm-model"><i class="fa fa-check"></i><b>6.3.1</b> Prediction using a GBM model</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-23"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="6.3.2" data-path="boosted-trees.html"><a href="boosted-trees.html#evaluate-test-set-auc-1"><i class="fa fa-check"></i><b>6.3.2</b> Evaluate test set AUC</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-24"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="boosted-trees.html"><a href="boosted-trees.html#gbm-hyperparameters"><i class="fa fa-check"></i><b>6.4</b> GBM Hyperparameters</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="boosted-trees.html"><a href="boosted-trees.html#early-stopping-in-gbms"><i class="fa fa-check"></i><b>6.4.1</b> Early Stopping in GBMs</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-25"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="6.4.2" data-path="boosted-trees.html"><a href="boosted-trees.html#oob-vs-cv-based-early-stopping"><i class="fa fa-check"></i><b>6.4.2</b> OOB vs CV-Based Early Stopping</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-26"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="boosted-trees.html"><a href="boosted-trees.html#model-comparison-via-roc-curve-auc"><i class="fa fa-check"></i><b>6.5</b> Model Comparison via ROC Curve &amp; AUC</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="boosted-trees.html"><a href="boosted-trees.html#compare-all-models-based-on-auc"><i class="fa fa-check"></i><b>6.5.1</b> Compare All Models Based on AUC</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-27"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="6.5.2" data-path="boosted-trees.html"><a href="boosted-trees.html#plot-compare-roc-curves"><i class="fa fa-check"></i><b>6.5.2</b> Plot &amp; Compare ROC Curves</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-28"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><a href="https://learn.datacamp.com/courses/tree-based-models-in-r">Tree-Based Models</a></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="random-forests" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Random Forests</h1>
+<div id="introduction-to-random-forests" class="section level2">
+<h2><span class="header-section-number">5.1</span> Introduction to Random Forests</h2>
+<iframe src="https://drive.google.com/file/d/1phMANteaur-rlsCADNKrEt-ncKLYQSWj/preview" width="640" height="480">
+</iframe>
+<hr />
+<div id="bagged-trees-vs.-random-forest" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Bagged trees vs. Random Forest</h3>
+<p>What is the main difference between bagged trees and the Random Forest algorithm?</p>
+<ul>
+<li><p>In Random Forest, the decision trees are trained on a random subset of the rows, but in bagging, they use all the rows.</p></li>
+<li><p><strong>In Random Forest, only a subset of features are selected at random at each split in a decision tree. In bagging, all features are used.</strong></p></li>
+<li><p>In Random Forest, there is randomness. In bagging, there is no randomness.</p></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="train-a-random-forest-model" class="section level2">
+<h2><span class="header-section-number">5.2</span> Train a Random Forest model</h2>
+<p>Here you will use the <code>randomForest()</code> function from the <strong>randomForest</strong> package to train a Random Forest classifier to predict loan default.</p>
+<hr />
+<div id="exercise-16" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<p>The <code>credit_train</code> and <code>credit_test</code> datasets (from Chapter 1 &amp; 3) are already loaded in the workspace.</p>
+<ul>
+<li>Use the <code>randomForest::randomForest()</code> function to train a Random Forest model on the <code>credit_train</code> dataset.</li>
+</ul>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="random-forests.html#cb82-1"></a><span class="co"># Train a Random Forest</span></span>
+<span id="cb82-2"><a href="random-forests.html#cb82-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb82-3"><a href="random-forests.html#cb82-3"></a>credit_model &lt;-<span class="st"> </span><span class="kw">randomForest</span>(default <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb82-4"><a href="random-forests.html#cb82-4"></a>                             credit_Train)</span></code></pre></div>
+<ul>
+<li><p>The formula used to define the model is the same as in previous chapters – we want to predict “default” as a function of all the other columns in the training set.</p></li>
+<li><p>Inspect the model output.</p></li>
+</ul>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="random-forests.html#cb83-1"></a><span class="co"># Print the model output                             </span></span>
+<span id="cb83-2"><a href="random-forests.html#cb83-2"></a><span class="kw">print</span>(credit_model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+##  randomForest(formula = default ~ ., data = credit_Train) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 4
+## 
+##         OOB estimate of  error rate: 24.12%
+## Confusion matrix:
+##      no yes class.error
+## no  527  43   0.0754386
+## yes 150  80   0.6521739</code></pre>
+<hr />
+</div>
+</div>
+<div id="understanding-random-forest-model-output" class="section level2">
+<h2><span class="header-section-number">5.3</span> Understanding Random Forest Model Output</h2>
+<iframe src="https://drive.google.com/file/d/1nzJGmi-4ykBBuM4UyUvVvZYBnQ1F94Nv/preview" width="640" height="480">
+</iframe>
+<hr />
+<div id="evaluate-out-of-bag-error" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Evaluate out-of-bag error</h3>
+<p>Here you will plot the OOB error as a function of the number of trees trained, and extract the final OOB error of the Random Forest model from the trained model object.</p>
+<hr />
+</div>
+<div id="exercise-17" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<p>The <code>credit_model</code> trained in the previous exercise is loaded in the workspace.</p>
+<ul>
+<li>Get the OOB error rate for the Random Forest model.</li>
+</ul>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="random-forests.html#cb85-1"></a><span class="co"># Grab OOB error matrix &amp; take a look</span></span>
+<span id="cb85-2"><a href="random-forests.html#cb85-2"></a>err &lt;-<span class="st"> </span>credit_model<span class="op">$</span>err.rate</span>
+<span id="cb85-3"><a href="random-forests.html#cb85-3"></a><span class="kw">head</span>(err)</span></code></pre></div>
+<pre><code>           OOB        no       yes
+[1,] 0.3170732 0.2150000 0.5517241
+[2,] 0.3525641 0.2400000 0.6083916
+[3,] 0.3310924 0.2091346 0.6145251
+[4,] 0.3333333 0.2154812 0.6192893
+[5,] 0.3264746 0.1992263 0.6367925
+[6,] 0.3040000 0.1872659 0.5925926</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="random-forests.html#cb87-1"></a><span class="co"># Look at final OOB error rate (last row in err matrix)</span></span>
+<span id="cb87-2"><a href="random-forests.html#cb87-2"></a>oob_err &lt;-<span class="st"> </span>err[<span class="dv">500</span>, <span class="st">&quot;OOB&quot;</span>]</span>
+<span id="cb87-3"><a href="random-forests.html#cb87-3"></a><span class="kw">print</span>(oob_err)</span></code></pre></div>
+<pre><code>    OOB 
+0.24125 </code></pre>
+<ul>
+<li>Plot the OOB error rate against the number of trees in the forest.</li>
+</ul>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="random-forests.html#cb89-1"></a><span class="co"># Plot the model trained in the previous exercise</span></span>
+<span id="cb89-2"><a href="random-forests.html#cb89-2"></a><span class="kw">plot</span>(credit_model)</span>
+<span id="cb89-3"><a href="random-forests.html#cb89-3"></a></span>
+<span id="cb89-4"><a href="random-forests.html#cb89-4"></a><span class="co"># Add a legend since it doesn&#39;t have one by default</span></span>
+<span id="cb89-5"><a href="random-forests.html#cb89-5"></a><span class="kw">legend</span>(<span class="dt">x =</span> <span class="st">&quot;right&quot;</span>, </span>
+<span id="cb89-6"><a href="random-forests.html#cb89-6"></a>       <span class="dt">legend =</span> <span class="kw">colnames</span>(err),</span>
+<span id="cb89-7"><a href="random-forests.html#cb89-7"></a>       <span class="dt">fill =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(err))</span></code></pre></div>
+<p><img src="HonorsBookdown_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="evaluate-model-performance-on-a-test-set" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> Evaluate model performance on a test set</h3>
+<p>Use the <code>caret::confusionMatrix()</code> function to compute test set accuracy and generate a confusion matrix. Compare the test set accuracy to the OOB accuracy.</p>
+<hr />
+</div>
+<div id="exercise-18" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<ul>
+<li>Generate class predictions for the <code>credit_test</code> data frame using the <code>credit_model</code> object.</li>
+</ul>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="random-forests.html#cb90-1"></a><span class="co"># Generate predicted classes using the model object</span></span>
+<span id="cb90-2"><a href="random-forests.html#cb90-2"></a>class_prediction &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> credit_model,   <span class="co"># model object </span></span>
+<span id="cb90-3"><a href="random-forests.html#cb90-3"></a>                            <span class="dt">newdata =</span> credit_Test,  <span class="co"># test dataset</span></span>
+<span id="cb90-4"><a href="random-forests.html#cb90-4"></a>                            <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>) <span class="co"># return classification labels</span></span></code></pre></div>
+<ul>
+<li>Using the <code>caret::confusionMatrix()</code> function, compute the confusion matrix for the test set.</li>
+</ul>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="random-forests.html#cb91-1"></a><span class="co"># Calculate the confusion matrix for the test set</span></span>
+<span id="cb91-2"><a href="random-forests.html#cb91-2"></a>cm &lt;-<span class="st"> </span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> class_prediction,       <span class="co"># predicted classes</span></span>
+<span id="cb91-3"><a href="random-forests.html#cb91-3"></a>                      <span class="dt">reference =</span> credit_Test<span class="op">$</span>default)  <span class="co"># actual classes</span></span>
+<span id="cb91-4"><a href="random-forests.html#cb91-4"></a><span class="kw">print</span>(cm)</span></code></pre></div>
+<pre><code>Confusion Matrix and Statistics
+
+          Reference
+Prediction  no yes
+       no  123  40
+       yes   7  30
+                                       
+               Accuracy : 0.765        
+                 95% CI : (0.7, 0.8219)
+    No Information Rate : 0.65         
+    P-Value [Acc &gt; NIR] : 0.0002983    
+                                       
+                  Kappa : 0.4205       
+                                       
+ Mcnemar&#39;s Test P-Value : 3.046e-06    
+                                       
+            Sensitivity : 0.9462       
+            Specificity : 0.4286       
+         Pos Pred Value : 0.7546       
+         Neg Pred Value : 0.8108       
+             Prevalence : 0.6500       
+         Detection Rate : 0.6150       
+   Detection Prevalence : 0.8150       
+      Balanced Accuracy : 0.6874       
+                                       
+       &#39;Positive&#39; Class : no           
+                                       </code></pre>
+<ul>
+<li>Compare the test set accuracy reported from the confusion matrix to the OOB accuracy. The OOB error is stored in <code>oob_err</code>, which is already in your workspace, and so OOB accuracy is just <code>1 - oob_err</code>.</li>
+</ul>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="random-forests.html#cb93-1"></a><span class="co"># Compare test set accuracy to OOB accuracy</span></span>
+<span id="cb93-2"><a href="random-forests.html#cb93-2"></a><span class="kw">paste0</span>(<span class="st">&quot;Test Accuracy: &quot;</span>, cm<span class="op">$</span>overall[<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>[1] &quot;Test Accuracy: 0.765&quot;</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="random-forests.html#cb95-1"></a><span class="kw">paste0</span>(<span class="st">&quot;OOB Accuracy: &quot;</span>, <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>oob_err)</span></code></pre></div>
+<pre><code>[1] &quot;OOB Accuracy: 0.75875&quot;</code></pre>
+<hr />
+</div>
+</div>
+<div id="oob-error-vs.-test-set-error" class="section level2">
+<h2><span class="header-section-number">5.4</span> OOB Error vs. Test Set Error</h2>
+<iframe src="https://drive.google.com/file/d/1g08rV8Tzr5VhimAPIv6B0lnWuIGsfNE5/preview" width="640" height="480">
+</iframe>
+<hr />
+<div id="advantage-of-oob-error" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Advantage of OOB error</h3>
+<p>What is the main advantage of using OOB error instead of validation or test error?</p>
+<ul>
+<li><p>Tuning the model hyperparameters using OOB error will lead to a better model.</p></li>
+<li><p><strong>If you evaluate your model using OOB error, then you don’t need to create a separate test set.</strong></p></li>
+<li><p>OOB error is more accurate than test set error.</p></li>
+</ul>
+<hr />
+</div>
+<div id="evaluate-test-set-auc" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Evaluate Test Set AUC</h3>
+<p>In Chapter 3, we learned about the <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve">AUC</a> metric for evaluating binary classification models. In this exercise, you will compute test set AUC for the Random Forest model.</p>
+<hr />
+</div>
+<div id="exercise-19" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<ul>
+<li>Use the <code>predict()</code> function with <code>type = "prob"</code> to generate numeric predictions on the <code>credit_test</code> dataset.</li>
+</ul>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="random-forests.html#cb97-1"></a><span class="co"># Generate predictions on the test set</span></span>
+<span id="cb97-2"><a href="random-forests.html#cb97-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> credit_model, </span>
+<span id="cb97-3"><a href="random-forests.html#cb97-3"></a>                <span class="dt">newdata =</span> credit_Test,</span>
+<span id="cb97-4"><a href="random-forests.html#cb97-4"></a>                <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb97-5"><a href="random-forests.html#cb97-5"></a></span>
+<span id="cb97-6"><a href="random-forests.html#cb97-6"></a><span class="co"># `pred` is a matrix</span></span>
+<span id="cb97-7"><a href="random-forests.html#cb97-7"></a><span class="kw">class</span>(pred)</span></code></pre></div>
+<pre><code>[1] &quot;matrix&quot; &quot;votes&quot; </code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="random-forests.html#cb99-1"></a><span class="co"># Look at the pred format</span></span>
+<span id="cb99-2"><a href="random-forests.html#cb99-2"></a><span class="kw">head</span>(pred) </span></code></pre></div>
+<pre><code>      no   yes
+1  0.904 0.096
+3  0.902 0.098
+7  1.000 0.000
+9  0.970 0.030
+12 0.216 0.784
+22 0.826 0.174</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="random-forests.html#cb101-1"></a>credit_Model &lt;-<span class="st"> </span><span class="kw">randomForest</span>(default <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb101-2"><a href="random-forests.html#cb101-2"></a>                             credit_Train)</span>
+<span id="cb101-3"><a href="random-forests.html#cb101-3"></a>rf_preds &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> credit_Model, </span>
+<span id="cb101-4"><a href="random-forests.html#cb101-4"></a>                <span class="dt">newdata =</span> credit_Test)</span></code></pre></div>
+<ul>
+<li>Compute the AUC using the <code>auc()</code> function from the <strong>Metrics</strong> package.</li>
+</ul>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="random-forests.html#cb102-1"></a><span class="co"># Compute the AUC (`actual` must be a binary 1/0 numeric vector)</span></span>
+<span id="cb102-2"><a href="random-forests.html#cb102-2"></a><span class="kw">auc</span>(<span class="dt">actual =</span> <span class="kw">ifelse</span>(credit_Test<span class="op">$</span>default <span class="op">==</span><span class="st"> &quot;yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb102-3"><a href="random-forests.html#cb102-3"></a>    <span class="dt">predicted =</span> pred[,<span class="st">&quot;yes&quot;</span>])</span></code></pre></div>
+<pre><code>[1] 0.8187363</code></pre>
+<hr />
+</div>
+</div>
+<div id="tuning-a-random-forest-model" class="section level2">
+<h2><span class="header-section-number">5.5</span> Tuning a Random Forest Model</h2>
+<iframe src="https://drive.google.com/file/d/1fRnfgVML4fdzTDHEgydmxaEBp5A9noq7/preview" width="640" height="480">
+</iframe>
+<hr />
+<div id="tuning-a-random-forest-via-mtry" class="section level3">
+<h3><span class="header-section-number">5.5.1</span> Tuning a Random Forest via mtry</h3>
+<p>In this exercise, you will use the <code>randomForest::tuneRF()</code> to tune <code>mtry</code> (by training several models). This function is a specific utility to tune the <code>mtry</code> parameter based on OOB error, which is helpful when you want a quick &amp; easy way to tune your model. A more generic way of tuning Random Forest parameters will be presented in the following exercise.</p>
+<hr />
+</div>
+<div id="exercise-20" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<ul>
+<li>Use the <code>tuneRF()</code> function in place of the <code>randomForest()</code> function to train a series of models with different <code>mtry</code> values and examine the the results.
+<ul>
+<li>Note that (unfortunately) the <code>tuneRF()</code> interface does not support the typical formula input that we’ve been using, but instead uses two arguments, <code>x</code> (matrix or data frame of predictor variables) and <code>y</code> (response vector; must be a factor for classification).</li>
+</ul></li>
+<li>The <code>tuneRF()</code> function has an argument, <code>ntreeTry</code> that defaults to 50 trees. Set <code>nTreeTry = 500</code> to train a random forest model of the same size as you previously did.</li>
+</ul>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="random-forests.html#cb104-1"></a><span class="co"># Execute the tuning process</span></span>
+<span id="cb104-2"><a href="random-forests.html#cb104-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)              </span>
+<span id="cb104-3"><a href="random-forests.html#cb104-3"></a>res &lt;-<span class="st"> </span><span class="kw">tuneRF</span>(<span class="dt">x =</span> <span class="kw">subset</span>(credit_Train, <span class="dt">select =</span> <span class="op">-</span>default),</span>
+<span id="cb104-4"><a href="random-forests.html#cb104-4"></a>              <span class="dt">y =</span> credit_Train<span class="op">$</span>default,</span>
+<span id="cb104-5"><a href="random-forests.html#cb104-5"></a>              <span class="dt">ntreeTry =</span> <span class="dv">500</span>)</span></code></pre></div>
+<pre><code>mtry = 4  OOB error = 24.12% 
+Searching left ...
+mtry = 2    OOB error = 23.88% 
+0.01036269 0.05 
+Searching right ...
+mtry = 8    OOB error = 23.62% 
+0.02072539 0.05 </code></pre>
+<p><img src="HonorsBookdown_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<ul>
+<li>After tuning the forest, this function will also plot model performance (OOB error) as a function of the <code>mtry</code> values that were evaluated.
+<ul>
+<li>Keep in mind that if we want to evaluate the model based on AUC instead of error (accuracy), then this is not the best way to tune a model, as the selection only considers (OOB) error.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="random-forests.html#cb106-1"></a><span class="co"># Look at results</span></span>
+<span id="cb106-2"><a href="random-forests.html#cb106-2"></a><span class="kw">print</span>(res)</span></code></pre></div>
+<pre><code>      mtry OOBError
+2.OOB    2  0.23875
+4.OOB    4  0.24125
+8.OOB    8  0.23625</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="random-forests.html#cb108-1"></a><span class="co"># Find the mtry value that minimizes OOB Error</span></span>
+<span id="cb108-2"><a href="random-forests.html#cb108-2"></a>mtry_opt &lt;-<span class="st"> </span>res[,<span class="st">&quot;mtry&quot;</span>][<span class="kw">which.min</span>(res[,<span class="st">&quot;OOBError&quot;</span>])]</span>
+<span id="cb108-3"><a href="random-forests.html#cb108-3"></a><span class="kw">print</span>(mtry_opt)</span></code></pre></div>
+<pre><code>8.OOB 
+    8 </code></pre>
+<hr />
+</div>
+<div id="tuning-a-random-forest-via-tree-depth" class="section level3">
+<h3><span class="header-section-number">5.5.2</span> Tuning a Random Forest via tree depth</h3>
+<p>In Chapter 2, we created a manual grid of hyperparameters using the <code>expand.grid()</code> function and wrote code that trained and evaluated the models of the grid in a loop. In this exercise, you will create a grid of <code>mtry</code>, <code>nodesize</code> and <code>sampsize</code> values. In this example, we will identify the “best model” based on OOB error. The best model is defined as the model from our grid which minimizes OOB error.</p>
+<p>Keep in mind that there are other ways to select a best model from a grid, such as choosing the best model based on validation AUC. However, for this exercise, we will use the built-in OOB error calculations instead of using a separate validation set.</p>
+<hr />
+</div>
+<div id="exercise-21" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<ul>
+<li>Create a grid of <code>mtry</code>, <code>nodesize</code> and <code>sampsize</code> values.</li>
+</ul>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="random-forests.html#cb110-1"></a><span class="co"># Establish a list of possible values for mtry, nodesize and sampsize</span></span>
+<span id="cb110-2"><a href="random-forests.html#cb110-2"></a>mtry &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">4</span>, <span class="kw">ncol</span>(credit_Train) <span class="op">*</span><span class="st"> </span><span class="fl">0.8</span>, <span class="dv">2</span>)</span>
+<span id="cb110-3"><a href="random-forests.html#cb110-3"></a>nodesize &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">2</span>)</span>
+<span id="cb110-4"><a href="random-forests.html#cb110-4"></a>sampsize &lt;-<span class="st"> </span><span class="kw">nrow</span>(credit_Train) <span class="op">*</span><span class="st"> </span><span class="kw">c</span>(<span class="fl">0.7</span>, <span class="fl">0.8</span>)</span>
+<span id="cb110-5"><a href="random-forests.html#cb110-5"></a></span>
+<span id="cb110-6"><a href="random-forests.html#cb110-6"></a><span class="co"># Create a data frame containing all combinations </span></span>
+<span id="cb110-7"><a href="random-forests.html#cb110-7"></a>hyper_grid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">mtry =</span> mtry, <span class="dt">nodesize =</span> nodesize, <span class="dt">sampsize =</span> sampsize)</span>
+<span id="cb110-8"><a href="random-forests.html#cb110-8"></a></span>
+<span id="cb110-9"><a href="random-forests.html#cb110-9"></a><span class="co"># Create an empty vector to store OOB error values</span></span>
+<span id="cb110-10"><a href="random-forests.html#cb110-10"></a>oob_err &lt;-<span class="st"> </span><span class="kw">c</span>()</span></code></pre></div>
+<ul>
+<li>Write a simple loop to train all the models and choose the best one based on OOB error.</li>
+</ul>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="random-forests.html#cb111-1"></a><span class="co"># Write a loop over the rows of hyper_grid to train the grid of models</span></span>
+<span id="cb111-2"><a href="random-forests.html#cb111-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(hyper_grid)) {</span>
+<span id="cb111-3"><a href="random-forests.html#cb111-3"></a></span>
+<span id="cb111-4"><a href="random-forests.html#cb111-4"></a>    <span class="co"># Train a Random Forest model</span></span>
+<span id="cb111-5"><a href="random-forests.html#cb111-5"></a>    model &lt;-<span class="st"> </span><span class="kw">randomForest</span>(<span class="dt">formula =</span> default <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb111-6"><a href="random-forests.html#cb111-6"></a>                          <span class="dt">data =</span> credit_Train,</span>
+<span id="cb111-7"><a href="random-forests.html#cb111-7"></a>                          <span class="dt">mtry =</span> hyper_grid<span class="op">$</span>mtry[i],</span>
+<span id="cb111-8"><a href="random-forests.html#cb111-8"></a>                          <span class="dt">nodesize =</span> hyper_grid<span class="op">$</span>nodesize[i],</span>
+<span id="cb111-9"><a href="random-forests.html#cb111-9"></a>                          <span class="dt">sampsize =</span> hyper_grid<span class="op">$</span>sampsize[i])</span>
+<span id="cb111-10"><a href="random-forests.html#cb111-10"></a>                          </span>
+<span id="cb111-11"><a href="random-forests.html#cb111-11"></a>    <span class="co"># Store OOB error for the model                      </span></span>
+<span id="cb111-12"><a href="random-forests.html#cb111-12"></a>    oob_err[i] &lt;-<span class="st"> </span>model<span class="op">$</span>err.rate[<span class="kw">nrow</span>(model<span class="op">$</span>err.rate), <span class="st">&quot;OOB&quot;</span>]</span>
+<span id="cb111-13"><a href="random-forests.html#cb111-13"></a>}</span></code></pre></div>
+<ul>
+<li>Print the set of hyperparameters which produced the best model.</li>
+</ul>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="random-forests.html#cb112-1"></a><span class="co"># Identify optimal set of hyperparmeters based on OOB error</span></span>
+<span id="cb112-2"><a href="random-forests.html#cb112-2"></a>opt_i &lt;-<span class="st"> </span><span class="kw">which.min</span>(oob_err)</span>
+<span id="cb112-3"><a href="random-forests.html#cb112-3"></a><span class="kw">print</span>(hyper_grid[opt_i,])</span></code></pre></div>
+<pre><code>  mtry nodesize sampsize
+2    6        3      560</code></pre>
+<hr />
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bagged-trees.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="boosted-trees.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["HonorsBookdown.pdf", "HonorsBookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

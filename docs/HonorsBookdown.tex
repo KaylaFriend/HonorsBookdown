@@ -113,7 +113,7 @@
 
 \title{\href{https://learn.datacamp.com/courses/tree-based-models-in-r}{Tree-Based Models}}
 \author{\href{https://kaylafriend.github.io/}{Kayla Friend}}
-\date{Last compiled: Apr 06, 2021}
+\date{Last compiled: May 06, 2021}
 
 \begin{document}
 \maketitle
@@ -130,52 +130,14 @@ This material is from the \href{https://www.datacamp.com}{DataCamp} course \href
 \hypertarget{classification-trees}{%
 \chapter{Classification Trees}\label{classification-trees}}
 
-\begin{verbatim}
-## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-\end{verbatim}
-
-\begin{verbatim}
-## v ggplot2 3.3.3     v dplyr   1.0.5
-## v tibble  3.1.0     v stringr 1.4.0
-## v tidyr   1.1.3     v forcats 0.5.1
-## v purrr   0.3.4
-\end{verbatim}
-
-\begin{verbatim}
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   checking_balance = col_character(),
-##   months_loan_duration = col_double(),
-##   credit_history = col_character(),
-##   purpose = col_character(),
-##   amount = col_double(),
-##   savings_balance = col_character(),
-##   employment_duration = col_character(),
-##   percent_of_income = col_double(),
-##   years_at_residence = col_double(),
-##   age = col_double(),
-##   other_credit = col_character(),
-##   housing = col_character(),
-##   existing_loans_count = col_double(),
-##   job = col_character(),
-##   dependents = col_double(),
-##   phone = col_character(),
-##   default = col_character()
-## )
-\end{verbatim}
-
 \hypertarget{welcome-to-the-course}{%
 \section*{Welcome to the Course}\label{welcome-to-the-course}}
 \addcontentsline{toc}{section}{Welcome to the Course}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{build-a-classification-tree}{%
+\section{Build a Classification Tree}\label{build-a-classification-tree}}
 
 A classification tree is a decision tree that performs a classification (vs regression) task.\#\# Build a Classification Tree
 
@@ -206,12 +168,12 @@ The data frame \texttt{creditsub} is in the workspace. This data frame is a subs
 \end{Shaded}
 
 \begin{verbatim}
-## tibble[,5] [1,000 x 5] (S3: tbl_df/tbl/data.frame)
-##  $ months_loan_duration: num [1:1000] 6 48 12 42 24 36 24 36 12 30 ...
-##  $ percent_of_income   : num [1:1000] 4 2 2 2 3 2 3 2 2 4 ...
-##  $ years_at_residence  : num [1:1000] 4 2 3 4 4 4 4 2 4 2 ...
-##  $ age                 : num [1:1000] 67 22 49 45 53 35 53 35 61 28 ...
-##  $ default             : chr [1:1000] "no" "yes" "no" "no" ...
+tibble[,5] [1,000 x 5] (S3: tbl_df/tbl/data.frame)
+ $ months_loan_duration: num [1:1000] 6 48 12 42 24 36 24 36 12 30 ...
+ $ percent_of_income   : num [1:1000] 4 2 2 2 3 2 3 2 2 4 ...
+ $ years_at_residence  : num [1:1000] 4 2 3 4 4 4 4 2 4 2 ...
+ $ age                 : num [1:1000] 67 22 49 45 53 35 53 35 61 28 ...
+ $ default             : chr [1:1000] "no" "yes" "no" "no" ...
 \end{verbatim}
 
 \begin{itemize}
@@ -249,6 +211,9 @@ The data frame \texttt{creditsub} is in the workspace. This data frame is a subs
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
+\hypertarget{advantages-of-tree-based-methods}{%
+\subsection{Advantages of Tree-Based Methods}\label{advantages-of-tree-based-methods}}
+
 What are some advantages of using tree-based methods over other supervised learning methods?
 
 \begin{itemize}
@@ -266,7 +231,7 @@ What are some advantages of using tree-based methods over other supervised learn
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \hypertarget{prediction-with-a-classification-tree}{%
-\section{Prediction with a Classification Tree}\label{prediction-with-a-classification-tree}}
+\subsection{Prediction with a Classification Tree}\label{prediction-with-a-classification-tree}}
 
 Let's use the decision tree that you trained in the first exercise. The tree predicts whether a loan applicant will default on their loan (or not).
 
@@ -290,11 +255,14 @@ According to the model this person will default on their loan.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
+\hypertarget{traintest-split}{%
+\subsection{Train/Test Split}\label{traintest-split}}
+
+For this exercise, you'll randomly split the \href{}{German Credit Dataset} into two pieces: a training set (80\%) called \texttt{credit\_train} and a test set (20\%) that we will call \texttt{credit\_test}. We'll use these two sets throughout the chapter. The \texttt{credit} data frame is loaded into the workspace.
+
 \hypertarget{exercise-1}{%
 \subsection*{Exercise}\label{exercise-1}}
 \addcontentsline{toc}{subsection}{Exercise}
-
-For this exercise, you'll randomly split the \href{}{German Credit Dataset} into two pieces: a training set (80\%) called \texttt{credit\_train} and a test set (20\%) that we will call \texttt{credit\_test}. We'll use these two sets throughout the chapter. The \texttt{credit} data frame is loaded into the workspace.
 
 \begin{itemize}
 \tightlist
@@ -354,26 +322,2443 @@ For this exercise, you'll randomly split the \href{}{German Credit Dataset} into
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{methods}{%
-\chapter{Methods}\label{methods}}
+\hypertarget{train-a-classification-tree}{%
+\subsection{Train a Classification Tree}\label{train-a-classification-tree}}
 
-We describe our methods in this chapter.
+In this exercise, you will train a model on the newly created training set and print the model object to get a sense of the results.
 
-\hypertarget{applications}{%
-\chapter{Applications}\label{applications}}
+\begin{itemize}
+\tightlist
+\item
+  Train a classification tree using the \texttt{credit\_train} data frame.
+\end{itemize}
 
-Some \emph{significant} applications are demonstrated in this chapter.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Train the model (to predict 'default')}
+\NormalTok{credit_model <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ default }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                      \DataTypeTok{data =}\NormalTok{ credit_train, }
+                      \DataTypeTok{method =} \StringTok{"class"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{example-one}{%
-\section{Example one}\label{example-one}}
+\begin{itemize}
+\tightlist
+\item
+  Look at the model output by printing the model object.
+\end{itemize}
 
-\hypertarget{example-two}{%
-\section{Example two}\label{example-two}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Look at the model output                      }
+\KeywordTok{print}\NormalTok{(credit_model)}
+\end{Highlighting}
+\end{Shaded}
 
-\hypertarget{final-words}{%
-\chapter{Final Words}\label{final-words}}
+\begin{verbatim}
+n= 800 
 
-We have finished a nice book.
+node), split, n, loss, yval, (yprob)
+      * denotes terminal node
+
+  1) root 800 230 no (0.7125000 0.2875000)  
+    2) checking_balance=> 200 DM,unknown 365  48 no (0.8684932 0.1315068) *
+    3) checking_balance=< 0 DM,1 - 200 DM 435 182 no (0.5816092 0.4183908)  
+      6) months_loan_duration< 22.5 259  85 no (0.6718147 0.3281853)  
+       12) credit_history=critical,good,poor 235  68 no (0.7106383 0.2893617)  
+         24) months_loan_duration< 11.5 70  11 no (0.8428571 0.1571429) *
+         25) months_loan_duration>=11.5 165  57 no (0.6545455 0.3454545)  
+           50) amount>=1282 112  30 no (0.7321429 0.2678571) *
+           51) amount< 1282 53  26 yes (0.4905660 0.5094340)  
+            102) purpose=business,education,furniture/appliances 34  12 no (0.6470588 0.3529412) *
+            103) purpose=car,renovations 19   4 yes (0.2105263 0.7894737) *
+       13) credit_history=perfect,very good 24   7 yes (0.2916667 0.7083333) *
+      7) months_loan_duration>=22.5 176  79 yes (0.4488636 0.5511364)  
+       14) savings_balance=> 1000 DM,unknown 29   7 no (0.7586207 0.2413793) *
+       15) savings_balance=< 100 DM,100 - 500 DM,500 - 1000 DM 147  57 yes (0.3877551 0.6122449)  
+         30) months_loan_duration< 47.5 119  54 yes (0.4537815 0.5462185)  
+           60) amount>=2313.5 93  45 no (0.5161290 0.4838710)  
+            120) amount< 3026 19   5 no (0.7368421 0.2631579) *
+            121) amount>=3026 74  34 yes (0.4594595 0.5405405)  
+              242) percent_of_income< 2.5 38  15 no (0.6052632 0.3947368)  
+                484) purpose=business,car,education 23   6 no (0.7391304 0.2608696) *
+                485) purpose=car0,furniture/appliances,renovations 15   6 yes (0.4000000 0.6000000) *
+              243) percent_of_income>=2.5 36  11 yes (0.3055556 0.6944444) *
+           61) amount< 2313.5 26   6 yes (0.2307692 0.7692308) *
+         31) months_loan_duration>=47.5 28   3 yes (0.1071429 0.8928571) *
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{evaluating-classification-model-performance}{%
+\section{Evaluating Classification Model Performance}\label{evaluating-classification-model-performance}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{compute-confusion-matrix}{%
+\subsection{Compute confusion matrix}\label{compute-confusion-matrix}}
+
+As discussed in the previous video, there are a number of different metrics by which you can measure the performance of a classification model. In this exercise, we will evaluate the performance of the model using test set classification error. A confusion matrix is a convenient way to examine the per-class error rates for all classes at once.
+
+The \texttt{confusionMatrix()} function from the caret package prints both the confusion matrix and a number of other useful classification metrics such as ``Accuracy'' (fraction of correctly classified instances).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-2}{%
+\subsection*{Exercise}\label{exercise-2}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The caret package has been loaded for you.
+
+\begin{itemize}
+\tightlist
+\item
+  Generate class predictions for the \texttt{credit\_test} data frame using the \texttt{credit\_model} object.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predicted classes using the model object}
+\NormalTok{class_prediction <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model,  }
+                        \DataTypeTok{newdata =}\NormalTok{ credit_test,   }
+                        \DataTypeTok{type =} \StringTok{"class"}\NormalTok{) }
+\NormalTok{class_prediction}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20 
+ no  no  no  no yes  no  no  no  no yes  no  no  no yes  no  no  no  no  no  no 
+ 21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40 
+ no  no  no  no  no  no  no  no  no yes  no  no  no  no  no  no yes yes  no yes 
+ 41  42  43  44  45  46  47  48  49  50  51  52  53  54  55  56  57  58  59  60 
+ no  no  no  no  no  no  no  no  no yes  no  no  no yes yes  no yes  no yes  no 
+ 61  62  63  64  65  66  67  68  69  70  71  72  73  74  75  76  77  78  79  80 
+ no yes  no  no yes yes  no  no  no  no  no yes yes  no  no  no  no yes  no yes 
+ 81  82  83  84  85  86  87  88  89  90  91  92  93  94  95  96  97  98  99 100 
+ no  no  no  no yes  no  no yes  no  no  no  no  no yes  no  no  no  no  no  no 
+101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+ no yes  no  no yes  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no 
+121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 
+yes yes  no  no  no yes  no  no  no  no  no  no  no  no yes  no yes  no  no yes 
+141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 
+ no  no  no yes  no  no  no  no  no yes  no  no  no  no  no  no  no  no  no  no 
+161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 
+ no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no 
+181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 
+ no  no yes yes yes  no yes  no  no  no  no  no yes  no  no  no yes  no  no yes 
+Levels: no yes
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Using the \texttt{caret::confusionMatrix()} function, compute the confusion matrix for the test set.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate the confusion matrix for the test set}
+\NormalTok{caret}\OperatorTok{::}\KeywordTok{confusionMatrix}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ class_prediction,       }
+        \DataTypeTok{reference =} \KeywordTok{factor}\NormalTok{(credit_test}\OperatorTok{$}\NormalTok{default))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  no yes
+       no  117  44
+       yes  13  26
+                                          
+               Accuracy : 0.715           
+                 95% CI : (0.6471, 0.7764)
+    No Information Rate : 0.65            
+    P-Value [Acc > NIR] : 0.03046         
+                                          
+                  Kappa : 0.3023          
+                                          
+ Mcnemar's Test P-Value : 7.08e-05        
+                                          
+            Sensitivity : 0.9000          
+            Specificity : 0.3714          
+         Pos Pred Value : 0.7267          
+         Neg Pred Value : 0.6667          
+             Prevalence : 0.6500          
+         Detection Rate : 0.5850          
+   Detection Prevalence : 0.8050          
+      Balanced Accuracy : 0.6357          
+                                          
+       'Positive' Class : no              
+                                          
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{use-of-splitting-criterion-in-trees}{%
+\section{Use of Splitting Criterion in Trees}\label{use-of-splitting-criterion-in-trees}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{compare-models-with-a-different-splitting-criterion}{%
+\subsection{Compare models with a different splitting criterion}\label{compare-models-with-a-different-splitting-criterion}}
+
+Train two models that use a different splitting criterion and use the validation set to choose a ``best'' model from this group. To do this you'll use the \texttt{parms} argument of the \texttt{rpart()} function. This argument takes a named list that contains values of different parameters you can use to change how the model is trained. Set the parameter \texttt{split} to control the splitting criterion.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-3}{%
+\subsection*{Exercise}\label{exercise-3}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The datasets \texttt{credit\_test} and \texttt{credit\_train} have already been loaded for you.
+
+\begin{itemize}
+\tightlist
+\item
+  Train a model, splitting the tree based on gini index.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Train a gini-based model}
+\NormalTok{credit_model1 <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ default }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                       \DataTypeTok{data =}\NormalTok{ credit_train, }
+                       \DataTypeTok{method =} \StringTok{"class"}\NormalTok{,}
+                       \DataTypeTok{parms =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{split =} \StringTok{"gini"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Train a model, splitting the tree based on information index.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Train an information-based model}
+\NormalTok{credit_model2 <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ default }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                       \DataTypeTok{data =}\NormalTok{ credit_train, }
+                       \DataTypeTok{method =} \StringTok{"class"}\NormalTok{,}
+                       \DataTypeTok{parms =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{split =} \StringTok{"information"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Generate predictions on the validation set using both models.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predictions on the validation set using the gini model}
+\NormalTok{pred1 <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model1,}
+                 \DataTypeTok{newdata =}\NormalTok{ credit_test,}
+                 \DataTypeTok{type =} \StringTok{"class"}\NormalTok{)    }
+
+\CommentTok{# Generate predictions on the validation set using the information model}
+\NormalTok{pred2 <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model2, }
+                 \DataTypeTok{newdata =}\NormalTok{ credit_test,}
+                 \DataTypeTok{type =} \StringTok{"class"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Classification error is the fraction of incorrectly classified instances. Compute and compare the test set classification error of the two models by using the \texttt{ce()} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compare classification error}
+\KeywordTok{ce}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ credit_test}\OperatorTok{$}\NormalTok{default, }
+     \DataTypeTok{predicted =}\NormalTok{ pred1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.285
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ce}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ credit_test}\OperatorTok{$}\NormalTok{default, }
+     \DataTypeTok{predicted =}\NormalTok{ pred2) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.285
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{regression-trees}{%
+\chapter{Regression Trees}\label{regression-trees}}
+
+\hypertarget{introduction-to-regression-trees}{%
+\section{Introduction to Regression Trees}\label{introduction-to-regression-trees}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{classification-vs.-regression}{%
+\subsection{Classification vs.~regression}\label{classification-vs.-regression}}
+
+What is the difference between classification and regression?
+
+\begin{itemize}
+\item
+  In classification, the response represents a category (e.g.~``apples'', ``oranges'', ``bananas'').
+\item
+  In regression, the response represents a numeric value (e.g.~price of a house).
+\item
+  \textbf{All of the above.}
+\item
+  None of the above.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{split-the-data}{%
+\section{Split the data}\label{split-the-data}}
+
+The goal of this exercise is to predict a student's final Mathematics grade based on the following variables: \texttt{sex}, \texttt{age}, \texttt{address}, \texttt{studytime} (weekly study time), \texttt{schoolsup} (extra educational support), \texttt{famsup} (family educational support), \texttt{paid} (extra paid classes within the course subject) and \texttt{absences}.
+
+The response is \texttt{final\_grade} (numeric: from 0 to 20, output target).
+
+After initial exploration, split the data into training, validation, and test sets. In this chapter, we will introduce the idea of a validation set, which can be used to select a ``best'' model from a set of competing models.
+
+In Chapter 1, we demonstrated a simple way to split the data into two pieces using the \texttt{sample()} function. In this exercise, we will take a slightly different approach to splitting the data that allows us to split the data into more than two parts (here, we want three: train, validation, test). We still use the \texttt{sample()} function, but instead of sampling the indices themselves, we will assign each row to either the training, validation or test sets according to a probability distribution.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-4}{%
+\subsection*{Exercise}\label{exercise-4}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+These examples will use a subset of the \href{https://archive.ics.uci.edu/ml/datasets/Student+Performance}{Student Performance Dataset} from UCI ML Dataset Repository.
+
+The dataset \texttt{grade} is already in your workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Take a look at the data using the \texttt{str()} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Look at the data}
+\KeywordTok{str}\NormalTok{(grade)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+spec_tbl_df[,8] [395 x 8] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ final_grade: num [1:395] 3 3 5 7.5 5 7.5 5.5 3 9.5 7.5 ...
+ $ age        : num [1:395] 18 17 15 15 16 16 16 17 15 15 ...
+ $ address    : chr [1:395] "U" "U" "U" "U" ...
+ $ studytime  : num [1:395] 2 2 2 3 2 2 2 2 2 2 ...
+ $ schoolsup  : chr [1:395] "yes" "no" "yes" "no" ...
+ $ famsup     : chr [1:395] "no" "yes" "no" "yes" ...
+ $ paid       : chr [1:395] "no" "no" "yes" "yes" ...
+ $ absences   : num [1:395] 6 4 10 2 4 10 0 6 0 0 ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   final_grade = col_double(),
+  ..   age = col_double(),
+  ..   address = col_character(),
+  ..   studytime = col_double(),
+  ..   schoolsup = col_character(),
+  ..   famsup = col_character(),
+  ..   paid = col_character(),
+  ..   absences = col_double()
+  .. )
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Set a seed (for reproducibility) and then sample n\_train rows to define the set of training set indices.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Draw a sample of size nrow(grade) from the number 1 to 3 (with replacement). You want approximately 70\% of the sample to be 1 and the remaining 30\% to be equally split between 2 and 3.
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Set seed and create assignment}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{assignment <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{3}\NormalTok{, }\DataTypeTok{size =} \KeywordTok{nrow}\NormalTok{(grade), }\DataTypeTok{prob =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.7}\NormalTok{, }\FloatTok{0.15}\NormalTok{, }\FloatTok{0.15}\NormalTok{), }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Subset \texttt{grade} using the sample you just drew so that indices with the value 1 are in \texttt{grade\_train}, indices with the value 2 are in \texttt{grade\_valid}, and indices with 3 are in \texttt{grade\_test}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create a train, validation and tests from the original data frame }
+\NormalTok{grade_train <-}\StringTok{ }\NormalTok{grade[assignment }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{, ]    }\CommentTok{# subset grade to training indices only}
+\NormalTok{grade_valid <-}\StringTok{ }\NormalTok{grade[assignment }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{, ]  }\CommentTok{# subset grade to validation indices only}
+\NormalTok{grade_test <-}\StringTok{ }\NormalTok{grade[assignment }\OperatorTok{==}\StringTok{ }\DecValTok{3}\NormalTok{, ]   }\CommentTok{# subset grade to test indices only}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{train-a-regression-tree-model}{%
+\section{Train a regression tree model}\label{train-a-regression-tree-model}}
+
+In this exercise, we will use the \texttt{grade\_train} dataset to fit a regression tree using \texttt{rpart()} and visualize it using \texttt{rpart.plot()}. A regression tree plot looks identical to a classification tree plot, with the exception that there will be numeric values in the leaf nodes instead of predicted classes.
+
+This is very similar to what we did previously in Chapter 1. When fitting a classification tree, we use \texttt{method\ =\ "class"}, however, when fitting a regression tree, we need to set \texttt{method\ =\ "anova"}. By default, the \texttt{rpart()} function will make an intelligent guess as to what the method value should be based on the data type of your response column, but it's recommened that you explictly set the method for reproducibility reasons (since the auto-guesser may change in the future).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-5}{%
+\subsection*{Exercise}\label{exercise-5}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The \texttt{grade\_train} training set is loaded into the workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Using the \texttt{grade\_train} dataframe and the given formula, train a regresion tree.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grade_model <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ final_grade }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                     \DataTypeTok{data =}\NormalTok{ grade_train, }
+                     \DataTypeTok{method =} \StringTok{"anova"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Look at the model output by printing the model object.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Look at the model output                      }
+\KeywordTok{print}\NormalTok{(grade_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+n= 282 
+
+node), split, n, deviance, yval
+      * denotes terminal node
+
+ 1) root 282 1519.49700 5.271277  
+   2) absences< 0.5 82  884.18600 4.323171  
+     4) paid=no 50  565.50500 3.430000  
+       8) famsup=yes 22  226.36360 2.272727 *
+       9) famsup=no 28  286.52680 4.339286 *
+     5) paid=yes 32  216.46880 5.718750  
+      10) age>=17.5 10   82.90000 4.100000 *
+      11) age< 17.5 22   95.45455 6.454545 *
+   3) absences>=0.5 200  531.38000 5.660000  
+     6) absences>=13.5 42  111.61900 4.904762 *
+     7) absences< 13.5 158  389.43670 5.860759  
+      14) schoolsup=yes 23   50.21739 4.847826 *
+      15) schoolsup=no 135  311.60000 6.033333  
+        30) studytime< 3.5 127  276.30710 5.940945 *
+        31) studytime>=3.5 8   17.00000 7.500000 *
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Plot the decision tree using \texttt{rpart.plot()}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Plot the tree model}
+\KeywordTok{rpart.plot}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ grade_model, }\DataTypeTok{yesno =} \DecValTok{2}\NormalTok{, }\DataTypeTok{type =} \DecValTok{0}\NormalTok{, }\DataTypeTok{extra =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{performance-metrics-for-regression}{%
+\section{Performance Metrics for Regression}\label{performance-metrics-for-regression}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{evaluate-a-regression-tree-model}{%
+\subsection{Evaluate a regression tree model}\label{evaluate-a-regression-tree-model}}
+
+Predict the final grade for all students in the test set. The grade is on a 0-20 scale. Evaluate the model based on test set \href{https://en.wikipedia.org/wiki/Root-mean-square_deviation}{RMSE (Root Mean Squared Error)}. RMSE tells us approximately how far away our predictions are from the true values.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-6}{%
+\subsection*{Exercise}\label{exercise-6}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  First generate predictions on the \texttt{grade\_test} data frame using the \texttt{grade\_model} object.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predictions on a test set}
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ grade_model,  }\CommentTok{# model object }
+                \DataTypeTok{newdata =}\NormalTok{ grade_test)  }\CommentTok{# test dataset}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  After generating test set predictions, use the \texttt{rmse()} function from the \textbf{Metrics} package to compute test set RMSE.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compute the RMSE}
+\KeywordTok{rmse}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ grade_test}\OperatorTok{$}\NormalTok{final_grade, }
+     \DataTypeTok{predicted =}\NormalTok{ pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2.278249
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{what-are-the-hyperparameters-for-a-decision-tree}{%
+\section{What are the Hyperparameters for a Decision Tree?}\label{what-are-the-hyperparameters-for-a-decision-tree}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{tuning-the-model}{%
+\subsection{Tuning the Model}\label{tuning-the-model}}
+
+Tune (or ``trim'') the model using the \texttt{prune()} function by finding the best ``CP'' value (CP stands for ``Complexity Parameter'').
+
+\hypertarget{exercise-7}{%
+\subsection*{Exercise}\label{exercise-7}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Print the CP Table, a matrix of information on the optimal prunings (based on CP).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Plot the "CP Table"}
+\KeywordTok{plotcp}\NormalTok{(grade_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print the "CP Table"}
+\KeywordTok{print}\NormalTok{(grade_model}\OperatorTok{$}\NormalTok{cptable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+          CP nsplit rel error    xerror       xstd
+1 0.06839852      0 1.0000000 1.0066743 0.09169976
+2 0.06726713      1 0.9316015 1.0185398 0.08663026
+3 0.03462630      2 0.8643344 0.8923588 0.07351895
+4 0.02508343      3 0.8297080 0.9046335 0.08045100
+5 0.01995676      4 0.8046246 0.8920489 0.08153881
+6 0.01817661      5 0.7846679 0.9042142 0.08283114
+7 0.01203879      6 0.7664912 0.8833557 0.07945742
+8 0.01000000      7 0.7544525 0.8987112 0.08200148
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Retrieve the optimal CP value; the value for CP which minimizes cross-validated error of the model.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Retrieve optimal cp value based on cross-validated error}
+\NormalTok{opt_index <-}\StringTok{ }\KeywordTok{which.min}\NormalTok{(grade_model}\OperatorTok{$}\NormalTok{cptable[, }\StringTok{"xerror"}\NormalTok{])}
+\NormalTok{cp_opt <-}\StringTok{ }\NormalTok{grade_model}\OperatorTok{$}\NormalTok{cptable[opt_index, }\StringTok{"CP"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{prune()} function trim the tree, snipping off the least important splits, based on CP.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Prune the model (to optimized cp value)}
+\NormalTok{grade_model_opt <-}\StringTok{ }\KeywordTok{prune}\NormalTok{(}\DataTypeTok{tree =}\NormalTok{ grade_model, }
+                         \DataTypeTok{cp =}\NormalTok{ cp_opt)}
+\CommentTok{# Plot the optimized model}
+\KeywordTok{rpart.plot}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ grade_model_opt, }\DataTypeTok{yesno =} \DecValTok{2}\NormalTok{, }\DataTypeTok{type =} \DecValTok{0}\NormalTok{, }\DataTypeTok{extra =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-31-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{grid-search-for-model-selection}{%
+\section{Grid Search for Model Selection}\label{grid-search-for-model-selection}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{generate-a-grid-of-hyperparameter-values}{%
+\subsection{Generate a grid of hyperparameter values}\label{generate-a-grid-of-hyperparameter-values}}
+
+Use \texttt{expand.grid(}) to generate a grid of \texttt{maxdepth} and \texttt{minsplit} values.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-8}{%
+\subsection*{Exercise}\label{exercise-8}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Establish a list of possible values for \texttt{minsplit} and \texttt{maxdepth}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Establish a list of possible values for minsplit and maxdepth}
+\NormalTok{minsplit <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{maxdepth <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{expand.grid()} function to generate a data frame containing all combinations
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create a data frame containing all combinations }
+\NormalTok{hyper_grid <-}\StringTok{ }\KeywordTok{expand.grid}\NormalTok{(}\DataTypeTok{minsplit =}\NormalTok{ minsplit, }\DataTypeTok{maxdepth =}\NormalTok{ maxdepth)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Take a look at the resulting grid object
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Check out the grid}
+\KeywordTok{head}\NormalTok{(hyper_grid)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  minsplit maxdepth
+1        1        1
+2        2        1
+3        3        1
+4        4        1
+5        1        2
+6        2        2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print the number of grid combinations}
+\KeywordTok{nrow}\NormalTok{(hyper_grid)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 24
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{generate-a-grid-of-models}{%
+\subsection{Generate a grid of models}\label{generate-a-grid-of-models}}
+
+In this exercise, we will write a simple loop to train a ``grid'' of models and store the models in a list called \texttt{grade\_models}. R users who are familiar with the \texttt{apply} functions in R could think about how this loop could be easily converted into a function applied to a list as an extra-credit thought experiment.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-9}{%
+\subsection*{Exercise}\label{exercise-9}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Create an empty list to store the models from the grid search.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Number of potential models in the grid}
+\NormalTok{num_models <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(hyper_grid)}
+\CommentTok{# Create an empty list to store models}
+\NormalTok{grade_models <-}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Write a loop that trains a model for each row in \texttt{hyper\_grid} and adds it to the \texttt{grade\_models} list.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The loop will by indexed by the rows of \texttt{hyper\_grid}.
+  \item
+    For each row, there is a unique combination of the \texttt{minsplit} and \texttt{maxdepth} values that will be used to train a model.
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Write a loop over the rows of hyper_grid to train the grid of models}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{num_models) \{}
+
+    \CommentTok{# Get minsplit, maxdepth values at row i}
+\NormalTok{    minsplit <-}\StringTok{ }\NormalTok{hyper_grid}\OperatorTok{$}\NormalTok{minsplit[i]}
+\NormalTok{    maxdepth <-}\StringTok{ }\NormalTok{hyper_grid}\OperatorTok{$}\NormalTok{maxdepth[i]}
+
+    \CommentTok{# Train a model and store in the list}
+\NormalTok{    grade_models[[i]] <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ final_grade }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                               \DataTypeTok{data =}\NormalTok{ grade_train, }
+                               \DataTypeTok{method =} \StringTok{"anova"}\NormalTok{,}
+                               \DataTypeTok{minsplit =}\NormalTok{ minsplit,}
+                               \DataTypeTok{maxdepth =}\NormalTok{ maxdepth)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{evaluate-the-grid}{%
+\subsection{Evaluate the grid}\label{evaluate-the-grid}}
+
+Earlier in the chapter we split the dataset into three parts: training, validation and test.
+
+A dataset that is not used in training is sometimes referred to as a ``holdout'' set. A holdout set is used to estimate model performance and although both validation and test sets are considered to be holdout data, there is a key difference:
+
+\begin{itemize}
+\item
+  Just like a test set, a validation set is used to evaluate the performance of a model. The difference is that a validation set is specifically used to compare the performance of a group of models with the goal of choosing a ``best model'' from the group. All the models in a group are evaluated on the same validation set and the model with the best performance is considered to be the winner.
+\item
+  Once you have the best model, a final estimate of performance is computed on the test set.
+\item
+  A test set should only ever be used to estimate model performance and should not be used in model selection. Typically if you use a test set more than once, you are probably doing something wrong.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-10}{%
+\subsection*{Exercise}\label{exercise-10}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Write a loop that evaluates each model in the \texttt{grade\_models} list and stores the validation RMSE in a vector called \texttt{rmse\_values}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Number of potential models in the grid}
+\NormalTok{num_models <-}\StringTok{ }\KeywordTok{length}\NormalTok{(grade_models)}
+
+\CommentTok{# Create an empty vector to store RMSE values}
+\NormalTok{rmse_values <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+
+\CommentTok{# Write a loop over the models to compute validation RMSE}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{num_models) \{}
+
+    \CommentTok{# Retrieve the i^th model from the list}
+\NormalTok{    model <-}\StringTok{ }\NormalTok{grade_models[[i]]}
+    
+    \CommentTok{# Generate predictions on grade_valid }
+\NormalTok{    pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ model,}
+                    \DataTypeTok{newdata =}\NormalTok{ grade_valid)}
+    
+    \CommentTok{# Compute validation RMSE and add to the }
+\NormalTok{    rmse_values[i] <-}\StringTok{ }\KeywordTok{rmse}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ grade_valid}\OperatorTok{$}\NormalTok{final_grade, }
+                           \DataTypeTok{predicted =}\NormalTok{ pred)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{which.min()} function can be applied to the \texttt{rmse\_values} vector to identify the index containing the smallest RMSE value.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The model with the smallest validation set RMSE will be designated as the ``best model''.
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Identify the model with smallest validation set RMSE}
+\NormalTok{best_model <-}\StringTok{ }\NormalTok{grade_models[[}\KeywordTok{which.min}\NormalTok{(rmse_values)]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Inspect the model parameters of the best model.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print the model paramters of the best model}
+\NormalTok{best_model}\OperatorTok{$}\NormalTok{control}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Generate predictions on the test set using the best model to compute test set RMSE.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compute test set RMSE on best_model}
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ best_model,}
+                \DataTypeTok{newdata =}\NormalTok{ grade_test)}
+\KeywordTok{rmse}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ grade_test}\OperatorTok{$}\NormalTok{final_grade, }
+     \DataTypeTok{predicted =}\NormalTok{ pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 2.124109
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{bagged-trees}{%
+\chapter{Bagged Trees}\label{bagged-trees}}
+
+\hypertarget{introduction-to-bagged-trees}{%
+\section{Introduction to Bagged Trees}\label{introduction-to-bagged-trees}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{advantages-of-bagged-trees}{%
+\subsection{Advantages of bagged trees}\label{advantages-of-bagged-trees}}
+
+What are the advantages of bagged trees compared to a single tree?
+
+\begin{itemize}
+\item
+  Increases the accuracy of the resulting predictions
+\item
+  Easier to interpret the resulting model
+\item
+  Reduces variance by averaging a set of observations
+\item
+  1 and 2 are correct
+\item
+  \textbf{1 and 3 are correct}
+\item
+  2 and 3 are correct
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{train-a-bagged-tree-model}{%
+\section{Train a Bagged Tree Model}\label{train-a-bagged-tree-model}}
+
+Let's start by training a bagged tree model. You'll be using the \texttt{bagging()} function from the \texttt{ipred} package. The number of bagged trees can be specified using the \texttt{nbagg} parameter, but here we will use the default (25).
+
+If we want to estimate the model's accuracy using the ``out-of-bag'' (OOB) samples, we can set the the \texttt{coob} parameter to \texttt{TRUE}. The OOB samples are the training obsevations that were not selected into the bootstrapped sample (used in training). Since these observations were not used in training, we can use them instead to evaluate the accuracy of the model (done automatically inside the \texttt{bagging()} function).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-11}{%
+\subsection*{Exercise}\label{exercise-11}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The \texttt{credit\_train} and \texttt{credit\_test} datasets from Chapter 1 are already loaded in the workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{bagging()} function to train a bagged tree model.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Bagging is a randomized model, so let's set a seed (123) for reproducibility}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+
+\CommentTok{# Train a bagged model}
+\NormalTok{credit_model <-}\StringTok{ }\KeywordTok{bagging}\NormalTok{(}\DataTypeTok{formula =} \KeywordTok{factor}\NormalTok{(default) }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                        \DataTypeTok{data =}\NormalTok{ credit_train,}
+                        \DataTypeTok{coob =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Inspect the model by printing it.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print the model}
+\KeywordTok{print}\NormalTok{(credit_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Bagging classification trees with 25 bootstrap replications 
+
+Call: bagging.data.frame(formula = factor(default) ~ ., data = credit_train, 
+    coob = TRUE)
+
+Out-of-bag estimate of misclassification error:  0.2537 
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{evaluating-the-bagged-tree-performance}{%
+\section{Evaluating the Bagged Tree Performance}\label{evaluating-the-bagged-tree-performance}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{prediction-and-confusion-matrix}{%
+\subsection{Prediction and confusion matrix}\label{prediction-and-confusion-matrix}}
+
+As you saw in the video, a confusion matrix is a very useful tool for examining all possible outcomes of your predictions (true positive, true negative, false positive, false negative).
+
+In this exercise, you will predict those who will default using bagged trees. You will also create the confusion matrix using the \texttt{confusionMatrix()} function from the \textbf{caret} package.
+
+It's always good to take a look at the output using the \texttt{print()} function.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-12}{%
+\subsection*{Exercise}\label{exercise-12}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The fitted model object, \texttt{credit\_model}, is already in your workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{predict()} function with \texttt{type\ =\ "class"} to generate predicted labels on the \texttt{credit\_test} dataset.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predicted classes using the model object}
+\NormalTok{class_prediction <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model, }
+                            \DataTypeTok{newdata =}\NormalTok{ credit_test,  }
+                            \DataTypeTok{type =} \StringTok{"class"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Take a look at the prediction using the \texttt{print()} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print the predicted classes}
+\KeywordTok{print}\NormalTok{(class_prediction)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  [1] no  no  no  no  yes no  no  no  no  no  no  no  no  yes no  no  no  no 
+ [19] no  no  yes no  no  no  no  no  yes no  no  no  no  no  no  no  no  no 
+ [37] yes yes no  yes no  yes no  no  no  no  no  no  no  yes no  yes no  yes
+ [55] yes no  yes no  yes no  no  yes no  no  yes yes no  yes no  no  no  yes
+ [73] yes no  no  no  no  no  no  yes no  no  no  no  yes no  no  yes no  no 
+ [91] no  no  no  yes yes no  no  no  no  no  no  yes no  no  yes no  no  no 
+[109] no  no  no  no  no  no  no  no  no  no  no  no  yes no  yes no  no  yes
+[127] yes no  yes no  no  no  no  no  yes no  yes yes no  no  no  no  yes no 
+[145] no  no  yes no  no  no  no  yes no  no  no  no  no  no  no  yes no  no 
+[163] yes no  yes no  no  no  no  no  no  no  no  no  no  no  no  no  no  no 
+[181] no  no  yes yes yes no  yes no  no  no  no  no  yes no  no  no  yes no 
+[199] no  yes
+Levels: no yes
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Calculate the confusion matrix using the \texttt{confusionMatrix} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate the confusion matrix for the test set}
+\KeywordTok{confusionMatrix}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ class_prediction,         }
+                \DataTypeTok{reference =} \KeywordTok{factor}\NormalTok{(credit_test}\OperatorTok{$}\NormalTok{default))  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  no yes
+       no  119  33
+       yes  11  37
+                                          
+               Accuracy : 0.78            
+                 95% CI : (0.7161, 0.8354)
+    No Information Rate : 0.65            
+    P-Value [Acc > NIR] : 4.557e-05       
+                                          
+                  Kappa : 0.4787          
+                                          
+ Mcnemar's Test P-Value : 0.001546        
+                                          
+            Sensitivity : 0.9154          
+            Specificity : 0.5286          
+         Pos Pred Value : 0.7829          
+         Neg Pred Value : 0.7708          
+             Prevalence : 0.6500          
+         Detection Rate : 0.5950          
+   Detection Prevalence : 0.7600          
+      Balanced Accuracy : 0.7220          
+                                          
+       'Positive' Class : no              
+                                          
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{predict-on-a-test-set-and-compute-auc}{%
+\subsection{Predict on a Test Set and Compute AUC}\label{predict-on-a-test-set-and-compute-auc}}
+
+In binary classification problems, we can predict numeric values instead of class labels. In fact, class labels are created only after you use the model to predict a raw, numeric, \emph{predicted value} for a test point.
+
+The \emph{predicted label} is generated by applying a threshold to the \emph{predicted value}, such that all tests points with predicted value greater than that threshold get a predicted label of ``1'' and, points below that threshold get a predicted label of ``0''.
+
+In this exercise, generate predicted values (rather than class labels) on the test set and evaluate performance based on \href{https://en.wikipedia.org/wiki/Receiver_operating_characteristic\#Area_under_the_curve}{AUC (Area Under the ROC Curve)}. The AUC is a common metric for evaluating the discriminatory ability of a binary classification model.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-13}{%
+\subsection*{Exercise}\label{exercise-13}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{predict()} function with \texttt{type\ =\ "prob"} to generate numeric predictions on the \texttt{credit\_test} dataset.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predictions on the test set}
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model,}
+                \DataTypeTok{newdata =}\NormalTok{ credit_test,}
+                \DataTypeTok{type =} \StringTok{"prob"}\NormalTok{)}
+
+\CommentTok{# `pred` is a matrix}
+\KeywordTok{class}\NormalTok{(pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "matrix"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Look at the pred format}
+\KeywordTok{head}\NormalTok{(pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+       no  yes
+[1,] 0.92 0.08
+[2,] 0.92 0.08
+[3,] 1.00 0.00
+[4,] 1.00 0.00
+[5,] 0.16 0.84
+[6,] 0.84 0.16
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Compute the AUC using the \texttt{auc()} function from the \textbf{Metrics} package.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compute the AUC (`actual` must be a binary (or 1/0 numeric) vector)}
+\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =} \KeywordTok{ifelse}\NormalTok{(credit_test}\OperatorTok{$}\NormalTok{default }\OperatorTok{==}\StringTok{ "yes"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{), }
+    \DataTypeTok{predicted =}\NormalTok{ pred[,}\StringTok{"yes"}\NormalTok{])  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.8084066
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{using-caret-for-cross-validating-models}{%
+\section{\texorpdfstring{Using \texttt{caret} for Cross-Validating Models}{Using caret for Cross-Validating Models}}\label{using-caret-for-cross-validating-models}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{cross-validate-a-bagged-tree-model-in-caret}{%
+\subsection{Cross-validate a bagged tree model in caret}\label{cross-validate-a-bagged-tree-model-in-caret}}
+
+Use \texttt{caret::train()} with the \texttt{"treebag"} method to train a model and evaluate the model using cross-validated AUC. The \textbf{caret} package allows the user to easily cross-validate any model across any relevant performance metric. In this case, we will use 5-fold cross validation and evaluate cross-validated AUC (Area Under the ROC Curve).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-14}{%
+\subsection*{Exercise}\label{exercise-14}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The \texttt{credit\_train} dataset is in your workspace. You will use this data frame as the training data.
+
+\begin{itemize}
+\tightlist
+\item
+  First specify a \texttt{ctrl} object, which is created using the \texttt{caret::trainControl()} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Specify the training configuration}
+\NormalTok{ctrl <-}\StringTok{ }\KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"cv"}\NormalTok{,     }\CommentTok{# Cross-validation}
+                     \DataTypeTok{number =} \DecValTok{5}\NormalTok{,      }\CommentTok{# 5 folds}
+                     \DataTypeTok{classProbs =} \OtherTok{TRUE}\NormalTok{,                  }\CommentTok{# For AUC}
+                     \DataTypeTok{summaryFunction =}\NormalTok{ twoClassSummary)  }\CommentTok{# For AUC}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  In the \texttt{trainControl()} function, you can specify many things. We will set: \texttt{method\ =\ "cv"}, \texttt{number\ =\ 5} for 5-fold cross-validation. Also, two options that are required if you want to use AUC as the metric: \texttt{classProbs\ =\ TRUE} and \texttt{summaryFunction\ =\ twoClassSummary}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Cross validate the credit model using "treebag" method; }
+\CommentTok{# Track AUC (Area under the ROC curve)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)  }\CommentTok{# for reproducibility}
+\NormalTok{credit_caret_model <-}\StringTok{ }\KeywordTok{train}\NormalTok{(default }\OperatorTok{~}\StringTok{ }\NormalTok{.,}
+                            \DataTypeTok{data =}\NormalTok{ credit_train, }
+                            \DataTypeTok{method =} \StringTok{"treebag"}\NormalTok{,}
+                            \DataTypeTok{metric =} \StringTok{"ROC"}\NormalTok{,}
+                            \DataTypeTok{trControl =}\NormalTok{ ctrl)}
+
+\CommentTok{# Look at the model object}
+\KeywordTok{print}\NormalTok{(credit_caret_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Bagged CART 
+
+800 samples
+ 16 predictor
+  2 classes: 'no', 'yes' 
+
+No pre-processing
+Resampling: Cross-Validated (5 fold) 
+Summary of sample sizes: 640, 640, 640, 640, 640 
+Resampling results:
+
+  ROC        Sens       Spec     
+  0.7309497  0.8789474  0.4086957
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Inspect the contents of the model list }
+\KeywordTok{names}\NormalTok{(credit_caret_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+ [1] "method"       "modelInfo"    "modelType"    "results"      "pred"        
+ [6] "bestTune"     "call"         "dots"         "metric"       "control"     
+[11] "finalModel"   "preProcess"   "trainingData" "resample"     "resampledCM" 
+[16] "perfNames"    "maximize"     "yLimits"      "times"        "levels"      
+[21] "terms"        "coefnames"    "contrasts"    "xlevels"     
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print the CV AUC}
+\NormalTok{credit_caret_model}\OperatorTok{$}\NormalTok{results[,}\StringTok{"ROC"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.7309497
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{generate-predictions-from-the-caret-model}{%
+\subsection{Generate predictions from the caret model}\label{generate-predictions-from-the-caret-model}}
+
+Generate predictions on a test set for the caret model.
+
+\begin{itemize}
+\tightlist
+\item
+  First generate predictions on the \texttt{credit\_test} data frame using the \texttt{credit\_caret\_model} object.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predictions on the test set}
+\NormalTok{predc <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_caret_model, }
+                \DataTypeTok{newdata =}\NormalTok{ credit_test,}
+                \DataTypeTok{type =} \StringTok{"prob"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  After generating test set predictions, use the \texttt{auc()} function from the \texttt{Metrics} package to compute AUC.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compute the AUC (`actual` must be a binary (or 1/0 numeric) vector)}
+\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =} \KeywordTok{ifelse}\NormalTok{(credit_test}\OperatorTok{$}\NormalTok{default }\OperatorTok{==}\StringTok{ "yes"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{), }
+                    \DataTypeTok{predicted =}\NormalTok{ predc[,}\StringTok{"yes"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.7782967
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{compare-test-set-performance-to-cv-performance}{%
+\section{Compare test set performance to CV performance}\label{compare-test-set-performance-to-cv-performance}}
+
+In this excercise, you will print test set AUC estimates that you computed in previous exercises. These two methods use the same code underneath, so the estimates should be very similar.
+
+\begin{itemize}
+\item
+  The \texttt{credit\_ipred\_model\_test\_auc} object stores the test set AUC from the model trained using the \texttt{ipred::bagging()} function.
+\item
+  The \texttt{credit\_caret\_model\_test\_auc} object stores the test set AUC from the model trained using the \texttt{caret::train()} function with \texttt{method\ =\ "treebag"}.
+\end{itemize}
+
+Lastly, we will print the 5-fold cross-validated estimate of AUC that is stored within the \texttt{credit\_caret\_model} object. This number will be a more accurate estimate of the true model performance since we have averaged the performance over five models instead of just one.
+
+On small datasets like this one, the difference between test set model performance estimates and cross-validated model performance estimates will tend to be more pronounced. When using small data, it's recommended to use cross-validated estimates of performance because they are more stable.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-15}{%
+\subsection*{Exercise}\label{exercise-15}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Print the object credit\_ipred\_model\_test\_auc.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print ipred::bagging test set AUC estimate}
+\KeywordTok{print}\NormalTok{(credit_ipred_model_test_auc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.8084066
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Print the object credit\_caret\_model\_test\_auc.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print caret "treebag" test set AUC estimate}
+\KeywordTok{print}\NormalTok{(credit_caret_model_test_auc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.7782967
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Compare these to the 5-fold cross validated AUC.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compare to caret 5-fold cross-validated AUC}
+\NormalTok{credit_caret_model}\OperatorTok{$}\NormalTok{results[, }\StringTok{"ROC"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.7309497
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{random-forests}{%
+\chapter{Random Forests}\label{random-forests}}
+
+\hypertarget{introduction-to-random-forests}{%
+\section{Introduction to Random Forests}\label{introduction-to-random-forests}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{bagged-trees-vs.-random-forest}{%
+\subsection{Bagged trees vs.~Random Forest}\label{bagged-trees-vs.-random-forest}}
+
+What is the main difference between bagged trees and the Random Forest algorithm?
+
+\begin{itemize}
+\item
+  In Random Forest, the decision trees are trained on a random subset of the rows, but in bagging, they use all the rows.
+\item
+  \textbf{In Random Forest, only a subset of features are selected at random at each split in a decision tree. In bagging, all features are used.}
+\item
+  In Random Forest, there is randomness. In bagging, there is no randomness.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{train-a-random-forest-model}{%
+\section{Train a Random Forest model}\label{train-a-random-forest-model}}
+
+Here you will use the \texttt{randomForest()} function from the \textbf{randomForest} package to train a Random Forest classifier to predict loan default.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-16}{%
+\subsection*{Exercise}\label{exercise-16}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The \texttt{credit\_train} and \texttt{credit\_test} datasets (from Chapter 1 \& 3) are already loaded in the workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{randomForest::randomForest()} function to train a Random Forest model on the \texttt{credit\_train} dataset.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Train a Random Forest}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)  }\CommentTok{# for reproducibility}
+\NormalTok{credit_model <-}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(default }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+\NormalTok{                             credit_Train)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  The formula used to define the model is the same as in previous chapters -- we want to predict ``default'' as a function of all the other columns in the training set.
+\item
+  Inspect the model output.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print the model output                             }
+\KeywordTok{print}\NormalTok{(credit_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+##  randomForest(formula = default ~ ., data = credit_Train) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 4
+## 
+##         OOB estimate of  error rate: 24.12%
+## Confusion matrix:
+##      no yes class.error
+## no  527  43   0.0754386
+## yes 150  80   0.6521739
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{understanding-random-forest-model-output}{%
+\section{Understanding Random Forest Model Output}\label{understanding-random-forest-model-output}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{evaluate-out-of-bag-error}{%
+\subsection{Evaluate out-of-bag error}\label{evaluate-out-of-bag-error}}
+
+Here you will plot the OOB error as a function of the number of trees trained, and extract the final OOB error of the Random Forest model from the trained model object.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-17}{%
+\subsection*{Exercise}\label{exercise-17}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The \texttt{credit\_model} trained in the previous exercise is loaded in the workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Get the OOB error rate for the Random Forest model.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Grab OOB error matrix & take a look}
+\NormalTok{err <-}\StringTok{ }\NormalTok{credit_model}\OperatorTok{$}\NormalTok{err.rate}
+\KeywordTok{head}\NormalTok{(err)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+           OOB        no       yes
+[1,] 0.3170732 0.2150000 0.5517241
+[2,] 0.3525641 0.2400000 0.6083916
+[3,] 0.3310924 0.2091346 0.6145251
+[4,] 0.3333333 0.2154812 0.6192893
+[5,] 0.3264746 0.1992263 0.6367925
+[6,] 0.3040000 0.1872659 0.5925926
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Look at final OOB error rate (last row in err matrix)}
+\NormalTok{oob_err <-}\StringTok{ }\NormalTok{err[}\DecValTok{500}\NormalTok{, }\StringTok{"OOB"}\NormalTok{]}
+\KeywordTok{print}\NormalTok{(oob_err)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+    OOB 
+0.24125 
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Plot the OOB error rate against the number of trees in the forest.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Plot the model trained in the previous exercise}
+\KeywordTok{plot}\NormalTok{(credit_model)}
+
+\CommentTok{# Add a legend since it doesn't have one by default}
+\KeywordTok{legend}\NormalTok{(}\DataTypeTok{x =} \StringTok{"right"}\NormalTok{, }
+       \DataTypeTok{legend =} \KeywordTok{colnames}\NormalTok{(err),}
+       \DataTypeTok{fill =} \DecValTok{1}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(err))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-63-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{evaluate-model-performance-on-a-test-set}{%
+\subsection{Evaluate model performance on a test set}\label{evaluate-model-performance-on-a-test-set}}
+
+Use the \texttt{caret::confusionMatrix()} function to compute test set accuracy and generate a confusion matrix. Compare the test set accuracy to the OOB accuracy.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-18}{%
+\subsection*{Exercise}\label{exercise-18}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Generate class predictions for the \texttt{credit\_test} data frame using the \texttt{credit\_model} object.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predicted classes using the model object}
+\NormalTok{class_prediction <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model,   }\CommentTok{# model object }
+                            \DataTypeTok{newdata =}\NormalTok{ credit_Test,  }\CommentTok{# test dataset}
+                            \DataTypeTok{type =} \StringTok{"class"}\NormalTok{) }\CommentTok{# return classification labels}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Using the \texttt{caret::confusionMatrix()} function, compute the confusion matrix for the test set.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate the confusion matrix for the test set}
+\NormalTok{cm <-}\StringTok{ }\KeywordTok{confusionMatrix}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ class_prediction,       }\CommentTok{# predicted classes}
+                      \DataTypeTok{reference =}\NormalTok{ credit_Test}\OperatorTok{$}\NormalTok{default)  }\CommentTok{# actual classes}
+\KeywordTok{print}\NormalTok{(cm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  no yes
+       no  123  40
+       yes   7  30
+                                       
+               Accuracy : 0.765        
+                 95% CI : (0.7, 0.8219)
+    No Information Rate : 0.65         
+    P-Value [Acc > NIR] : 0.0002983    
+                                       
+                  Kappa : 0.4205       
+                                       
+ Mcnemar's Test P-Value : 3.046e-06    
+                                       
+            Sensitivity : 0.9462       
+            Specificity : 0.4286       
+         Pos Pred Value : 0.7546       
+         Neg Pred Value : 0.8108       
+             Prevalence : 0.6500       
+         Detection Rate : 0.6150       
+   Detection Prevalence : 0.8150       
+      Balanced Accuracy : 0.6874       
+                                       
+       'Positive' Class : no           
+                                       
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Compare the test set accuracy reported from the confusion matrix to the OOB accuracy. The OOB error is stored in \texttt{oob\_err}, which is already in your workspace, and so OOB accuracy is just \texttt{1\ -\ oob\_err}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compare test set accuracy to OOB accuracy}
+\KeywordTok{paste0}\NormalTok{(}\StringTok{"Test Accuracy: "}\NormalTok{, cm}\OperatorTok{$}\NormalTok{overall[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Test Accuracy: 0.765"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{paste0}\NormalTok{(}\StringTok{"OOB Accuracy: "}\NormalTok{, }\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{oob_err)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "OOB Accuracy: 0.75875"
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{oob-error-vs.-test-set-error}{%
+\section{OOB Error vs.~Test Set Error}\label{oob-error-vs.-test-set-error}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{advantage-of-oob-error}{%
+\subsection{Advantage of OOB error}\label{advantage-of-oob-error}}
+
+What is the main advantage of using OOB error instead of validation or test error?
+
+\begin{itemize}
+\item
+  Tuning the model hyperparameters using OOB error will lead to a better model.
+\item
+  \textbf{If you evaluate your model using OOB error, then you don't need to create a separate test set.}
+\item
+  OOB error is more accurate than test set error.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{evaluate-test-set-auc}{%
+\subsection{Evaluate Test Set AUC}\label{evaluate-test-set-auc}}
+
+In Chapter 3, we learned about the \href{https://en.wikipedia.org/wiki/Receiver_operating_characteristic\#Area_under_the_curve}{AUC} metric for evaluating binary classification models. In this exercise, you will compute test set AUC for the Random Forest model.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-19}{%
+\subsection*{Exercise}\label{exercise-19}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{predict()} function with \texttt{type\ =\ "prob"} to generate numeric predictions on the \texttt{credit\_test} dataset.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predictions on the test set}
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model, }
+                \DataTypeTok{newdata =}\NormalTok{ credit_Test,}
+                \DataTypeTok{type =} \StringTok{"prob"}\NormalTok{)}
+
+\CommentTok{# `pred` is a matrix}
+\KeywordTok{class}\NormalTok{(pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "matrix" "votes" 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Look at the pred format}
+\KeywordTok{head}\NormalTok{(pred) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      no   yes
+1  0.904 0.096
+3  0.902 0.098
+7  1.000 0.000
+9  0.970 0.030
+12 0.216 0.784
+22 0.826 0.174
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{credit_Model <-}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(default }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+\NormalTok{                             credit_Train)}
+\NormalTok{rf_preds <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_Model, }
+                \DataTypeTok{newdata =}\NormalTok{ credit_Test)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Compute the AUC using the \texttt{auc()} function from the \textbf{Metrics} package.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compute the AUC (`actual` must be a binary 1/0 numeric vector)}
+\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =} \KeywordTok{ifelse}\NormalTok{(credit_Test}\OperatorTok{$}\NormalTok{default }\OperatorTok{==}\StringTok{ "yes"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{), }
+    \DataTypeTok{predicted =}\NormalTok{ pred[,}\StringTok{"yes"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.8187363
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{tuning-a-random-forest-model}{%
+\section{Tuning a Random Forest Model}\label{tuning-a-random-forest-model}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{tuning-a-random-forest-via-mtry}{%
+\subsection{Tuning a Random Forest via mtry}\label{tuning-a-random-forest-via-mtry}}
+
+In this exercise, you will use the \texttt{randomForest::tuneRF()} to tune \texttt{mtry} (by training several models). This function is a specific utility to tune the \texttt{mtry} parameter based on OOB error, which is helpful when you want a quick \& easy way to tune your model. A more generic way of tuning Random Forest parameters will be presented in the following exercise.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-20}{%
+\subsection*{Exercise}\label{exercise-20}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{tuneRF()} function in place of the \texttt{randomForest()} function to train a series of models with different \texttt{mtry} values and examine the the results.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Note that (unfortunately) the \texttt{tuneRF()} interface does not support the typical formula input that we've been using, but instead uses two arguments, \texttt{x} (matrix or data frame of predictor variables) and \texttt{y} (response vector; must be a factor for classification).
+  \end{itemize}
+\item
+  The \texttt{tuneRF()} function has an argument, \texttt{ntreeTry} that defaults to 50 trees. Set \texttt{nTreeTry\ =\ 500} to train a random forest model of the same size as you previously did.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Execute the tuning process}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)              }
+\NormalTok{res <-}\StringTok{ }\KeywordTok{tuneRF}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{subset}\NormalTok{(credit_Train, }\DataTypeTok{select =} \OperatorTok{-}\NormalTok{default),}
+              \DataTypeTok{y =}\NormalTok{ credit_Train}\OperatorTok{$}\NormalTok{default,}
+              \DataTypeTok{ntreeTry =} \DecValTok{500}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+mtry = 4  OOB error = 24.12% 
+Searching left ...
+mtry = 2    OOB error = 23.88% 
+0.01036269 0.05 
+Searching right ...
+mtry = 8    OOB error = 23.62% 
+0.02072539 0.05 
+\end{verbatim}
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-70-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  After tuning the forest, this function will also plot model performance (OOB error) as a function of the \texttt{mtry} values that were evaluated.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Keep in mind that if we want to evaluate the model based on AUC instead of error (accuracy), then this is not the best way to tune a model, as the selection only considers (OOB) error.
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Look at results}
+\KeywordTok{print}\NormalTok{(res)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      mtry OOBError
+2.OOB    2  0.23875
+4.OOB    4  0.24125
+8.OOB    8  0.23625
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Find the mtry value that minimizes OOB Error}
+\NormalTok{mtry_opt <-}\StringTok{ }\NormalTok{res[,}\StringTok{"mtry"}\NormalTok{][}\KeywordTok{which.min}\NormalTok{(res[,}\StringTok{"OOBError"}\NormalTok{])]}
+\KeywordTok{print}\NormalTok{(mtry_opt)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+8.OOB 
+    8 
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{tuning-a-random-forest-via-tree-depth}{%
+\subsection{Tuning a Random Forest via tree depth}\label{tuning-a-random-forest-via-tree-depth}}
+
+In Chapter 2, we created a manual grid of hyperparameters using the \texttt{expand.grid()} function and wrote code that trained and evaluated the models of the grid in a loop. In this exercise, you will create a grid of \texttt{mtry}, \texttt{nodesize} and \texttt{sampsize} values. In this example, we will identify the ``best model'' based on OOB error. The best model is defined as the model from our grid which minimizes OOB error.
+
+Keep in mind that there are other ways to select a best model from a grid, such as choosing the best model based on validation AUC. However, for this exercise, we will use the built-in OOB error calculations instead of using a separate validation set.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-21}{%
+\subsection*{Exercise}\label{exercise-21}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Create a grid of \texttt{mtry}, \texttt{nodesize} and \texttt{sampsize} values.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Establish a list of possible values for mtry, nodesize and sampsize}
+\NormalTok{mtry <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{4}\NormalTok{, }\KeywordTok{ncol}\NormalTok{(credit_Train) }\OperatorTok{*}\StringTok{ }\FloatTok{0.8}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{nodesize <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{sampsize <-}\StringTok{ }\KeywordTok{nrow}\NormalTok{(credit_Train) }\OperatorTok{*}\StringTok{ }\KeywordTok{c}\NormalTok{(}\FloatTok{0.7}\NormalTok{, }\FloatTok{0.8}\NormalTok{)}
+
+\CommentTok{# Create a data frame containing all combinations }
+\NormalTok{hyper_grid <-}\StringTok{ }\KeywordTok{expand.grid}\NormalTok{(}\DataTypeTok{mtry =}\NormalTok{ mtry, }\DataTypeTok{nodesize =}\NormalTok{ nodesize, }\DataTypeTok{sampsize =}\NormalTok{ sampsize)}
+
+\CommentTok{# Create an empty vector to store OOB error values}
+\NormalTok{oob_err <-}\StringTok{ }\KeywordTok{c}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Write a simple loop to train all the models and choose the best one based on OOB error.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Write a loop over the rows of hyper_grid to train the grid of models}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\KeywordTok{nrow}\NormalTok{(hyper_grid)) \{}
+
+    \CommentTok{# Train a Random Forest model}
+\NormalTok{    model <-}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ default }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                          \DataTypeTok{data =}\NormalTok{ credit_Train,}
+                          \DataTypeTok{mtry =}\NormalTok{ hyper_grid}\OperatorTok{$}\NormalTok{mtry[i],}
+                          \DataTypeTok{nodesize =}\NormalTok{ hyper_grid}\OperatorTok{$}\NormalTok{nodesize[i],}
+                          \DataTypeTok{sampsize =}\NormalTok{ hyper_grid}\OperatorTok{$}\NormalTok{sampsize[i])}
+                          
+    \CommentTok{# Store OOB error for the model                      }
+\NormalTok{    oob_err[i] <-}\StringTok{ }\NormalTok{model}\OperatorTok{$}\NormalTok{err.rate[}\KeywordTok{nrow}\NormalTok{(model}\OperatorTok{$}\NormalTok{err.rate), }\StringTok{"OOB"}\NormalTok{]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Print the set of hyperparameters which produced the best model.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Identify optimal set of hyperparmeters based on OOB error}
+\NormalTok{opt_i <-}\StringTok{ }\KeywordTok{which.min}\NormalTok{(oob_err)}
+\KeywordTok{print}\NormalTok{(hyper_grid[opt_i,])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+  mtry nodesize sampsize
+2    6        3      560
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{boosted-trees}{%
+\chapter{Boosted Trees}\label{boosted-trees}}
+
+\hypertarget{introduction-to-boosting}{%
+\section{Introduction to Boosting}\label{introduction-to-boosting}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{bagged-trees-vs.-boosted-trees}{%
+\subsection{Bagged trees vs.~boosted trees}\label{bagged-trees-vs.-boosted-trees}}
+
+What is the main difference between bagged trees and boosted trees?
+
+\begin{itemize}
+\item
+  Boosted trees don't perform as well as bagged trees.
+\item
+  Boosted trees have fewer hyperparameters to tune than bagged trees.
+\item
+  \textbf{Boosted trees improve the model fit by considering past fits and bagged trees do not.}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{train-a-gbm-model}{%
+\section{Train a GBM Model}\label{train-a-gbm-model}}
+
+Here you will use the \texttt{gbm()} function to train a GBM classifier to predict loan default. You will train a 10,000-tree GBM on the \texttt{credit\_train} dataset, which is pre-loaded into your workspace.
+
+Using such a large number of trees (10,000) is probably not optimal for a GBM model, but we will build more trees than we need and then select the optimal number of trees based on early performance-based stopping. The best GBM model will likely contain fewer trees than we started with.
+
+For binary classification, \texttt{gbm()} requires the response to be encoded as 0/1 (numeric), so we will have to convert from a ``no/yes'' factor to a 0/1 numeric response column.
+
+Also, the the \texttt{gbm()} function requires the user to specify a \texttt{distribution} argument. For a binary classification problem, you should set \texttt{distribution\ =\ "bernoulli"}. The \href{https://en.wikipedia.org/wiki/Bernoulli_distribution}{Bernoulli distribution} models a binary response.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-22}{%
+\subsection*{Exercise}\label{exercise-22}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Convert from a ``no/yes'' factor to a 0/1 numeric response column using the \texttt{ifelse()} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Convert "yes" to 1, "no" to 0}
+\NormalTok{credit_train}\OperatorTok{$}\NormalTok{default <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(credit_train}\OperatorTok{$}\NormalTok{default }\OperatorTok{==}\StringTok{ "yes"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Train a 10,000-tree GBM model.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Train a 10000-tree GBM model}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{credit_model <-}\StringTok{ }\KeywordTok{gbm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ default }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                    \DataTypeTok{distribution =} \StringTok{"bernoulli"}\NormalTok{, }
+                    \DataTypeTok{data =}\NormalTok{ credit_train,}
+                    \DataTypeTok{n.trees =} \DecValTok{10000}\NormalTok{)}
+                    
+\CommentTok{# Print the model object                    }
+\KeywordTok{print}\NormalTok{(credit_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+gbm(formula = default ~ ., distribution = "bernoulli", data = credit_train, 
+    n.trees = 10000)
+A gradient boosted model with bernoulli loss function.
+10000 iterations were performed.
+There were 16 predictors of which 16 had non-zero influence.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# summary() prints variable importance}
+\KeywordTok{summary}\NormalTok{(credit_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-77-1.pdf}
+
+\begin{verbatim}
+                                      var    rel.inf
+amount                             amount 22.0897595
+age                                   age 17.9626175
+credit_history             credit_history 10.6369658
+purpose                           purpose 10.2584546
+employment_duration   employment_duration  8.8596192
+checking_balance         checking_balance  6.4650840
+months_loan_duration months_loan_duration  5.8863990
+savings_balance           savings_balance  3.7722735
+job                                   job  2.9418015
+other_credit                 other_credit  2.8613862
+housing                           housing  2.5237773
+years_at_residence     years_at_residence  2.3409228
+percent_of_income       percent_of_income  1.7687143
+phone                               phone  0.6373101
+existing_loans_count existing_loans_count  0.5870700
+dependents                     dependents  0.4078447
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{understanding-gbm-model-output}{%
+\section{Understanding GBM Model Output}\label{understanding-gbm-model-output}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{prediction-using-a-gbm-model}{%
+\subsection{Prediction using a GBM model}\label{prediction-using-a-gbm-model}}
+
+The \textbf{gbm} package uses a \texttt{predict()} function to generate predictions from a model, similar to many other machine learning packages in R. When you see a function like \texttt{predict()} that works on many different types of input (a GBM model, a RF model, a GLM model, etc), that indicates that \texttt{predict()} is an ``alias'' for a GBM-specific version of that function. The GBM specific version of that function is \texttt{predict.gbm()}, but for convenience sake, we can just use \texttt{predict()} (either works).
+
+One thing that's particular to the \texttt{predict.gbm()} however, is that you need to specify the number of trees used in the prediction. There is no default, so you have to specify this manually. For now, we can use the same number of trees that we specified when training the model, which is 10,000 (though this may not be the optimal number to use).
+
+Another argument that you can specify is \texttt{type}, which is only relevant to Bernoulli and Poisson distributed outcomes. When using Bernoulli loss, the returned value is on the log odds scale by default and for Poisson, it's on the log scale. If instead you specify \texttt{type\ =\ "response"}, then \texttt{gbm} converts the predicted values back to the same scale as the outcome. This will convert the predicted values into probabilities for Bernoulli and expected counts for Poisson.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-23}{%
+\subsection*{Exercise}\label{exercise-23}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+\begin{itemize}
+\tightlist
+\item
+  Generate predictions on the test set, using 10,000 trees.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Since we converted the training response col, let's also convert the test response col}
+\NormalTok{credit_test}\OperatorTok{$}\NormalTok{default <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(credit_test}\OperatorTok{$}\NormalTok{default }\OperatorTok{==}\StringTok{ "yes"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+
+\CommentTok{# Generate predictions on the test set}
+\NormalTok{preds1 <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model, }
+                  \DataTypeTok{newdata =}\NormalTok{ credit_test,}
+                  \DataTypeTok{n.trees =} \DecValTok{10000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Generate predictions on the test set using \texttt{type\ =\ "response"} and 10,000 trees.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predictions on the test set (scale to response)}
+\NormalTok{preds2 <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model, }
+                  \DataTypeTok{newdata =}\NormalTok{ credit_test,}
+                  \DataTypeTok{n.trees =} \DecValTok{10000}\NormalTok{,}
+                  \DataTypeTok{type =} \StringTok{"response"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Compare the ranges of the two sets of predictions.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compare the range of the two sets of predictions}
+\KeywordTok{range}\NormalTok{(preds1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] -6.004812  4.646991
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{range}\NormalTok{(preds2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.002460783 0.990500685
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{evaluate-test-set-auc-1}{%
+\subsection{Evaluate test set AUC}\label{evaluate-test-set-auc-1}}
+
+Compute test set AUC of the GBM model for the two sets of predictions. We will notice that they are the same value. That's because AUC is a rank-based metric, so changing the actual values does not change the value of the AUC.
+
+However, if we were to use a scale-aware metric like RMSE to evaluate performance, we would want to make sure we converted the predictions back to the original scale of the response.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-24}{%
+\subsection*{Exercise}\label{exercise-24}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The \texttt{preds1} and \texttt{preds2} prediction vectors from the previous exercise are pre-loaded into the workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Compute AUC of the predictions.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ credit_test}\OperatorTok{$}\NormalTok{default, }\DataTypeTok{predicted =}\NormalTok{ preds1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.7142857
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Compute AUC of the predictions (scaled to response).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ credit_test}\OperatorTok{$}\NormalTok{default, }\DataTypeTok{predicted =}\NormalTok{ preds2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.7142857
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Notice that the AUC is the same!
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{gbm-hyperparameters}{%
+\section{GBM Hyperparameters}\label{gbm-hyperparameters}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{early-stopping-in-gbms}{%
+\subsection{Early Stopping in GBMs}\label{early-stopping-in-gbms}}
+
+Use the \texttt{gbm.perf()} function to estimate the optimal number of boosting iterations (aka \texttt{n.trees}) for a GBM model object using both OOB and CV error. When you set out to train a large number of trees in a GBM (such as 10,000) and you use a validation method to determine an earlier (smaller) number of trees, then that's called ``early stopping''. The term ``early stopping'' is not unique to GBMs, but can describe auto-tuning the number of iterations in an iterative learning algorithm.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-25}{%
+\subsection*{Exercise}\label{exercise-25}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The \texttt{credit\_model} object is loaded in the workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Use the \texttt{gbm.perf()} function with the ``OOB'' method to get the optimal number of trees based on the OOB error and store that number as \texttt{ntree\_opt\_oob}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Optimal ntree estimate based on OOB}
+\NormalTok{ntree_opt_oob <-}\StringTok{ }\KeywordTok{gbm.perf}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model, }
+                          \DataTypeTok{method =} \StringTok{"OOB"}\NormalTok{, }
+                          \DataTypeTok{oobag.curve =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## OOB generally underestimates the optimal number of iterations although predictive performance is reasonably competitive. Using cv_folds>1 when calling gbm usually results in improved predictive performance.
+\end{verbatim}
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-84-1.pdf} \includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-84-2.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Train a new GBM model, this time with cross-validation, so we can get a cross-validated estimate of the optimal number of trees.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Train a CV GBM model}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{credit_model_cv <-}\StringTok{ }\KeywordTok{gbm}\NormalTok{(}\DataTypeTok{formula =}\NormalTok{ default }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                       \DataTypeTok{distribution =} \StringTok{"bernoulli"}\NormalTok{, }
+                       \DataTypeTok{data =}\NormalTok{ credit_train,}
+                       \DataTypeTok{n.trees =} \DecValTok{10000}\NormalTok{,}
+                       \DataTypeTok{cv.folds =} \DecValTok{2}\NormalTok{,}
+                       \DataTypeTok{n.cores =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+CV: 1 
+CV: 2 
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Lastly, use the gbm.perf() function with the ``cv'' method to get the optimal number of trees based on the CV error and store that number as ntree\_opt\_cv.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Optimal ntree estimate based on CV}
+\NormalTok{ntree_opt_cv <-}\StringTok{ }\KeywordTok{gbm.perf}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model_cv, }
+                         \DataTypeTok{method =} \StringTok{"cv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{HonorsBookdown_files/figure-latex/unnamed-chunk-86-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Compare the two numbers.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compare the estimates                         }
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"Optimal n.trees (OOB Estimate): "}\NormalTok{, ntree_opt_oob))                         }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Optimal n.trees (OOB Estimate): 76"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"Optimal n.trees (CV Estimate): "}\NormalTok{, ntree_opt_cv))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Optimal n.trees (CV Estimate): 139"
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{oob-vs-cv-based-early-stopping}{%
+\subsection{OOB vs CV-Based Early Stopping}\label{oob-vs-cv-based-early-stopping}}
+
+In the previous exercise, we used OOB error and cross-validated error to estimate the optimal number of trees in the GBM. These are two different ways to estimate the optimal number of trees, so in this exercise we will compare the performance of the models on a test set. We can use the same model object to make both of these estimates since the \texttt{predict.gbm()} function allows you to use any subset of the total number of trees (in our case, the total number is 10,000).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-26}{%
+\subsection*{Exercise}\label{exercise-26}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The \texttt{ntree\_opt\_oob} and \texttt{ntree\_opt\_cv} objects from the previous exercise (each storing an ``optimal'' value for \texttt{n.trees}) are loaded in the workspace.
+
+Using the \texttt{credit\_model} loaded in the workspace, generate two sets of predictions:
+
+\begin{itemize}
+\tightlist
+\item
+  One using the OOB estimate of \texttt{n.trees}: 3,233 (stored in \texttt{ntree\_opt\_oob})
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predictions on the test set using ntree_opt_oob number of trees}
+\NormalTok{preds1 <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model, }
+                  \DataTypeTok{newdata =}\NormalTok{ credit_test,}
+                  \DataTypeTok{n.trees =}\NormalTok{ ntree_opt_oob)}
+\NormalTok{auc1 <-}\StringTok{ }\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ credit_test}\OperatorTok{$}\NormalTok{default, }\DataTypeTok{predicted =}\NormalTok{ preds1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  And the other using the CV estimate of \texttt{n.trees}: 7,889 (stored in \texttt{ntree\_opt\_cv})
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate predictions on the test set using ntree_opt_cv number of trees}
+\NormalTok{preds2 <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(}\DataTypeTok{object =}\NormalTok{ credit_model, }
+                  \DataTypeTok{newdata =}\NormalTok{ credit_test,}
+                  \DataTypeTok{n.trees =}\NormalTok{ ntree_opt_cv)   }
+\NormalTok{auc2 <-}\StringTok{ }\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ credit_test}\OperatorTok{$}\NormalTok{default, }\DataTypeTok{predicted =}\NormalTok{ preds2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Compare the AUCs
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Compare AUC }
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"Test set AUC (OOB): "}\NormalTok{, auc1))                         }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Test set AUC (OOB): 0.802527472527472"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste0}\NormalTok{(}\StringTok{"Test set AUC (CV): "}\NormalTok{, auc2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Test set AUC (CV): 0.788241758241758"
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{model-comparison-via-roc-curve-auc}{%
+\section{Model Comparison via ROC Curve \& AUC}\label{model-comparison-via-roc-curve-auc}}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{compare-all-models-based-on-auc}{%
+\subsection{Compare All Models Based on AUC}\label{compare-all-models-based-on-auc}}
+
+In this final exercise, we will perform a model comparison across all types of models that we've learned about so far: Decision Trees, Bagged Trees, Random Forest and Gradient Boosting Machine (GBM). The models were all trained on the same training set, \texttt{credit\_train}, and predictions were made for the \texttt{credit\_test} dataset.
+
+We have pre-loaded four sets of test set predictions, generated using the models we trained in previous chapters (one for each model type). The numbers stored in the prediction vectors are the raw predicted values themselves -- not the predicted class labels. Using the raw predicted values, we can calculate test set AUC for each model and compare the results.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-27}{%
+\subsection*{Exercise}\label{exercise-27}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+Loaded in your workspace are four numeric vectors:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{dt\_preds}
+\item
+  \texttt{bag\_preds}
+\item
+  \texttt{rf\_preds}
+\item
+  \texttt{gbm\_preds}
+\end{itemize}
+
+These predictions were made on \texttt{credit\_test}, which is also loaded into the workspace.
+
+\begin{itemize}
+\tightlist
+\item
+  Apply the \texttt{Metrics::auc()} function to each of these vectors to calculate test set AUC. Recall that the higher the AUC, the better the model.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate the test set AUCs using the two sets of predictions & compare}
+\NormalTok{a <-}\StringTok{ }\NormalTok{credit_Test}\OperatorTok{$}\NormalTok{default}
+\NormalTok{dt_auc <-}\StringTok{ }\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ a, }\DataTypeTok{predicted =}\NormalTok{ dt_preds)}
+\NormalTok{bag_auc <-}\StringTok{ }\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ a, }\DataTypeTok{predicted =}\NormalTok{ bag_preds)}
+\NormalTok{rf_auc <-}\StringTok{ }\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ a, }\DataTypeTok{predicted =}\NormalTok{ rf_preds)}
+\NormalTok{gbm_auc <-}\StringTok{ }\KeywordTok{auc}\NormalTok{(}\DataTypeTok{actual =}\NormalTok{ a, }\DataTypeTok{predicted =}\NormalTok{ gbm_preds)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Print results}
+\KeywordTok{sprintf}\NormalTok{(}\StringTok{"Decision Tree Test AUC: %.3f"}\NormalTok{, dt_auc)}
+\KeywordTok{sprintf}\NormalTok{(}\StringTok{"Bagged Trees Test AUC: %.3f"}\NormalTok{, bag_auc)}
+\KeywordTok{sprintf}\NormalTok{(}\StringTok{"Random Forest Test AUC: %.3f"}\NormalTok{, rf_auc)}
+\KeywordTok{sprintf}\NormalTok{(}\StringTok{"GBM Test AUC: %.3f"}\NormalTok{, gbm_auc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{plot-compare-roc-curves}{%
+\subsection{Plot \& Compare ROC Curves}\label{plot-compare-roc-curves}}
+
+We conclude this course by plotting the ROC curves for all the models (one from each chapter) on the same graph. The ROCR package provides the \texttt{prediction()} and \texttt{performance()} functions which generate the data required for plotting the ROC curve, given a set of predictions and actual (true) values.
+
+The more ``up and to the left'' the ROC curve of a model is, the better the model. The AUC performance metric is literally the ``Area Under the ROC Curve'', so the greater the area under this curve, the higher the AUC, and the better-performing the model is.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{exercise-28}{%
+\subsection*{Exercise}\label{exercise-28}}
+\addcontentsline{toc}{subsection}{Exercise}
+
+The \textbf{ROCR} package can plot multiple ROC curves on the same plot if you plot several sets of predictions as a list.
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{prediction()} function takes as input a list of prediction vectors (one per model) and a corresponding list of true values (one per model, though in our case the models were all evaluated on the same test set so they all have the same set of true values). The \texttt{prediction()} function returns a ``prediction'' object which is then passed to the \texttt{performance()} function.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# List of predictions}
+\NormalTok{preds_list <-}\StringTok{ }\KeywordTok{list}\NormalTok{(dt_preds, bag_preds, rf_preds, gbm_preds)}
+
+\CommentTok{# List of actual values (same for all)}
+\NormalTok{m <-}\StringTok{ }\KeywordTok{length}\NormalTok{(preds_list)}
+\NormalTok{actuals_list <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\KeywordTok{list}\NormalTok{(credit_test}\OperatorTok{$}\NormalTok{default), m)}
+
+\CommentTok{# Plot the ROC curves}
+\NormalTok{pred <-}\StringTok{ }\KeywordTok{prediction}\NormalTok{(preds_list, actuals_list)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  The \texttt{performance()} function generates the data necessary to plot the curve from the ``prediction'' object. For the ROC curve, you will also pass along two measures, \texttt{"tpr"} and \texttt{"fpr"}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rocs <-}\StringTok{ }\KeywordTok{performance}\NormalTok{(pred, }\StringTok{"tpr"}\NormalTok{, }\StringTok{"fpr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Once you have the ``performance'' object, you can plot the ROC curves using the \texttt{plot()} method. We will add some color to the curves and a legend so we can tell which curves belong to which algorithm.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(rocs, }\DataTypeTok{col =} \KeywordTok{as.list}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\NormalTok{m), }\DataTypeTok{main =} \StringTok{"Test Set ROC Curves"}\NormalTok{)}
+\KeywordTok{legend}\NormalTok{(}\DataTypeTok{x =} \StringTok{"bottomright"}\NormalTok{, }
+       \DataTypeTok{legend =} \KeywordTok{c}\NormalTok{(}\StringTok{"Decision Tree"}\NormalTok{, }\StringTok{"Bagged Trees"}\NormalTok{, }\StringTok{"Random Forest"}\NormalTok{, }\StringTok{"GBM"}\NormalTok{),}
+       \DataTypeTok{fill =} \DecValTok{1}\OperatorTok{:}\NormalTok{m)}
+\end{Highlighting}
+\end{Shaded}
 
   \bibliography{book.bib,packages.bib}
 

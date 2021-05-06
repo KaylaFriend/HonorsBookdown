@@ -2,6 +2,18 @@
 
 ```{r include=FALSE}
 library(gbm)
+library(readr)
+library(rpart)
+library(rpart.plot)
+library(tidyverse)
+library(caret)
+library(Metrics)
+
+url <- "https://assets.datacamp.com/production/repositories/710/datasets/b649085c43111c83ba7ab6ec172d83cdc14a2942/credit.csv"
+  if(!file.exists("./credit.csv")){download.file(url, destfile = "./credit.csv")}
+
+credit <- read.csv("./credit.csv")
+
 creditsub <- credit %>%
   select(months_loan_duration, percent_of_income, years_at_residence, age, default)
 n <- nrow(creditsub)
@@ -34,7 +46,7 @@ What is the main difference between bagged trees and boosted trees?
 
 _____________
 
-### Train a GBM Model
+## Train a GBM Model
 
 Here you will use the `gbm()` function to train a GBM classifier to predict loan default. You will train a 10,000-tree GBM on the `credit_train` dataset, which is pre-loaded into your workspace.
 
@@ -57,10 +69,10 @@ credit_train$default <- ifelse(credit_train$default == "yes", 1, 0)
 
 * Train a 10,000-tree GBM model.
 
-```{r}
+```{r comment=NA}
 # Train a 10000-tree GBM model
 set.seed(1)
-credit_train
+
 credit_model <- gbm(formula = default ~ ., 
                     distribution = "bernoulli", 
                     data = credit_train,
@@ -114,10 +126,16 @@ preds2 <- predict(object = credit_model,
                   n.trees = 10000,
                   type = "response")
 ```
+```{r include=FALSE}
+gbm_preds <- predict(object = credit_model, 
+                  newdata = credit_test,
+                  n.trees = 10000)
+```
+
 
 * Compare the ranges of the two sets of predictions.
 
-```{r}
+```{r comment=NA}
 # Compare the range of the two sets of predictions
 range(preds1)
 range(preds2)
@@ -139,13 +157,13 @@ The `preds1` and `preds2` prediction vectors from the previous exercise are pre-
 
 * Compute AUC of the predictions.
 
-```{r}
+```{r comment=NA}
 auc(actual = credit_test$default, predicted = preds1)
 ```
 
 * Compute AUC of the predictions (scaled to response).
 
-```{r}
+```{r comment=NA}
 auc(actual = credit_test$default, predicted = preds2)
 ```
 
@@ -171,7 +189,7 @@ The `credit_model` object is loaded in the workspace.
 
 * Use the `gbm.perf()` function with the "OOB" method to get the optimal number of trees based on the OOB error and store that number as `ntree_opt_oob`.
 
-```{r}
+```{r warning=FALSE}
 # Optimal ntree estimate based on OOB
 ntree_opt_oob <- gbm.perf(object = credit_model, 
                           method = "OOB", 
@@ -180,7 +198,7 @@ ntree_opt_oob <- gbm.perf(object = credit_model,
 
 * Train a new GBM model, this time with cross-validation, so we can get a cross-validated estimate of the optimal number of trees.
 
-```{r}
+```{r comment=NA}
 # Train a CV GBM model
 set.seed(1)
 credit_model_cv <- gbm(formula = default ~ ., 
@@ -201,7 +219,7 @@ ntree_opt_cv <- gbm.perf(object = credit_model_cv,
 
 * Compare the two numbers.
 
-```{r}
+```{r comment=NA}
 # Compare the estimates                         
 print(paste0("Optimal n.trees (OOB Estimate): ", ntree_opt_oob))                         
 print(paste0("Optimal n.trees (CV Estimate): ", ntree_opt_cv))
@@ -243,7 +261,7 @@ auc2 <- auc(actual = credit_test$default, predicted = preds2)
 
 * Compare the AUCs
 
-```{r}
+```{r comment=NA}
 # Compare AUC 
 print(paste0("Test set AUC (OOB): ", auc1))                         
 print(paste0("Test set AUC (CV): ", auc2))
@@ -278,20 +296,24 @@ These predictions were made on `credit_test`, which is also loaded into the work
 
 * Apply the `Metrics::auc()` function to each of these vectors to calculate test set AUC. Recall that the higher the AUC, the better the model.
 
-```{r}
+```{r eval=FALSE, comment=NA}
 # Generate the test set AUCs using the two sets of predictions & compare
-actual <- credit_test$default
-dt_auc <- auc(actual = actual, predicted = dt_preds)
-bag_auc <- auc(actual = actual, predicted = bag_preds)
-rf_auc <- auc(actual = actual, predicted = rf_preds)
-gbm_auc <- auc(actual = actual, predicted = gbm_preds)
+a <- credit_Test$default
+dt_auc <- auc(actual = a, predicted = dt_preds)
+bag_auc <- auc(actual = a, predicted = bag_preds)
+rf_auc <- auc(actual = a, predicted = rf_preds)
+gbm_auc <- auc(actual = a, predicted = gbm_preds)
 
+
+```
+```{r eval=FALSE, comment=NA}
 # Print results
 sprintf("Decision Tree Test AUC: %.3f", dt_auc)
 sprintf("Bagged Trees Test AUC: %.3f", bag_auc)
 sprintf("Random Forest Test AUC: %.3f", rf_auc)
 sprintf("GBM Test AUC: %.3f", gbm_auc)
 ```
+
 
 ___________________
 
@@ -309,7 +331,7 @@ The **ROCR** package can plot multiple ROC curves on the same plot if you plot s
 
 * The `prediction()` function takes as input a list of prediction vectors (one per model) and a corresponding list of true values (one per model, though in our case the models were all evaluated on the same test set so they all have the same set of true values). The `prediction()` function returns a "prediction" object which is then passed to the `performance()` function.
 
-```{r}
+```{r eval=FALSE}
 # List of predictions
 preds_list <- list(dt_preds, bag_preds, rf_preds, gbm_preds)
 
@@ -323,13 +345,13 @@ pred <- prediction(preds_list, actuals_list)
 
 * The `performance()` function generates the data necessary to plot the curve from the "prediction" object. For the ROC curve, you will also pass along two measures, `"tpr"` and `"fpr"`.
 
-```{r}
+```{r eval=FALSE}
 rocs <- performance(pred, "tpr", "fpr")
 ```
 
 * Once you have the "performance" object, you can plot the ROC curves using the `plot()` method. We will add some color to the curves and a legend so we can tell which curves belong to which algorithm.
 
-```{r}
+```{r eval=FALSE}
 plot(rocs, col = as.list(1:m), main = "Test Set ROC Curves")
 legend(x = "bottomright", 
        legend = c("Decision Tree", "Bagged Trees", "Random Forest", "GBM"),

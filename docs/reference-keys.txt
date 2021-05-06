@@ -6,11 +6,14 @@ advantages-of-tree-based-methods
 prediction-with-a-classification-tree
 overview-of-the-modelling-process
 traintest-split
+train-a-classification-tree
 evaluating-classification-model-performance
 compute-confusion-matrix
 use-of-splitting-criterion-in-trees
+compare-models-with-a-different-splitting-criterion
 regression-trees
 introduction-to-regression-trees
+classification-vs.-regression
 split-the-data
 train-a-regression-tree-model
 performance-metrics-for-regression

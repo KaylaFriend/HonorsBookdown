@@ -20,7 +20,7 @@ library(rpart.plot)
 
 _____________
 
-### Classification vs. regression{-}
+### Classification vs. regression
 
 What is the difference between classification and regression?
 
@@ -54,7 +54,7 @@ The dataset `grade` is already in your workspace.
 
 * Take a look at the data using the `str()` function.
 
-```{r}
+```{r comment=NA}
 # Look at the data
 str(grade)
 ```
@@ -101,7 +101,7 @@ grade_model <- rpart(formula = final_grade ~ .,
 
 * Look at the model output by printing the model object.
 
-```{r}
+```{r comment=NA}
 # Look at the model output                      
 print(grade_model)
 ```
@@ -139,7 +139,7 @@ pred <- predict(object = grade_model,  # model object
 
 * After generating test set predictions, use the `rmse()` function from the **Metrics** package to compute test set RMSE.
 
-```{r}
+```{r comment=NA}
 # Compute the RMSE
 rmse(actual = grade_test$final_grade, 
      predicted = pred)
@@ -161,7 +161,7 @@ Tune (or "trim") the model using the `prune()` function by finding the best "CP"
 
 * Print the CP Table, a matrix of information on the optimal prunings (based on CP).
 
-```{r}
+```{r comment=NA}
 # Plot the "CP Table"
 plotcp(grade_model)
 # Print the "CP Table"
@@ -219,7 +219,7 @@ hyper_grid <- expand.grid(minsplit = minsplit, maxdepth = maxdepth)
 
 * Take a look at the resulting grid object
 
-```{r}
+```{r comment=NA}
 # Check out the grid
 head(hyper_grid)
 # Print the number of grid combinations
@@ -326,7 +326,7 @@ best_model$control
 
 * Generate predictions on the test set using the best model to compute test set RMSE.
 
-```{r}
+```{r comment=NA}
 # Compute test set RMSE on best_model
 pred <- predict(object = best_model,
                 newdata = grade_test)

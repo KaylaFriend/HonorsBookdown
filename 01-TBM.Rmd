@@ -40,7 +40,7 @@ The data frame `creditsub` is in the workspace. This data frame is a subset of t
 
 * Take a look at the data using the `str()` function.
 
-```{r}
+```{r comment=NA}
 str(creditsub)
 ```
 
@@ -146,7 +146,7 @@ credit_test <- credit[-train_indices, ]
 
 _______________
 
-### Train a Classification Tree{-}
+### Train a Classification Tree
 
 In this exercise, you will train a model on the newly created training set and print the model object to get a sense of the results.
 
@@ -161,7 +161,7 @@ credit_model <- rpart(formula = default ~ .,
 
 * Look at the model output by printing the model object.
 
-```{r}
+```{r comment=NA}
 # Look at the model output                      
 print(credit_model)
 ```
@@ -174,7 +174,7 @@ _______________
 
 _______________
 
-## Compute confusion matrix
+### Compute confusion matrix
 
 As discussed in the previous video, there are a number of different metrics by which you can measure the performance of a classification model. In this exercise, we will evaluate the performance of the model using test set classification error. A confusion matrix is a convenient way to examine the per-class error rates for all classes at once.
 
@@ -188,7 +188,7 @@ The caret package has been loaded for you.
 
 * Generate class predictions for the `credit_test` data frame using the `credit_model` object.
 
-```{r}
+```{r comment=NA}
 # Generate predicted classes using the model object
 class_prediction <- predict(object = credit_model,  
                         newdata = credit_test,   
@@ -198,7 +198,7 @@ class_prediction
 
 * Using the `caret::confusionMatrix()` function, compute the confusion matrix for the test set.
 
-```{r}
+```{r comment=NA}
 # Calculate the confusion matrix for the test set
 caret::confusionMatrix(data = class_prediction,       
         reference = factor(credit_test$default))
@@ -212,7 +212,7 @@ ______________
 
 ______________
 
-## Compare models with a different splitting criterion{-}
+### Compare models with a different splitting criterion
 
 Train two models that use a different splitting criterion and use the validation set to choose a "best" model from this group. To do this you'll use the `parms` argument of the `rpart()` function. This argument takes a named list that contains values of different parameters you can use to change how the model is trained. Set the parameter `split` to control the splitting criterion.
 
@@ -255,10 +255,16 @@ pred2 <- predict(object = credit_model2,
                  newdata = credit_test,
                  type = "class")
 ```
+```{r include=FALSE}
+dt_preds <- predict(object = credit_model2, 
+                 newdata = credit_test,
+                 type = "class")
+```
+
 
 * Classification error is the fraction of incorrectly classified instances. Compute and compare the test set classification error of the two models by using the `ce()` function.
 
-```{r}
+```{r comment=NA}
 # Compare classification error
 ce(actual = credit_test$default, 
      predicted = pred1)
