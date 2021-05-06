@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Bagged Trees | Tree-Based Models</title>
+  <meta name="description" content="Bookdown based on the datacamp course Tree-Based Models in R. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Bagged Trees | Tree-Based Models" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bookdown based on the datacamp course Tree-Based Models in R. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Bagged Trees | Tree-Based Models" />
+  
+  <meta name="twitter:description" content="Bookdown based on the datacamp course Tree-Based Models in R. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Kayla Friend" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression-trees.html"/>
+<link rel="next" href="random-forests.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="classification-trees.html"><a href="classification-trees.html"><i class="fa fa-check"></i><b>2</b> Classification Trees</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#welcome-to-the-course"><i class="fa fa-check"></i>Welcome to the Course</a></li>
+<li class="chapter" data-level="2.1" data-path="classification-trees.html"><a href="classification-trees.html#build-a-classification-tree"><i class="fa fa-check"></i><b>2.1</b> Build a Classification Tree</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="classification-trees.html"><a href="classification-trees.html#introduction-to-classification-trees"><i class="fa fa-check"></i><b>2.2</b> Introduction to Classification Trees</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="classification-trees.html"><a href="classification-trees.html#advantages-of-tree-based-methods"><i class="fa fa-check"></i><b>2.2.1</b> Advantages of Tree-Based Methods</a></li>
+<li class="chapter" data-level="2.2.2" data-path="classification-trees.html"><a href="classification-trees.html#prediction-with-a-classification-tree"><i class="fa fa-check"></i><b>2.2.2</b> Prediction with a Classification Tree</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="classification-trees.html"><a href="classification-trees.html#overview-of-the-modelling-process"><i class="fa fa-check"></i><b>2.3</b> Overview of the Modelling Process</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="classification-trees.html"><a href="classification-trees.html#traintest-split"><i class="fa fa-check"></i><b>2.3.1</b> Train/Test Split</a></li>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-1"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#train-a-classification-tree"><i class="fa fa-check"></i>Train a Classification Tree</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="classification-trees.html"><a href="classification-trees.html#evaluating-classification-model-performance"><i class="fa fa-check"></i><b>2.4</b> Evaluating Classification Model Performance</a></li>
+<li class="chapter" data-level="2.5" data-path="classification-trees.html"><a href="classification-trees.html#compute-confusion-matrix"><i class="fa fa-check"></i><b>2.5</b> Compute confusion matrix</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-2"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="classification-trees.html"><a href="classification-trees.html#use-of-splitting-criterion-in-trees"><i class="fa fa-check"></i><b>2.6</b> Use of Splitting Criterion in Trees</a></li>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#compare-models-with-a-different-splitting-criterion"><i class="fa fa-check"></i>Compare models with a different splitting criterion</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-3"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>3</b> Regression Trees</a><ul>
+<li class="chapter" data-level="3.1" data-path="regression-trees.html"><a href="regression-trees.html#introduction-to-regression-trees"><i class="fa fa-check"></i><b>3.1</b> Introduction to Regression Trees</a><ul>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#classification-vs.-regression"><i class="fa fa-check"></i>Classification vs. regression</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="regression-trees.html"><a href="regression-trees.html#split-the-data"><i class="fa fa-check"></i><b>3.2</b> Split the data</a><ul>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-4"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="regression-trees.html"><a href="regression-trees.html#train-a-regression-tree-model"><i class="fa fa-check"></i><b>3.3</b> Train a regression tree model</a><ul>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-5"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="regression-trees.html"><a href="regression-trees.html#performance-metrics-for-regression"><i class="fa fa-check"></i><b>3.4</b> Performance Metrics for Regression</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="regression-trees.html"><a href="regression-trees.html#evaluate-a-regression-tree-model"><i class="fa fa-check"></i><b>3.4.1</b> Evaluate a regression tree model</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-6"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="regression-trees.html"><a href="regression-trees.html#what-are-the-hyperparameters-for-a-decision-tree"><i class="fa fa-check"></i><b>3.5</b> What are the Hyperparameters for a Decision Tree?</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="regression-trees.html"><a href="regression-trees.html#tuning-the-model"><i class="fa fa-check"></i><b>3.5.1</b> Tuning the Model</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-7"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="regression-trees.html"><a href="regression-trees.html#grid-search-for-model-selection"><i class="fa fa-check"></i><b>3.6</b> Grid Search for Model Selection</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="regression-trees.html"><a href="regression-trees.html#generate-a-grid-of-hyperparameter-values"><i class="fa fa-check"></i><b>3.6.1</b> Generate a grid of hyperparameter values</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-8"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="3.6.2" data-path="regression-trees.html"><a href="regression-trees.html#generate-a-grid-of-models"><i class="fa fa-check"></i><b>3.6.2</b> Generate a grid of models</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-9"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="3.6.3" data-path="regression-trees.html"><a href="regression-trees.html#evaluate-the-grid"><i class="fa fa-check"></i><b>3.6.3</b> Evaluate the grid</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-10"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>4</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="4.1" data-path="bagged-trees.html"><a href="bagged-trees.html#introduction-to-bagged-trees"><i class="fa fa-check"></i><b>4.1</b> Introduction to Bagged Trees</a></li>
+<li class="chapter" data-level="4.2" data-path="bagged-trees.html"><a href="bagged-trees.html#advantages-of-bagged-trees"><i class="fa fa-check"></i><b>4.2</b> Advantages of bagged trees</a></li>
+<li class="chapter" data-level="4.3" data-path="bagged-trees.html"><a href="bagged-trees.html#train-a-bagged-tree-model"><i class="fa fa-check"></i><b>4.3</b> Train a Bagged Tree Model</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-11"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bagged-trees.html"><a href="bagged-trees.html#evaluating-the-bagged-tree-performance"><i class="fa fa-check"></i><b>4.4</b> Evaluating the Bagged Tree Performance</a></li>
+<li class="chapter" data-level="4.5" data-path="bagged-trees.html"><a href="bagged-trees.html#prediction-and-confusion-matrix"><i class="fa fa-check"></i><b>4.5</b> Prediction and confusion matrix</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-12"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="bagged-trees.html"><a href="bagged-trees.html#predict-on-a-test-set-and-compute-auc"><i class="fa fa-check"></i><b>4.6</b> Predict on a Test Set and Compute AUC</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-13"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="bagged-trees.html"><a href="bagged-trees.html#using-caret-for-cross-validating-models"><i class="fa fa-check"></i><b>4.7</b> Using <code>caret</code> for Cross-Validating Models</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="bagged-trees.html"><a href="bagged-trees.html#cross-validate-a-bagged-tree-model-in-caret"><i class="fa fa-check"></i><b>4.7.1</b> Cross-validate a bagged tree model in caret</a></li>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-14"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="4.7.2" data-path="bagged-trees.html"><a href="bagged-trees.html#generate-predictions-from-the-caret-model"><i class="fa fa-check"></i><b>4.7.2</b> Generate predictions from the caret model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="bagged-trees.html"><a href="bagged-trees.html#compare-test-set-performance-to-cv-performance"><i class="fa fa-check"></i><b>4.8</b> Compare test set performance to CV performance</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-15"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>5</b> Random Forests</a><ul>
+<li class="chapter" data-level="5.1" data-path="random-forests.html"><a href="random-forests.html#introduction-to-random-forests"><i class="fa fa-check"></i><b>5.1</b> Introduction to Random Forests</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="random-forests.html"><a href="random-forests.html#bagged-trees-vs.-random-forest"><i class="fa fa-check"></i><b>5.1.1</b> Bagged trees vs. Random Forest</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="random-forests.html"><a href="random-forests.html#train-a-random-forest-model"><i class="fa fa-check"></i><b>5.2</b> Train a Random Forest model</a><ul>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-16"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="random-forests.html"><a href="random-forests.html#understanding-random-forest-model-output"><i class="fa fa-check"></i><b>5.3</b> Understanding Random Forest Model Output</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="random-forests.html"><a href="random-forests.html#evaluate-out-of-bag-error"><i class="fa fa-check"></i><b>5.3.1</b> Evaluate out-of-bag error</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-17"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="5.3.2" data-path="random-forests.html"><a href="random-forests.html#evaluate-model-performance-on-a-test-set"><i class="fa fa-check"></i><b>5.3.2</b> Evaluate model performance on a test set</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-18"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="random-forests.html"><a href="random-forests.html#oob-error-vs.-test-set-error"><i class="fa fa-check"></i><b>5.4</b> OOB Error vs. Test Set Error</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="random-forests.html"><a href="random-forests.html#advantage-of-oob-error"><i class="fa fa-check"></i><b>5.4.1</b> Advantage of OOB error</a></li>
+<li class="chapter" data-level="5.4.2" data-path="random-forests.html"><a href="random-forests.html#evaluate-test-set-auc"><i class="fa fa-check"></i><b>5.4.2</b> Evaluate Test Set AUC</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-19"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="random-forests.html"><a href="random-forests.html#tuning-a-random-forest-model"><i class="fa fa-check"></i><b>5.5</b> Tuning a Random Forest Model</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="random-forests.html"><a href="random-forests.html#tuning-a-random-forest-via-mtry"><i class="fa fa-check"></i><b>5.5.1</b> Tuning a Random Forest via mtry</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-20"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="5.5.2" data-path="random-forests.html"><a href="random-forests.html#tuning-a-random-forest-via-tree-depth"><i class="fa fa-check"></i><b>5.5.2</b> Tuning a Random Forest via tree depth</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-21"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="boosted-trees.html"><a href="boosted-trees.html"><i class="fa fa-check"></i><b>6</b> Boosted Trees</a><ul>
+<li class="chapter" data-level="6.1" data-path="boosted-trees.html"><a href="boosted-trees.html#introduction-to-boosting"><i class="fa fa-check"></i><b>6.1</b> Introduction to Boosting</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="boosted-trees.html"><a href="boosted-trees.html#bagged-trees-vs.-boosted-trees"><i class="fa fa-check"></i><b>6.1.1</b> Bagged trees vs. boosted trees</a></li>
+<li class="chapter" data-level="6.1.2" data-path="boosted-trees.html"><a href="boosted-trees.html#train-a-gbm-model"><i class="fa fa-check"></i><b>6.1.2</b> Train a GBM Model</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-22"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="boosted-trees.html"><a href="boosted-trees.html#understanding-gbm-model-output"><i class="fa fa-check"></i><b>6.2</b> Understanding GBM Model Output</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="boosted-trees.html"><a href="boosted-trees.html#prediction-using-a-gbm-model"><i class="fa fa-check"></i><b>6.2.1</b> Prediction using a GBM model</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-23"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="6.2.2" data-path="boosted-trees.html"><a href="boosted-trees.html#evaluate-test-set-auc-1"><i class="fa fa-check"></i><b>6.2.2</b> Evaluate test set AUC</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-24"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="boosted-trees.html"><a href="boosted-trees.html#gbm-hyperparameters"><i class="fa fa-check"></i><b>6.3</b> GBM Hyperparameters</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="boosted-trees.html"><a href="boosted-trees.html#early-stopping-in-gbms"><i class="fa fa-check"></i><b>6.3.1</b> Early Stopping in GBMs</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-25"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="6.3.2" data-path="boosted-trees.html"><a href="boosted-trees.html#oob-vs-cv-based-early-stopping"><i class="fa fa-check"></i><b>6.3.2</b> OOB vs CV-Based Early Stopping</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-26"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="boosted-trees.html"><a href="boosted-trees.html#model-comparison-via-roc-curve-auc"><i class="fa fa-check"></i><b>6.4</b> Model Comparison via ROC Curve &amp; AUC</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="boosted-trees.html"><a href="boosted-trees.html#compare-all-models-based-on-auc"><i class="fa fa-check"></i><b>6.4.1</b> Compare All Models Based on AUC</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-27"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="6.4.2" data-path="boosted-trees.html"><a href="boosted-trees.html#plot-compare-roc-curves"><i class="fa fa-check"></i><b>6.4.2</b> Plot &amp; Compare ROC Curves</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-28"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><a href="https://learn.datacamp.com/courses/tree-based-models-in-r">Tree-Based Models</a></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bagged-trees" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Bagged Trees</h1>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.3     ✓ dplyr   1.0.5
+## ✓ tibble  3.1.1     ✓ stringr 1.4.0
+## ✓ tidyr   1.1.3     ✓ forcats 0.5.1
+## ✓ purrr   0.3.4</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## 
+## Attaching package: &#39;caret&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     lift</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Metrics&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:caret&#39;:
+## 
+##     precision, recall</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   checking_balance = col_character(),
+##   months_loan_duration = col_double(),
+##   credit_history = col_character(),
+##   purpose = col_character(),
+##   amount = col_double(),
+##   savings_balance = col_character(),
+##   employment_duration = col_character(),
+##   percent_of_income = col_double(),
+##   years_at_residence = col_double(),
+##   age = col_double(),
+##   other_credit = col_character(),
+##   housing = col_character(),
+##   existing_loans_count = col_double(),
+##   job = col_character(),
+##   dependents = col_double(),
+##   phone = col_character(),
+##   default = col_character()
+## )</code></pre>
+<div id="introduction-to-bagged-trees" class="section level2">
+<h2><span class="header-section-number">4.1</span> Introduction to Bagged Trees</h2>
+<iframe src="https://drive.google.com/file/d/1DhOLqbdyl-XQxWy7uebvQ9QDo5F3skXO/preview" width="640" height="480">
+</iframe>
+<hr />
+</div>
+<div id="advantages-of-bagged-trees" class="section level2">
+<h2><span class="header-section-number">4.2</span> Advantages of bagged trees</h2>
+<p>What are the advantages of bagged trees compared to a single tree?</p>
+<ul>
+<li><p>Increases the accuracy of the resulting predictions</p></li>
+<li><p>Easier to interpret the resulting model</p></li>
+<li><p>Reduces variance by averaging a set of observations</p></li>
+<li><p>1 and 2 are correct</p></li>
+<li><p><strong>1 and 3 are correct</strong></p></li>
+<li><p>2 and 3 are correct</p></li>
+</ul>
+<hr />
+</div>
+<div id="train-a-bagged-tree-model" class="section level2">
+<h2><span class="header-section-number">4.3</span> Train a Bagged Tree Model</h2>
+<p>Let’s start by training a bagged tree model. You’ll be using the <code>bagging()</code> function from the <code>ipred</code> package. The number of bagged trees can be specified using the <code>nbagg</code> parameter, but here we will use the default (25).</p>
+<p>If we want to estimate the model’s accuracy using the “out-of-bag” (OOB) samples, we can set the the <code>coob</code> parameter to <code>TRUE</code>. The OOB samples are the training obsevations that were not selected into the bootstrapped sample (used in training). Since these observations were not used in training, we can use them instead to evaluate the accuracy of the model (done automatically inside the <code>bagging()</code> function).</p>
+<hr />
+<div id="exercise-11" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<p>The <code>credit_train</code> and <code>credit_test</code> datasets from Chapter 1 are already loaded in the workspace.</p>
+<ul>
+<li>Use the <code>bagging()</code> function to train a bagged tree model.</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="bagged-trees.html#cb10-1"></a><span class="co"># Bagging is a randomized model, so let&#39;s set a seed (123) for reproducibility</span></span>
+<span id="cb10-2"><a href="bagged-trees.html#cb10-2"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb10-3"><a href="bagged-trees.html#cb10-3"></a></span>
+<span id="cb10-4"><a href="bagged-trees.html#cb10-4"></a><span class="co"># Train a bagged model</span></span>
+<span id="cb10-5"><a href="bagged-trees.html#cb10-5"></a>credit_model &lt;-<span class="st"> </span><span class="kw">bagging</span>(<span class="dt">formula =</span> <span class="kw">factor</span>(default) <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb10-6"><a href="bagged-trees.html#cb10-6"></a>                        <span class="dt">data =</span> credit_train,</span>
+<span id="cb10-7"><a href="bagged-trees.html#cb10-7"></a>                        <span class="dt">coob =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<ul>
+<li>Inspect the model by printing it.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="bagged-trees.html#cb11-1"></a><span class="co"># Print the model</span></span>
+<span id="cb11-2"><a href="bagged-trees.html#cb11-2"></a><span class="kw">print</span>(credit_model)</span></code></pre></div>
+<pre><code>## 
+## Bagging classification trees with 25 bootstrap replications 
+## 
+## Call: bagging.data.frame(formula = factor(default) ~ ., data = credit_train, 
+##     coob = TRUE)
+## 
+## Out-of-bag estimate of misclassification error:  0.2537</code></pre>
+<hr />
+</div>
+</div>
+<div id="evaluating-the-bagged-tree-performance" class="section level2">
+<h2><span class="header-section-number">4.4</span> Evaluating the Bagged Tree Performance</h2>
+<iframe src="https://drive.google.com/file/d/1fo_Ons7vxGcmJYvQIAizhbWuNRiiV-Kj/preview" width="640" height="480">
+</iframe>
+<hr />
+</div>
+<div id="prediction-and-confusion-matrix" class="section level2">
+<h2><span class="header-section-number">4.5</span> Prediction and confusion matrix</h2>
+<p>As you saw in the video, a confusion matrix is a very useful tool for examining all possible outcomes of your predictions (true positive, true negative, false positive, false negative).</p>
+<p>In this exercise, you will predict those who will default using bagged trees. You will also create the confusion matrix using the <code>confusionMatrix()</code> function from the <strong>caret</strong> package.</p>
+<p>It’s always good to take a look at the output using the <code>print()</code> function.</p>
+<hr />
+<div id="exercise-12" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<p>The fitted model object, <code>credit_model</code>, is already in your workspace.</p>
+<ul>
+<li>Use the <code>predict()</code> function with <code>type = "class"</code> to generate predicted labels on the <code>credit_test</code> dataset.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="bagged-trees.html#cb13-1"></a><span class="co"># Generate predicted classes using the model object</span></span>
+<span id="cb13-2"><a href="bagged-trees.html#cb13-2"></a>class_prediction &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> credit_model, </span>
+<span id="cb13-3"><a href="bagged-trees.html#cb13-3"></a>                            <span class="dt">newdata =</span> credit_test,  </span>
+<span id="cb13-4"><a href="bagged-trees.html#cb13-4"></a>                            <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>) </span></code></pre></div>
+<ul>
+<li>Take a look at the prediction using the <code>print()</code> function.</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="bagged-trees.html#cb14-1"></a><span class="co"># Print the predicted classes</span></span>
+<span id="cb14-2"><a href="bagged-trees.html#cb14-2"></a><span class="kw">print</span>(class_prediction)</span></code></pre></div>
+<pre><code>##   [1] no  no  no  no  yes no  no  no  no  no  no  no  no  yes no  no  no  no 
+##  [19] no  no  yes no  no  no  no  no  yes no  no  no  no  no  no  no  no  no 
+##  [37] yes yes no  yes no  yes no  no  no  no  no  no  no  yes no  yes no  yes
+##  [55] yes no  yes no  yes no  no  yes no  no  yes yes no  yes no  no  no  yes
+##  [73] yes no  no  no  no  no  no  yes no  no  no  no  yes no  no  yes no  no 
+##  [91] no  no  no  yes yes no  no  no  no  no  no  yes no  no  yes no  no  no 
+## [109] no  no  no  no  no  no  no  no  no  no  no  no  yes no  yes no  no  yes
+## [127] yes no  yes no  no  no  no  no  yes no  yes yes no  no  no  no  yes no 
+## [145] no  no  yes no  no  no  no  yes no  no  no  no  no  no  no  yes no  no 
+## [163] yes no  yes no  no  no  no  no  no  no  no  no  no  no  no  no  no  no 
+## [181] no  no  yes yes yes no  yes no  no  no  no  no  yes no  no  no  yes no 
+## [199] no  yes
+## Levels: no yes</code></pre>
+<ul>
+<li>Calculate the confusion matrix using the <code>confusionMatrix</code> function.</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="bagged-trees.html#cb16-1"></a><span class="co"># Calculate the confusion matrix for the test set</span></span>
+<span id="cb16-2"><a href="bagged-trees.html#cb16-2"></a><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> class_prediction,         </span>
+<span id="cb16-3"><a href="bagged-trees.html#cb16-3"></a>                <span class="dt">reference =</span> <span class="kw">factor</span>(credit_test<span class="op">$</span>default))  </span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  no yes
+##        no  119  33
+##        yes  11  37
+##                                           
+##                Accuracy : 0.78            
+##                  95% CI : (0.7161, 0.8354)
+##     No Information Rate : 0.65            
+##     P-Value [Acc &gt; NIR] : 4.557e-05       
+##                                           
+##                   Kappa : 0.4787          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.001546        
+##                                           
+##             Sensitivity : 0.9154          
+##             Specificity : 0.5286          
+##          Pos Pred Value : 0.7829          
+##          Neg Pred Value : 0.7708          
+##              Prevalence : 0.6500          
+##          Detection Rate : 0.5950          
+##    Detection Prevalence : 0.7600          
+##       Balanced Accuracy : 0.7220          
+##                                           
+##        &#39;Positive&#39; Class : no              
+## </code></pre>
+<hr />
+</div>
+</div>
+<div id="predict-on-a-test-set-and-compute-auc" class="section level2">
+<h2><span class="header-section-number">4.6</span> Predict on a Test Set and Compute AUC</h2>
+<p>In binary classification problems, we can predict numeric values instead of class labels. In fact, class labels are created only after you use the model to predict a raw, numeric, <em>predicted value</em> for a test point.</p>
+<p>The <em>predicted label</em> is generated by applying a threshold to the <em>predicted value</em>, such that all tests points with predicted value greater than that threshold get a predicted label of “1” and, points below that threshold get a predicted label of “0”.</p>
+<p>In this exercise, generate predicted values (rather than class labels) on the test set and evaluate performance based on <a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve">AUC (Area Under the ROC Curve)</a>. The AUC is a common metric for evaluating the discriminatory ability of a binary classification model.</p>
+<hr />
+<div id="exercise-13" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<ul>
+<li>Use the <code>predict()</code> function with <code>type = "prob"</code> to generate numeric predictions on the <code>credit_test</code> dataset.</li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="bagged-trees.html#cb18-1"></a><span class="co"># Generate predictions on the test set</span></span>
+<span id="cb18-2"><a href="bagged-trees.html#cb18-2"></a>pred &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> credit_model,</span>
+<span id="cb18-3"><a href="bagged-trees.html#cb18-3"></a>                <span class="dt">newdata =</span> credit_test,</span>
+<span id="cb18-4"><a href="bagged-trees.html#cb18-4"></a>                <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)</span>
+<span id="cb18-5"><a href="bagged-trees.html#cb18-5"></a></span>
+<span id="cb18-6"><a href="bagged-trees.html#cb18-6"></a><span class="co"># `pred` is a matrix</span></span>
+<span id="cb18-7"><a href="bagged-trees.html#cb18-7"></a><span class="kw">class</span>(pred)</span></code></pre></div>
+<pre><code>## [1] &quot;matrix&quot;</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="bagged-trees.html#cb20-1"></a><span class="co"># Look at the pred format</span></span>
+<span id="cb20-2"><a href="bagged-trees.html#cb20-2"></a><span class="kw">head</span>(pred)</span></code></pre></div>
+<pre><code>##        no  yes
+## [1,] 0.92 0.08
+## [2,] 0.92 0.08
+## [3,] 1.00 0.00
+## [4,] 1.00 0.00
+## [5,] 0.16 0.84
+## [6,] 0.84 0.16</code></pre>
+<ul>
+<li>Compute the AUC using the <code>auc()</code> function from the <strong>Metrics</strong> package.</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="bagged-trees.html#cb22-1"></a><span class="co"># Compute the AUC (`actual` must be a binary (or 1/0 numeric) vector)</span></span>
+<span id="cb22-2"><a href="bagged-trees.html#cb22-2"></a><span class="kw">auc</span>(<span class="dt">actual =</span> <span class="kw">ifelse</span>(credit_test<span class="op">$</span>default <span class="op">==</span><span class="st"> &quot;yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb22-3"><a href="bagged-trees.html#cb22-3"></a>    <span class="dt">predicted =</span> pred[,<span class="st">&quot;yes&quot;</span>])  </span></code></pre></div>
+<pre><code>## [1] 0.8084066</code></pre>
+<hr />
+</div>
+</div>
+<div id="using-caret-for-cross-validating-models" class="section level2">
+<h2><span class="header-section-number">4.7</span> Using <code>caret</code> for Cross-Validating Models</h2>
+<iframe src="https://drive.google.com/file/d/1nebe1SkHqeawp-41d9vCy5Pf0BPHGaxE/preview" width="640" height="480">
+</iframe>
+<hr />
+<div id="cross-validate-a-bagged-tree-model-in-caret" class="section level3">
+<h3><span class="header-section-number">4.7.1</span> Cross-validate a bagged tree model in caret</h3>
+<p>Use <code>caret::train()</code> with the <code>"treebag"</code> method to train a model and evaluate the model using cross-validated AUC. The <strong>caret</strong> package allows the user to easily cross-validate any model across any relevant performance metric. In this case, we will use 5-fold cross validation and evaluate cross-validated AUC (Area Under the ROC Curve).</p>
+<hr />
+</div>
+<div id="exercise-14" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<p>The <code>credit_train</code> dataset is in your workspace. You will use this data frame as the training data.</p>
+<ul>
+<li>First specify a <code>ctrl</code> object, which is created using the <code>caret::trainControl()</code> function.</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="bagged-trees.html#cb24-1"></a><span class="co"># Specify the training configuration</span></span>
+<span id="cb24-2"><a href="bagged-trees.html#cb24-2"></a>ctrl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,     <span class="co"># Cross-validation</span></span>
+<span id="cb24-3"><a href="bagged-trees.html#cb24-3"></a>                     <span class="dt">number =</span> <span class="dv">5</span>,      <span class="co"># 5 folds</span></span>
+<span id="cb24-4"><a href="bagged-trees.html#cb24-4"></a>                     <span class="dt">classProbs =</span> <span class="ot">TRUE</span>,                  <span class="co"># For AUC</span></span>
+<span id="cb24-5"><a href="bagged-trees.html#cb24-5"></a>                     <span class="dt">summaryFunction =</span> twoClassSummary)  <span class="co"># For AUC</span></span></code></pre></div>
+<ul>
+<li>In the <code>trainControl()</code> function, you can specify many things. We will set: <code>method = "cv"</code>, <code>number = 5</code> for 5-fold cross-validation. Also, two options that are required if you want to use AUC as the metric: <code>classProbs = TRUE</code> and <code>summaryFunction = twoClassSummary</code>.</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="bagged-trees.html#cb25-1"></a><span class="co"># Cross validate the credit model using &quot;treebag&quot; method; </span></span>
+<span id="cb25-2"><a href="bagged-trees.html#cb25-2"></a><span class="co"># Track AUC (Area under the ROC curve)</span></span>
+<span id="cb25-3"><a href="bagged-trees.html#cb25-3"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)  <span class="co"># for reproducibility</span></span>
+<span id="cb25-4"><a href="bagged-trees.html#cb25-4"></a>credit_caret_model &lt;-<span class="st"> </span><span class="kw">train</span>(default <span class="op">~</span><span class="st"> </span>.,</span>
+<span id="cb25-5"><a href="bagged-trees.html#cb25-5"></a>                            <span class="dt">data =</span> credit_train, </span>
+<span id="cb25-6"><a href="bagged-trees.html#cb25-6"></a>                            <span class="dt">method =</span> <span class="st">&quot;treebag&quot;</span>,</span>
+<span id="cb25-7"><a href="bagged-trees.html#cb25-7"></a>                            <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</span>
+<span id="cb25-8"><a href="bagged-trees.html#cb25-8"></a>                            <span class="dt">trControl =</span> ctrl)</span>
+<span id="cb25-9"><a href="bagged-trees.html#cb25-9"></a></span>
+<span id="cb25-10"><a href="bagged-trees.html#cb25-10"></a><span class="co"># Look at the model object</span></span>
+<span id="cb25-11"><a href="bagged-trees.html#cb25-11"></a><span class="kw">print</span>(credit_caret_model)</span></code></pre></div>
+<pre><code>## Bagged CART 
+## 
+## 800 samples
+##  16 predictor
+##   2 classes: &#39;no&#39;, &#39;yes&#39; 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 640, 640, 640, 640, 640 
+## Resampling results:
+## 
+##   ROC        Sens       Spec     
+##   0.7309497  0.8789474  0.4086957</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="bagged-trees.html#cb27-1"></a><span class="co"># Inspect the contents of the model list </span></span>
+<span id="cb27-2"><a href="bagged-trees.html#cb27-2"></a><span class="kw">names</span>(credit_caret_model)</span></code></pre></div>
+<pre><code>##  [1] &quot;method&quot;       &quot;modelInfo&quot;    &quot;modelType&quot;    &quot;results&quot;      &quot;pred&quot;        
+##  [6] &quot;bestTune&quot;     &quot;call&quot;         &quot;dots&quot;         &quot;metric&quot;       &quot;control&quot;     
+## [11] &quot;finalModel&quot;   &quot;preProcess&quot;   &quot;trainingData&quot; &quot;resample&quot;     &quot;resampledCM&quot; 
+## [16] &quot;perfNames&quot;    &quot;maximize&quot;     &quot;yLimits&quot;      &quot;times&quot;        &quot;levels&quot;      
+## [21] &quot;terms&quot;        &quot;coefnames&quot;    &quot;contrasts&quot;    &quot;xlevels&quot;</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="bagged-trees.html#cb29-1"></a><span class="co"># Print the CV AUC</span></span>
+<span id="cb29-2"><a href="bagged-trees.html#cb29-2"></a>credit_caret_model<span class="op">$</span>results[,<span class="st">&quot;ROC&quot;</span>]</span></code></pre></div>
+<pre><code>## [1] 0.7309497</code></pre>
+<hr />
+</div>
+<div id="generate-predictions-from-the-caret-model" class="section level3">
+<h3><span class="header-section-number">4.7.2</span> Generate predictions from the caret model</h3>
+<p>Generate predictions on a test set for the caret model.</p>
+<ul>
+<li>First generate predictions on the <code>credit_test</code> data frame using the <code>credit_caret_model</code> object.</li>
+</ul>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="bagged-trees.html#cb31-1"></a><span class="co"># Generate predictions on the test set</span></span>
+<span id="cb31-2"><a href="bagged-trees.html#cb31-2"></a>predc &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> credit_caret_model, </span>
+<span id="cb31-3"><a href="bagged-trees.html#cb31-3"></a>                <span class="dt">newdata =</span> credit_test,</span>
+<span id="cb31-4"><a href="bagged-trees.html#cb31-4"></a>                <span class="dt">type =</span> <span class="st">&quot;prob&quot;</span>)</span></code></pre></div>
+<ul>
+<li>After generating test set predictions, use the <code>auc()</code> function from the <code>Metrics</code> package to compute AUC.</li>
+</ul>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="bagged-trees.html#cb32-1"></a><span class="co"># Compute the AUC (`actual` must be a binary (or 1/0 numeric) vector)</span></span>
+<span id="cb32-2"><a href="bagged-trees.html#cb32-2"></a><span class="kw">auc</span>(<span class="dt">actual =</span> <span class="kw">ifelse</span>(credit_test<span class="op">$</span>default <span class="op">==</span><span class="st"> &quot;yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb32-3"><a href="bagged-trees.html#cb32-3"></a>                    <span class="dt">predicted =</span> predc[,<span class="st">&quot;yes&quot;</span>])</span></code></pre></div>
+<pre><code>## [1] 0.7782967</code></pre>
+<hr />
+</div>
+</div>
+<div id="compare-test-set-performance-to-cv-performance" class="section level2">
+<h2><span class="header-section-number">4.8</span> Compare test set performance to CV performance</h2>
+<p>In this excercise, you will print test set AUC estimates that you computed in previous exercises. These two methods use the same code underneath, so the estimates should be very similar.</p>
+<ul>
+<li><p>The <code>credit_ipred_model_test_auc</code> object stores the test set AUC from the model trained using the <code>ipred::bagging()</code> function.</p></li>
+<li><p>The <code>credit_caret_model_test_auc</code> object stores the test set AUC from the model trained using the <code>caret::train()</code> function with <code>method = "treebag"</code>.</p></li>
+</ul>
+<p>Lastly, we will print the 5-fold cross-validated estimate of AUC that is stored within the <code>credit_caret_model</code> object. This number will be a more accurate estimate of the true model performance since we have averaged the performance over five models instead of just one.</p>
+<p>On small datasets like this one, the difference between test set model performance estimates and cross-validated model performance estimates will tend to be more pronounced. When using small data, it’s recommended to use cross-validated estimates of performance because they are more stable.</p>
+<hr />
+<div id="exercise-15" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<ul>
+<li>Print the object credit_ipred_model_test_auc.</li>
+</ul>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="bagged-trees.html#cb34-1"></a>credit_ipred_model_test_auc &lt;-<span class="st"> </span><span class="kw">auc</span>(<span class="dt">actual =</span> <span class="kw">ifelse</span>(credit_test<span class="op">$</span>default <span class="op">==</span><span class="st"> &quot;yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb34-2"><a href="bagged-trees.html#cb34-2"></a>    <span class="dt">predicted =</span> pred[,<span class="st">&quot;yes&quot;</span>])  </span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="bagged-trees.html#cb35-1"></a><span class="co"># Print ipred::bagging test set AUC estimate</span></span>
+<span id="cb35-2"><a href="bagged-trees.html#cb35-2"></a><span class="kw">print</span>(credit_ipred_model_test_auc)</span></code></pre></div>
+<ul>
+<li>Print the object credit_caret_model_test_auc.</li>
+</ul>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="bagged-trees.html#cb36-1"></a>credit_caret_model_test_auc &lt;-<span class="st"> </span><span class="kw">auc</span>(<span class="dt">actual =</span> <span class="kw">ifelse</span>(credit_test<span class="op">$</span>default <span class="op">==</span><span class="st"> &quot;yes&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>), </span>
+<span id="cb36-2"><a href="bagged-trees.html#cb36-2"></a>                    <span class="dt">predicted =</span> predc[,<span class="st">&quot;yes&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="bagged-trees.html#cb37-1"></a><span class="co"># Print caret &quot;treebag&quot; test set AUC estimate</span></span>
+<span id="cb37-2"><a href="bagged-trees.html#cb37-2"></a><span class="kw">print</span>(credit_caret_model_test_auc)</span></code></pre></div>
+<ul>
+<li>Compare these to the 5-fold cross validated AUC.</li>
+</ul>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="bagged-trees.html#cb38-1"></a><span class="co"># Compare to caret 5-fold cross-validated AUC</span></span>
+<span id="cb38-2"><a href="bagged-trees.html#cb38-2"></a>credit_caret_model<span class="op">$</span>results[, <span class="st">&quot;ROC&quot;</span>]</span></code></pre></div>
+<pre><code>## [1] 0.7309497</code></pre>
+<hr />
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression-trees.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="random-forests.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["HonorsBookdown.pdf", "HonorsBookdown.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

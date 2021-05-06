@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="methods.html"/>
+<link rel="next" href="regression-trees.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -135,22 +135,127 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
 <li class="chapter" data-level="2" data-path="classification-trees.html"><a href="classification-trees.html"><i class="fa fa-check"></i><b>2</b> Classification Trees</a><ul>
-<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#welcome-to-the-course"><i class="fa fa-check"></i>Welcome to the Course</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#welcome-to-the-course"><i class="fa fa-check"></i>Welcome to the Course</a></li>
+<li class="chapter" data-level="2.1" data-path="classification-trees.html"><a href="classification-trees.html#build-a-classification-tree"><i class="fa fa-check"></i><b>2.1</b> Build a Classification Tree</a><ul>
 <li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise"><i class="fa fa-check"></i>Exercise</a></li>
 </ul></li>
-<li class="chapter" data-level="2.1" data-path="classification-trees.html"><a href="classification-trees.html#introduction-to-classification-trees"><i class="fa fa-check"></i><b>2.1</b> Introduction to Classification Trees</a></li>
-<li class="chapter" data-level="2.2" data-path="classification-trees.html"><a href="classification-trees.html#prediction-with-a-classification-tree"><i class="fa fa-check"></i><b>2.2</b> Prediction with a Classification Tree</a></li>
+<li class="chapter" data-level="2.2" data-path="classification-trees.html"><a href="classification-trees.html#introduction-to-classification-trees"><i class="fa fa-check"></i><b>2.2</b> Introduction to Classification Trees</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="classification-trees.html"><a href="classification-trees.html#advantages-of-tree-based-methods"><i class="fa fa-check"></i><b>2.2.1</b> Advantages of Tree-Based Methods</a></li>
+<li class="chapter" data-level="2.2.2" data-path="classification-trees.html"><a href="classification-trees.html#prediction-with-a-classification-tree"><i class="fa fa-check"></i><b>2.2.2</b> Prediction with a Classification Tree</a></li>
+</ul></li>
 <li class="chapter" data-level="2.3" data-path="classification-trees.html"><a href="classification-trees.html#overview-of-the-modelling-process"><i class="fa fa-check"></i><b>2.3</b> Overview of the Modelling Process</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="classification-trees.html"><a href="classification-trees.html#traintest-split"><i class="fa fa-check"></i><b>2.3.1</b> Train/Test Split</a></li>
 <li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-1"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#train-a-classification-tree"><i class="fa fa-check"></i>Train a Classification Tree</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="classification-trees.html"><a href="classification-trees.html#evaluating-classification-model-performance"><i class="fa fa-check"></i><b>2.4</b> Evaluating Classification Model Performance</a></li>
+<li class="chapter" data-level="2.5" data-path="classification-trees.html"><a href="classification-trees.html#compute-confusion-matrix"><i class="fa fa-check"></i><b>2.5</b> Compute confusion matrix</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-2"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="classification-trees.html"><a href="classification-trees.html#use-of-splitting-criterion-in-trees"><i class="fa fa-check"></i><b>2.6</b> Use of Splitting Criterion in Trees</a></li>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#compare-models-with-a-different-splitting-criterion"><i class="fa fa-check"></i>Compare models with a different splitting criterion</a><ul>
+<li class="chapter" data-level="" data-path="classification-trees.html"><a href="classification-trees.html#exercise-3"><i class="fa fa-check"></i>Exercise</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>3</b> Methods</a></li>
-<li class="chapter" data-level="4" data-path="applications.html"><a href="applications.html"><i class="fa fa-check"></i><b>4</b> Applications</a><ul>
-<li class="chapter" data-level="4.1" data-path="applications.html"><a href="applications.html#example-one"><i class="fa fa-check"></i><b>4.1</b> Example one</a></li>
-<li class="chapter" data-level="4.2" data-path="applications.html"><a href="applications.html#example-two"><i class="fa fa-check"></i><b>4.2</b> Example two</a></li>
+<li class="chapter" data-level="3" data-path="regression-trees.html"><a href="regression-trees.html"><i class="fa fa-check"></i><b>3</b> Regression Trees</a><ul>
+<li class="chapter" data-level="3.1" data-path="regression-trees.html"><a href="regression-trees.html#introduction-to-regression-trees"><i class="fa fa-check"></i><b>3.1</b> Introduction to Regression Trees</a><ul>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#classification-vs.-regression"><i class="fa fa-check"></i>Classification vs. regression</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>5</b> Final Words</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="3.2" data-path="regression-trees.html"><a href="regression-trees.html#split-the-data"><i class="fa fa-check"></i><b>3.2</b> Split the data</a><ul>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-4"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="regression-trees.html"><a href="regression-trees.html#train-a-regression-tree-model"><i class="fa fa-check"></i><b>3.3</b> Train a regression tree model</a><ul>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-5"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="regression-trees.html"><a href="regression-trees.html#performance-metrics-for-regression"><i class="fa fa-check"></i><b>3.4</b> Performance Metrics for Regression</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="regression-trees.html"><a href="regression-trees.html#evaluate-a-regression-tree-model"><i class="fa fa-check"></i><b>3.4.1</b> Evaluate a regression tree model</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-6"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="regression-trees.html"><a href="regression-trees.html#what-are-the-hyperparameters-for-a-decision-tree"><i class="fa fa-check"></i><b>3.5</b> What are the Hyperparameters for a Decision Tree?</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="regression-trees.html"><a href="regression-trees.html#tuning-the-model"><i class="fa fa-check"></i><b>3.5.1</b> Tuning the Model</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-7"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="regression-trees.html"><a href="regression-trees.html#grid-search-for-model-selection"><i class="fa fa-check"></i><b>3.6</b> Grid Search for Model Selection</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="regression-trees.html"><a href="regression-trees.html#generate-a-grid-of-hyperparameter-values"><i class="fa fa-check"></i><b>3.6.1</b> Generate a grid of hyperparameter values</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-8"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="3.6.2" data-path="regression-trees.html"><a href="regression-trees.html#generate-a-grid-of-models"><i class="fa fa-check"></i><b>3.6.2</b> Generate a grid of models</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-9"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="3.6.3" data-path="regression-trees.html"><a href="regression-trees.html#evaluate-the-grid"><i class="fa fa-check"></i><b>3.6.3</b> Evaluate the grid</a></li>
+<li class="chapter" data-level="" data-path="regression-trees.html"><a href="regression-trees.html#exercise-10"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="bagged-trees.html"><a href="bagged-trees.html"><i class="fa fa-check"></i><b>4</b> Bagged Trees</a><ul>
+<li class="chapter" data-level="4.1" data-path="bagged-trees.html"><a href="bagged-trees.html#introduction-to-bagged-trees"><i class="fa fa-check"></i><b>4.1</b> Introduction to Bagged Trees</a></li>
+<li class="chapter" data-level="4.2" data-path="bagged-trees.html"><a href="bagged-trees.html#advantages-of-bagged-trees"><i class="fa fa-check"></i><b>4.2</b> Advantages of bagged trees</a></li>
+<li class="chapter" data-level="4.3" data-path="bagged-trees.html"><a href="bagged-trees.html#train-a-bagged-tree-model"><i class="fa fa-check"></i><b>4.3</b> Train a Bagged Tree Model</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-11"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="bagged-trees.html"><a href="bagged-trees.html#evaluating-the-bagged-tree-performance"><i class="fa fa-check"></i><b>4.4</b> Evaluating the Bagged Tree Performance</a></li>
+<li class="chapter" data-level="4.5" data-path="bagged-trees.html"><a href="bagged-trees.html#prediction-and-confusion-matrix"><i class="fa fa-check"></i><b>4.5</b> Prediction and confusion matrix</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-12"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="bagged-trees.html"><a href="bagged-trees.html#predict-on-a-test-set-and-compute-auc"><i class="fa fa-check"></i><b>4.6</b> Predict on a Test Set and Compute AUC</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-13"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="bagged-trees.html"><a href="bagged-trees.html#using-caret-for-cross-validating-models"><i class="fa fa-check"></i><b>4.7</b> Using <code>caret</code> for Cross-Validating Models</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="bagged-trees.html"><a href="bagged-trees.html#cross-validate-a-bagged-tree-model-in-caret"><i class="fa fa-check"></i><b>4.7.1</b> Cross-validate a bagged tree model in caret</a></li>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-14"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="4.7.2" data-path="bagged-trees.html"><a href="bagged-trees.html#generate-predictions-from-the-caret-model"><i class="fa fa-check"></i><b>4.7.2</b> Generate predictions from the caret model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="bagged-trees.html"><a href="bagged-trees.html#compare-test-set-performance-to-cv-performance"><i class="fa fa-check"></i><b>4.8</b> Compare test set performance to CV performance</a><ul>
+<li class="chapter" data-level="" data-path="bagged-trees.html"><a href="bagged-trees.html#exercise-15"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="random-forests.html"><a href="random-forests.html"><i class="fa fa-check"></i><b>5</b> Random Forests</a><ul>
+<li class="chapter" data-level="5.1" data-path="random-forests.html"><a href="random-forests.html#introduction-to-random-forests"><i class="fa fa-check"></i><b>5.1</b> Introduction to Random Forests</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="random-forests.html"><a href="random-forests.html#bagged-trees-vs.-random-forest"><i class="fa fa-check"></i><b>5.1.1</b> Bagged trees vs. Random Forest</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="random-forests.html"><a href="random-forests.html#train-a-random-forest-model"><i class="fa fa-check"></i><b>5.2</b> Train a Random Forest model</a><ul>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-16"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="random-forests.html"><a href="random-forests.html#understanding-random-forest-model-output"><i class="fa fa-check"></i><b>5.3</b> Understanding Random Forest Model Output</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="random-forests.html"><a href="random-forests.html#evaluate-out-of-bag-error"><i class="fa fa-check"></i><b>5.3.1</b> Evaluate out-of-bag error</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-17"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="5.3.2" data-path="random-forests.html"><a href="random-forests.html#evaluate-model-performance-on-a-test-set"><i class="fa fa-check"></i><b>5.3.2</b> Evaluate model performance on a test set</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-18"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="random-forests.html"><a href="random-forests.html#oob-error-vs.-test-set-error"><i class="fa fa-check"></i><b>5.4</b> OOB Error vs. Test Set Error</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="random-forests.html"><a href="random-forests.html#advantage-of-oob-error"><i class="fa fa-check"></i><b>5.4.1</b> Advantage of OOB error</a></li>
+<li class="chapter" data-level="5.4.2" data-path="random-forests.html"><a href="random-forests.html#evaluate-test-set-auc"><i class="fa fa-check"></i><b>5.4.2</b> Evaluate Test Set AUC</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-19"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="random-forests.html"><a href="random-forests.html#tuning-a-random-forest-model"><i class="fa fa-check"></i><b>5.5</b> Tuning a Random Forest Model</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="random-forests.html"><a href="random-forests.html#tuning-a-random-forest-via-mtry"><i class="fa fa-check"></i><b>5.5.1</b> Tuning a Random Forest via mtry</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-20"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="5.5.2" data-path="random-forests.html"><a href="random-forests.html#tuning-a-random-forest-via-tree-depth"><i class="fa fa-check"></i><b>5.5.2</b> Tuning a Random Forest via tree depth</a></li>
+<li class="chapter" data-level="" data-path="random-forests.html"><a href="random-forests.html#exercise-21"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="boosted-trees.html"><a href="boosted-trees.html"><i class="fa fa-check"></i><b>6</b> Boosted Trees</a><ul>
+<li class="chapter" data-level="6.1" data-path="boosted-trees.html"><a href="boosted-trees.html#introduction-to-boosting"><i class="fa fa-check"></i><b>6.1</b> Introduction to Boosting</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="boosted-trees.html"><a href="boosted-trees.html#bagged-trees-vs.-boosted-trees"><i class="fa fa-check"></i><b>6.1.1</b> Bagged trees vs. boosted trees</a></li>
+<li class="chapter" data-level="6.1.2" data-path="boosted-trees.html"><a href="boosted-trees.html#train-a-gbm-model"><i class="fa fa-check"></i><b>6.1.2</b> Train a GBM Model</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-22"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="boosted-trees.html"><a href="boosted-trees.html#understanding-gbm-model-output"><i class="fa fa-check"></i><b>6.2</b> Understanding GBM Model Output</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="boosted-trees.html"><a href="boosted-trees.html#prediction-using-a-gbm-model"><i class="fa fa-check"></i><b>6.2.1</b> Prediction using a GBM model</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-23"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="6.2.2" data-path="boosted-trees.html"><a href="boosted-trees.html#evaluate-test-set-auc-1"><i class="fa fa-check"></i><b>6.2.2</b> Evaluate test set AUC</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-24"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="boosted-trees.html"><a href="boosted-trees.html#gbm-hyperparameters"><i class="fa fa-check"></i><b>6.3</b> GBM Hyperparameters</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="boosted-trees.html"><a href="boosted-trees.html#early-stopping-in-gbms"><i class="fa fa-check"></i><b>6.3.1</b> Early Stopping in GBMs</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-25"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="6.3.2" data-path="boosted-trees.html"><a href="boosted-trees.html#oob-vs-cv-based-early-stopping"><i class="fa fa-check"></i><b>6.3.2</b> OOB vs CV-Based Early Stopping</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-26"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="boosted-trees.html"><a href="boosted-trees.html#model-comparison-via-roc-curve-auc"><i class="fa fa-check"></i><b>6.4</b> Model Comparison via ROC Curve &amp; AUC</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="boosted-trees.html"><a href="boosted-trees.html#compare-all-models-based-on-auc"><i class="fa fa-check"></i><b>6.4.1</b> Compare All Models Based on AUC</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-27"><i class="fa fa-check"></i>Exercise</a></li>
+<li class="chapter" data-level="6.4.2" data-path="boosted-trees.html"><a href="boosted-trees.html#plot-compare-roc-curves"><i class="fa fa-check"></i><b>6.4.2</b> Plot &amp; Compare ROC Curves</a></li>
+<li class="chapter" data-level="" data-path="boosted-trees.html"><a href="boosted-trees.html#exercise-28"><i class="fa fa-check"></i>Exercise</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -173,40 +278,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="classification-trees" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> Classification Trees</h1>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.3     ✓ dplyr   1.0.5
-## ✓ tibble  3.1.0     ✓ stringr 1.4.0
-## ✓ tidyr   1.1.3     ✓ forcats 0.5.1
-## ✓ purrr   0.3.4</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre><code>## 
-## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   checking_balance = col_character(),
-##   months_loan_duration = col_double(),
-##   credit_history = col_character(),
-##   purpose = col_character(),
-##   amount = col_double(),
-##   savings_balance = col_character(),
-##   employment_duration = col_character(),
-##   percent_of_income = col_double(),
-##   years_at_residence = col_double(),
-##   age = col_double(),
-##   other_credit = col_character(),
-##   housing = col_character(),
-##   existing_loans_count = col_double(),
-##   job = col_character(),
-##   dependents = col_double(),
-##   phone = col_character(),
-##   default = col_character()
-## )</code></pre>
 <div id="welcome-to-the-course" class="section level2 unnumbered">
 <h2>Welcome to the Course</h2>
 <iframe src="https://drive.google.com/file/d/1NpANMsB2mgYs5Hg9T1mR7p2QnZZdV0DQ/preview" width="640" height="480">
 </iframe>
 <hr />
+</div>
+<div id="build-a-classification-tree" class="section level2">
+<h2><span class="header-section-number">2.1</span> Build a Classification Tree</h2>
 <p>A classification tree is a decision tree that performs a classification (vs regression) task.## Build a Classification Tree</p>
 <p>Let’s get started and build our first classification tree.</p>
 <p>You will train a decision tree model to understand which loan applications are at higher risk of default using a subset of the <a href="https://archive.ics.uci.edu/ml/datasets/Statlog+%28German+Credit+Data%29">German Credit Dataset</a>. The response variable, <code>default</code>, indicates whether the loan went into a default or not, which means this is a binary classification problem (there are just two classes).</p>
@@ -218,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Take a look at the data using the <code>str()</code> function.</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="classification-trees.html#cb5-1"></a><span class="kw">str</span>(creditsub)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="classification-trees.html#cb1-1"></a><span class="kw">str</span>(creditsub)</span></code></pre></div>
 <pre><code>## tibble[,5] [1,000 × 5] (S3: tbl_df/tbl/data.frame)
 ##  $ months_loan_duration: num [1:1000] 6 48 12 42 24 36 24 36 12 30 ...
 ##  $ percent_of_income   : num [1:1000] 4 2 2 2 3 2 3 2 2 4 ...
@@ -228,22 +307,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>In R, formulas are used to model the response as a function of some set of predictors, so the formula here is <code>default ~ .</code>, which means use all columns (except the response column) as predictors. Fit the classification decision tree using the <code>rpart()</code> function from the <code>rpart</code> package. In the <code>rpart()</code> function, note that you’ll also have to provide the training data frame.</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="classification-trees.html#cb7-1"></a>credit_model &lt;-<span class="st"> </span><span class="kw">rpart</span>(<span class="dt">formula =</span> default <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb7-2"><a href="classification-trees.html#cb7-2"></a>                      <span class="dt">data =</span> creditsub, </span>
-<span id="cb7-3"><a href="classification-trees.html#cb7-3"></a>                      <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="classification-trees.html#cb3-1"></a>credit_model &lt;-<span class="st"> </span><span class="kw">rpart</span>(<span class="dt">formula =</span> default <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb3-2"><a href="classification-trees.html#cb3-2"></a>                      <span class="dt">data =</span> creditsub, </span>
+<span id="cb3-3"><a href="classification-trees.html#cb3-3"></a>                      <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
 <ul>
 <li>Using the model object that you create, plot the decision tree model using the <code>rpart.plot()</code> function from the <code>rpart.plot</code> package.</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="classification-trees.html#cb8-1"></a><span class="kw">rpart.plot</span>(<span class="dt">x =</span> credit_model, <span class="dt">yesno =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="dv">0</span>, <span class="dt">extra =</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="classification-trees.html#cb4-1"></a><span class="kw">rpart.plot</span>(<span class="dt">x =</span> credit_model, <span class="dt">yesno =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="dv">0</span>, <span class="dt">extra =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="HonorsBookdown_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <hr />
 </div>
 </div>
 <div id="introduction-to-classification-trees" class="section level2">
-<h2><span class="header-section-number">2.1</span> Introduction to Classification Trees</h2>
+<h2><span class="header-section-number">2.2</span> Introduction to Classification Trees</h2>
 <iframe src="https://drive.google.com/file/d/1Mz2Scq6UbFRBrASmXj3kOzO7zIr7nd8F/preview" width="640" height="480">
 </iframe>
 <hr />
+<div id="advantages-of-tree-based-methods" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Advantages of Tree-Based Methods</h3>
 <p>What are some advantages of using tree-based methods over other supervised learning methods?</p>
 <ul>
 <li>Model interpretability (easy to understand why a prediction is made).</li>
@@ -253,8 +334,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <hr />
 </div>
-<div id="prediction-with-a-classification-tree" class="section level2">
-<h2><span class="header-section-number">2.2</span> Prediction with a Classification Tree</h2>
+<div id="prediction-with-a-classification-tree" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Prediction with a Classification Tree</h3>
 <p>Let’s use the decision tree that you trained in the first exercise. The tree predicts whether a loan applicant will default on their loan (or not).</p>
 <p>Assume we have a loan applicant who:</p>
 <p>is applying for a 20-month loan
@@ -266,38 +347,222 @@ After following the correct path down the tree for this individual’s set of da
 <p>According to the model this person will default on their loan.</p>
 <hr />
 </div>
+</div>
 <div id="overview-of-the-modelling-process" class="section level2">
 <h2><span class="header-section-number">2.3</span> Overview of the Modelling Process</h2>
 <iframe src="https://drive.google.com/file/d/1ca-ESb3KqG7IOJiGx4K9-YEnqshcuSkr/preview" width="640" height="480">
 </iframe>
 <hr />
+<div id="traintest-split" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Train/Test Split</h3>
+<p>For this exercise, you’ll randomly split the <a href="">German Credit Dataset</a> into two pieces: a training set (80%) called <code>credit_train</code> and a test set (20%) that we will call <code>credit_test</code>. We’ll use these two sets throughout the chapter. The <code>credit</code> data frame is loaded into the workspace.</p>
+</div>
 <div id="exercise-1" class="section level3 unnumbered">
 <h3>Exercise</h3>
-<p>For this exercise, you’ll randomly split the <a href="">German Credit Dataset</a> into two pieces: a training set (80%) called <code>credit_train</code> and a test set (20%) that we will call <code>credit_test</code>. We’ll use these two sets throughout the chapter. The <code>credit</code> data frame is loaded into the workspace.</p>
 <ul>
 <li>Define <code>n</code>, the number of rows in the <code>credit</code> data frame.</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="classification-trees.html#cb9-1"></a><span class="co"># Total number of rows in the credit data frame</span></span>
-<span id="cb9-2"><a href="classification-trees.html#cb9-2"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(credit)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="classification-trees.html#cb5-1"></a><span class="co"># Total number of rows in the credit data frame</span></span>
+<span id="cb5-2"><a href="classification-trees.html#cb5-2"></a>n &lt;-<span class="st"> </span><span class="kw">nrow</span>(credit)</span></code></pre></div>
 <ul>
 <li>Define <code>n_train</code> to be ~80% of <code>n</code>.</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="classification-trees.html#cb10-1"></a><span class="co"># Number of rows for the training set (80% of the dataset)</span></span>
-<span id="cb10-2"><a href="classification-trees.html#cb10-2"></a>n_train &lt;-<span class="st"> </span><span class="kw">round</span>(.<span class="dv">8</span> <span class="op">*</span><span class="st"> </span>n)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="classification-trees.html#cb6-1"></a><span class="co"># Number of rows for the training set (80% of the dataset)</span></span>
+<span id="cb6-2"><a href="classification-trees.html#cb6-2"></a>n_train &lt;-<span class="st"> </span><span class="kw">round</span>(.<span class="dv">8</span> <span class="op">*</span><span class="st"> </span>n)</span></code></pre></div>
 <ul>
 <li>Set a seed (for reproducibility) and then sample <code>n_train</code> rows to define the set of training set indices.</li>
 </ul>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="classification-trees.html#cb11-1"></a><span class="co"># Create a vector of indices which is an 80% random sample</span></span>
-<span id="cb11-2"><a href="classification-trees.html#cb11-2"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb11-3"><a href="classification-trees.html#cb11-3"></a>train_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>n, n_train)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="classification-trees.html#cb7-1"></a><span class="co"># Create a vector of indices which is an 80% random sample</span></span>
+<span id="cb7-2"><a href="classification-trees.html#cb7-2"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb7-3"><a href="classification-trees.html#cb7-3"></a>train_indices &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>n, n_train)</span></code></pre></div>
 <ul>
 <li>Using row indices, subset the credit data frame to create two new datasets: <code>credit_train</code> and <code>credit_test</code></li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="classification-trees.html#cb12-1"></a><span class="co"># Subset the credit data frame to training indices only</span></span>
-<span id="cb12-2"><a href="classification-trees.html#cb12-2"></a>credit_train &lt;-<span class="st"> </span>credit[train_indices, ]  </span>
-<span id="cb12-3"><a href="classification-trees.html#cb12-3"></a>  </span>
-<span id="cb12-4"><a href="classification-trees.html#cb12-4"></a><span class="co"># Exclude the training indices to create the test set</span></span>
-<span id="cb12-5"><a href="classification-trees.html#cb12-5"></a>credit_test &lt;-<span class="st"> </span>credit[<span class="op">-</span>train_indices, ]</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="classification-trees.html#cb8-1"></a><span class="co"># Subset the credit data frame to training indices only</span></span>
+<span id="cb8-2"><a href="classification-trees.html#cb8-2"></a>credit_train &lt;-<span class="st"> </span>credit[train_indices, ]  </span>
+<span id="cb8-3"><a href="classification-trees.html#cb8-3"></a>  </span>
+<span id="cb8-4"><a href="classification-trees.html#cb8-4"></a><span class="co"># Exclude the training indices to create the test set</span></span>
+<span id="cb8-5"><a href="classification-trees.html#cb8-5"></a>credit_test &lt;-<span class="st"> </span>credit[<span class="op">-</span>train_indices, ]</span></code></pre></div>
+<hr />
+</div>
+<div id="train-a-classification-tree" class="section level3 unnumbered">
+<h3>Train a Classification Tree</h3>
+<p>In this exercise, you will train a model on the newly created training set and print the model object to get a sense of the results.</p>
+<ul>
+<li>Train a classification tree using the <code>credit_train</code> data frame.</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="classification-trees.html#cb9-1"></a><span class="co"># Train the model (to predict &#39;default&#39;)</span></span>
+<span id="cb9-2"><a href="classification-trees.html#cb9-2"></a>credit_model &lt;-<span class="st"> </span><span class="kw">rpart</span>(<span class="dt">formula =</span> default <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb9-3"><a href="classification-trees.html#cb9-3"></a>                      <span class="dt">data =</span> credit_train, </span>
+<span id="cb9-4"><a href="classification-trees.html#cb9-4"></a>                      <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
+<ul>
+<li>Look at the model output by printing the model object.</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="classification-trees.html#cb10-1"></a><span class="co"># Look at the model output                      </span></span>
+<span id="cb10-2"><a href="classification-trees.html#cb10-2"></a><span class="kw">print</span>(credit_model)</span></code></pre></div>
+<pre><code>## n= 800 
+## 
+## node), split, n, loss, yval, (yprob)
+##       * denotes terminal node
+## 
+##   1) root 800 230 no (0.7125000 0.2875000)  
+##     2) checking_balance=&gt; 200 DM,unknown 365  48 no (0.8684932 0.1315068) *
+##     3) checking_balance=&lt; 0 DM,1 - 200 DM 435 182 no (0.5816092 0.4183908)  
+##       6) months_loan_duration&lt; 22.5 259  85 no (0.6718147 0.3281853)  
+##        12) credit_history=critical,good,poor 235  68 no (0.7106383 0.2893617)  
+##          24) months_loan_duration&lt; 11.5 70  11 no (0.8428571 0.1571429) *
+##          25) months_loan_duration&gt;=11.5 165  57 no (0.6545455 0.3454545)  
+##            50) amount&gt;=1282 112  30 no (0.7321429 0.2678571) *
+##            51) amount&lt; 1282 53  26 yes (0.4905660 0.5094340)  
+##             102) purpose=business,education,furniture/appliances 34  12 no (0.6470588 0.3529412) *
+##             103) purpose=car,renovations 19   4 yes (0.2105263 0.7894737) *
+##        13) credit_history=perfect,very good 24   7 yes (0.2916667 0.7083333) *
+##       7) months_loan_duration&gt;=22.5 176  79 yes (0.4488636 0.5511364)  
+##        14) savings_balance=&gt; 1000 DM,unknown 29   7 no (0.7586207 0.2413793) *
+##        15) savings_balance=&lt; 100 DM,100 - 500 DM,500 - 1000 DM 147  57 yes (0.3877551 0.6122449)  
+##          30) months_loan_duration&lt; 47.5 119  54 yes (0.4537815 0.5462185)  
+##            60) amount&gt;=2313.5 93  45 no (0.5161290 0.4838710)  
+##             120) amount&lt; 3026 19   5 no (0.7368421 0.2631579) *
+##             121) amount&gt;=3026 74  34 yes (0.4594595 0.5405405)  
+##               242) percent_of_income&lt; 2.5 38  15 no (0.6052632 0.3947368)  
+##                 484) purpose=business,car,education 23   6 no (0.7391304 0.2608696) *
+##                 485) purpose=car0,furniture/appliances,renovations 15   6 yes (0.4000000 0.6000000) *
+##               243) percent_of_income&gt;=2.5 36  11 yes (0.3055556 0.6944444) *
+##            61) amount&lt; 2313.5 26   6 yes (0.2307692 0.7692308) *
+##          31) months_loan_duration&gt;=47.5 28   3 yes (0.1071429 0.8928571) *</code></pre>
+<hr />
+</div>
+</div>
+<div id="evaluating-classification-model-performance" class="section level2">
+<h2><span class="header-section-number">2.4</span> Evaluating Classification Model Performance</h2>
+<iframe src="https://drive.google.com/file/d/1TsfXThq_VqGzJ_Kwj76Jz1fNSmATjNOE/preview" width="640" height="480">
+</iframe>
+<hr />
+</div>
+<div id="compute-confusion-matrix" class="section level2">
+<h2><span class="header-section-number">2.5</span> Compute confusion matrix</h2>
+<p>As discussed in the previous video, there are a number of different metrics by which you can measure the performance of a classification model. In this exercise, we will evaluate the performance of the model using test set classification error. A confusion matrix is a convenient way to examine the per-class error rates for all classes at once.</p>
+<p>The <code>confusionMatrix()</code> function from the caret package prints both the confusion matrix and a number of other useful classification metrics such as “Accuracy” (fraction of correctly classified instances).</p>
+<hr />
+<div id="exercise-2" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<p>The caret package has been loaded for you.</p>
+<ul>
+<li>Generate class predictions for the <code>credit_test</code> data frame using the <code>credit_model</code> object.</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="classification-trees.html#cb12-1"></a><span class="co"># Generate predicted classes using the model object</span></span>
+<span id="cb12-2"><a href="classification-trees.html#cb12-2"></a>class_prediction &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> credit_model,  </span>
+<span id="cb12-3"><a href="classification-trees.html#cb12-3"></a>                        <span class="dt">newdata =</span> credit_test,   </span>
+<span id="cb12-4"><a href="classification-trees.html#cb12-4"></a>                        <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>) </span>
+<span id="cb12-5"><a href="classification-trees.html#cb12-5"></a>class_prediction</span></code></pre></div>
+<pre><code>##   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20 
+##  no  no  no  no yes  no  no  no  no yes  no  no  no yes  no  no  no  no  no  no 
+##  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38  39  40 
+##  no  no  no  no  no  no  no  no  no yes  no  no  no  no  no  no yes yes  no yes 
+##  41  42  43  44  45  46  47  48  49  50  51  52  53  54  55  56  57  58  59  60 
+##  no  no  no  no  no  no  no  no  no yes  no  no  no yes yes  no yes  no yes  no 
+##  61  62  63  64  65  66  67  68  69  70  71  72  73  74  75  76  77  78  79  80 
+##  no yes  no  no yes yes  no  no  no  no  no yes yes  no  no  no  no yes  no yes 
+##  81  82  83  84  85  86  87  88  89  90  91  92  93  94  95  96  97  98  99 100 
+##  no  no  no  no yes  no  no yes  no  no  no  no  no yes  no  no  no  no  no  no 
+## 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 
+##  no yes  no  no yes  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no 
+## 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 
+## yes yes  no  no  no yes  no  no  no  no  no  no  no  no yes  no yes  no  no yes 
+## 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 
+##  no  no  no yes  no  no  no  no  no yes  no  no  no  no  no  no  no  no  no  no 
+## 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 
+##  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no  no 
+## 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 
+##  no  no yes yes yes  no yes  no  no  no  no  no yes  no  no  no yes  no  no yes 
+## Levels: no yes</code></pre>
+<ul>
+<li>Using the <code>caret::confusionMatrix()</code> function, compute the confusion matrix for the test set.</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="classification-trees.html#cb14-1"></a><span class="co"># Calculate the confusion matrix for the test set</span></span>
+<span id="cb14-2"><a href="classification-trees.html#cb14-2"></a>caret<span class="op">::</span><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> class_prediction,       </span>
+<span id="cb14-3"><a href="classification-trees.html#cb14-3"></a>        <span class="dt">reference =</span> <span class="kw">factor</span>(credit_test<span class="op">$</span>default))</span></code></pre></div>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  no yes
+##        no  117  44
+##        yes  13  26
+##                                           
+##                Accuracy : 0.715           
+##                  95% CI : (0.6471, 0.7764)
+##     No Information Rate : 0.65            
+##     P-Value [Acc &gt; NIR] : 0.03046         
+##                                           
+##                   Kappa : 0.3023          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 7.08e-05        
+##                                           
+##             Sensitivity : 0.9000          
+##             Specificity : 0.3714          
+##          Pos Pred Value : 0.7267          
+##          Neg Pred Value : 0.6667          
+##              Prevalence : 0.6500          
+##          Detection Rate : 0.5850          
+##    Detection Prevalence : 0.8050          
+##       Balanced Accuracy : 0.6357          
+##                                           
+##        &#39;Positive&#39; Class : no              
+## </code></pre>
+<hr />
+</div>
+</div>
+<div id="use-of-splitting-criterion-in-trees" class="section level2">
+<h2><span class="header-section-number">2.6</span> Use of Splitting Criterion in Trees</h2>
+<iframe src="https://drive.google.com/file/d/1ui1eCpffCwFvV6HgWBibyOJT3KU3cZVg/preview" width="640" height="480">
+</iframe>
+<hr />
+</div>
+<div id="compare-models-with-a-different-splitting-criterion" class="section level2 unnumbered">
+<h2>Compare models with a different splitting criterion</h2>
+<p>Train two models that use a different splitting criterion and use the validation set to choose a “best” model from this group. To do this you’ll use the <code>parms</code> argument of the <code>rpart()</code> function. This argument takes a named list that contains values of different parameters you can use to change how the model is trained. Set the parameter <code>split</code> to control the splitting criterion.</p>
+<hr />
+<div id="exercise-3" class="section level3 unnumbered">
+<h3>Exercise</h3>
+<p>The datasets <code>credit_test</code> and <code>credit_train</code> have already been loaded for you.</p>
+<ul>
+<li>Train a model, splitting the tree based on gini index.</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="classification-trees.html#cb16-1"></a><span class="co"># Train a gini-based model</span></span>
+<span id="cb16-2"><a href="classification-trees.html#cb16-2"></a>credit_model1 &lt;-<span class="st"> </span><span class="kw">rpart</span>(<span class="dt">formula =</span> default <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb16-3"><a href="classification-trees.html#cb16-3"></a>                       <span class="dt">data =</span> credit_train, </span>
+<span id="cb16-4"><a href="classification-trees.html#cb16-4"></a>                       <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>,</span>
+<span id="cb16-5"><a href="classification-trees.html#cb16-5"></a>                       <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;gini&quot;</span>))</span></code></pre></div>
+<ul>
+<li>Train a model, splitting the tree based on information index.</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="classification-trees.html#cb17-1"></a><span class="co"># Train an information-based model</span></span>
+<span id="cb17-2"><a href="classification-trees.html#cb17-2"></a>credit_model2 &lt;-<span class="st"> </span><span class="kw">rpart</span>(<span class="dt">formula =</span> default <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb17-3"><a href="classification-trees.html#cb17-3"></a>                       <span class="dt">data =</span> credit_train, </span>
+<span id="cb17-4"><a href="classification-trees.html#cb17-4"></a>                       <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>,</span>
+<span id="cb17-5"><a href="classification-trees.html#cb17-5"></a>                       <span class="dt">parms =</span> <span class="kw">list</span>(<span class="dt">split =</span> <span class="st">&quot;information&quot;</span>))</span></code></pre></div>
+<ul>
+<li>Generate predictions on the validation set using both models.</li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="classification-trees.html#cb18-1"></a><span class="co"># Generate predictions on the validation set using the gini model</span></span>
+<span id="cb18-2"><a href="classification-trees.html#cb18-2"></a>pred1 &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> credit_model1,</span>
+<span id="cb18-3"><a href="classification-trees.html#cb18-3"></a>                 <span class="dt">newdata =</span> credit_test,</span>
+<span id="cb18-4"><a href="classification-trees.html#cb18-4"></a>                 <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)    </span>
+<span id="cb18-5"><a href="classification-trees.html#cb18-5"></a></span>
+<span id="cb18-6"><a href="classification-trees.html#cb18-6"></a><span class="co"># Generate predictions on the validation set using the information model</span></span>
+<span id="cb18-7"><a href="classification-trees.html#cb18-7"></a>pred2 &lt;-<span class="st"> </span><span class="kw">predict</span>(<span class="dt">object =</span> credit_model2, </span>
+<span id="cb18-8"><a href="classification-trees.html#cb18-8"></a>                 <span class="dt">newdata =</span> credit_test,</span>
+<span id="cb18-9"><a href="classification-trees.html#cb18-9"></a>                 <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
+<ul>
+<li>Classification error is the fraction of incorrectly classified instances. Compute and compare the test set classification error of the two models by using the <code>ce()</code> function.</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="classification-trees.html#cb19-1"></a><span class="co"># Compare classification error</span></span>
+<span id="cb19-2"><a href="classification-trees.html#cb19-2"></a><span class="kw">ce</span>(<span class="dt">actual =</span> credit_test<span class="op">$</span>default, </span>
+<span id="cb19-3"><a href="classification-trees.html#cb19-3"></a>     <span class="dt">predicted =</span> pred1)</span></code></pre></div>
+<pre><code>## [1] 0.285</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="classification-trees.html#cb21-1"></a><span class="kw">ce</span>(<span class="dt">actual =</span> credit_test<span class="op">$</span>default, </span>
+<span id="cb21-2"><a href="classification-trees.html#cb21-2"></a>     <span class="dt">predicted =</span> pred2) </span></code></pre></div>
+<pre><code>## [1] 0.285</code></pre>
 <hr />
 
 </div>
@@ -309,7 +574,7 @@ After following the correct path down the tree for this individual’s set of da
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="regression-trees.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

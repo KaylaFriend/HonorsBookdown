@@ -1,10 +1,31 @@
 # Bagged Trees
 
 ```{r echo=FALSE}
-library(ipred)
+library(readr)
+library(rpart)
+library(rpart.plot)
+library(tidyverse)
 library(caret)
-```
+library(ipred)
+library(Metrics)
 
+url <- "https://assets.datacamp.com/production/repositories/710/datasets/b649085c43111c83ba7ab6ec172d83cdc14a2942/credit.csv"
+  if(!file.exists("./credit.csv")){download.file(url, destfile = "./credit.csv")}
+
+credit <- read_csv("./credit.csv")
+creditsub <- credit %>%
+  select(months_loan_duration, percent_of_income, years_at_residence, age, default)
+
+n <- nrow(creditsub)
+n_train <- round(.8 * n)
+set.seed(123)
+train_indices <- sample(1:n, n_train)
+# Subset the credit data frame to training indices only
+credit_train <- credit[train_indices, ]  
+  
+# Exclude the training indices to create the test set
+credit_test <- credit[-train_indices, ]
+```
 
 ## Introduction to Bagged Trees
 
@@ -49,7 +70,7 @@ The `credit_train` and `credit_test` datasets from Chapter 1 are already loaded 
 set.seed(123)
 
 # Train a bagged model
-credit_model <- bagging(formula = default ~ ., 
+credit_model <- bagging(formula = factor(default) ~ ., 
                         data = credit_train,
                         coob = TRUE)
 ```
@@ -104,7 +125,7 @@ print(class_prediction)
 ```{r}
 # Calculate the confusion matrix for the test set
 confusionMatrix(data = class_prediction,         
-                reference = credit_test$default)  
+                reference = factor(credit_test$default))  
 ```
 
 _____________
@@ -204,7 +225,7 @@ Generate predictions on a test set for the caret model.
 
 ```{r}
 # Generate predictions on the test set
-pred <- predict(object = credit_caret_model, 
+predc <- predict(object = credit_caret_model, 
                 newdata = credit_test,
                 type = "prob")
 ```
@@ -214,7 +235,7 @@ pred <- predict(object = credit_caret_model,
 ```{r}
 # Compute the AUC (`actual` must be a binary (or 1/0 numeric) vector)
 auc(actual = ifelse(credit_test$default == "yes", 1, 0), 
-                    predicted = pred[,"yes"])
+                    predicted = predc[,"yes"])
 ```
 
 ________________
@@ -238,6 +259,11 @@ ________________
 * Print the object credit_ipred_model_test_auc.
 
 ```{r}
+credit_ipred_model_test_auc <- auc(actual = ifelse(credit_test$default == "yes", 1, 0), 
+    predicted = pred[,"yes"])  
+```
+
+```{r eval=FALSE}
 # Print ipred::bagging test set AUC estimate
 print(credit_ipred_model_test_auc)
 ```
@@ -245,6 +271,11 @@ print(credit_ipred_model_test_auc)
 * Print the object credit_caret_model_test_auc.
 
 ```{r}
+credit_caret_model_test_auc <- auc(actual = ifelse(credit_test$default == "yes", 1, 0), 
+                    predicted = predc[,"yes"])
+```
+
+```{r eval=FALSE}
 # Print caret "treebag" test set AUC estimate
 print(credit_caret_model_test_auc)
 ```

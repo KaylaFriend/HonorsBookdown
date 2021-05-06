@@ -1,11 +1,16 @@
 # Regression Trees
 
-```{r echo=FALSE}
+```{r include=FALSE}
 url <- "https://assets.datacamp.com/production/repositories/710/datasets/3d720e80d1ad70a88322c2175fa0e6041761a5f9/grade.csv"
   if(!file.exists("./grade.csv")){download.file(url, destfile = "./grade.csv")}
 
+library(readr)
+
 grade <- read_csv("./grade.csv")
-```
+
+library(Metrics)
+library(rpart)
+library(rpart.plot)
 ```
 
 
@@ -314,7 +319,7 @@ best_model <- grade_models[[which.min(rmse_values)]]
 
 * Inspect the model parameters of the best model.
 
-```{r}
+```{r eval=FALSE}
 # Print the model paramters of the best model
 best_model$control
 ```
